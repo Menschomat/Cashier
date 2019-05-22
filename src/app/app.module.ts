@@ -35,10 +35,17 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MainNavComponent } from './components/main-nav/main-nav.component';
+import { BookingCardComponent } from './components/booking-card/booking-card.component';
+import { OverviewCardComponent } from './components/overview-card/overview-card.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MainNavComponent,
+    BookingCardComponent,
+    OverviewCardComponent
   ],
   imports: [
     BrowserModule,
@@ -74,7 +81,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     MatSnackBarModule,
     MatTableModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

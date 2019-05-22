@@ -1,0 +1,10 @@
+:host{
+    top:0;
+    z-index: 9999;
+    position: fixed;
+    width: 100%;
+    max-height: 5em;
+}
+.example-spacer {
+  flex: 1 1 auto;
+}
