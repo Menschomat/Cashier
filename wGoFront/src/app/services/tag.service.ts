@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Tag } from "../model/tag";
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: "root"
@@ -25,7 +26,7 @@ export class TagService {
     "#D7CCC8",
     "#F5F5F5",
     "#CFD8DC"
-  ]
+  ];
   colors = [
     "#f44336",
     "#E91E63",
@@ -46,10 +47,15 @@ export class TagService {
     "#795548",
     "#9E9E9E",
     "#607D8B"
+  ];
+  apiURL: string = "http://localhost:8080/tag";
+  constructor(private httpClient: HttpClient) {}
 
-  ]
-  constructor() {}
   getColor() {
-    return this.colors[Math.floor(Math.random() * this.colors.length)];;
+    return this.colors[Math.floor(Math.random() * this.colors.length)];
+  }
+
+  public getAllTags() {
+    return this.httpClient.get<Tag[]>(`${this.apiURL}/all`);
   }
 }
