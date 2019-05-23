@@ -39,13 +39,15 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MainNavComponent } from './components/main-nav/main-nav.component';
 import { BookingCardComponent } from './components/booking-card/booking-card.component';
 import { OverviewCardComponent } from './components/overview-card/overview-card.component';
+import { NewTransactionDialogComponent } from './components/new-transaction-dialog/new-transaction-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainNavComponent,
     BookingCardComponent,
-    OverviewCardComponent
+    OverviewCardComponent,
+    NewTransactionDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -85,6 +87,7 @@ import { OverviewCardComponent } from './components/overview-card/overview-card.
     FontAwesomeModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [NewTransactionDialogComponent]
 })
 export class AppModule { }

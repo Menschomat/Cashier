@@ -1,0 +1,40 @@
+<div style="display: flex; flex-direction:column;">
+  <div style="display: flex; flex-direction:row;">
+    <h1>Neue Transaktion...</h1>
+    <div style="flex: 1;"></div>
+    <button
+      style="margin-top: 1.2em;"
+      mat-mini-fab
+      color="warn"
+      (click)="close()"
+    >
+      <fa-icon style="font-size: 1.7em;" [icon]="faClose"></fa-icon>
+    </button>
+  </div>
+  <form style="display: flex; flex-direction:column">
+      <mat-form-field>
+        <input matInput placeholder="Titel">
+      </mat-form-field>
+    
+      <mat-form-field>
+        <input matInput placeholder="Betrag">
+      </mat-form-field>
+    
+      <mat-form-field class="example-chip-list">
+          <mat-chip-list #chipList>
+            <mat-chip *ngFor="let tag of tags" [selectable]="selectable"
+                     [removable]="removable" (removed)="remove(tag)"
+                     style="color: rgba(255,255,255,0.8);"
+                     [ngStyle]="{'background-color':tag.color }">
+              {{tag.title}}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input placeholder="Themen"
+                   [matChipInputFor]="chipList"
+                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                   [matChipInputAddOnBlur]="addOnBlur"
+                   (matChipInputTokenEnd)="add($event)">
+          </mat-chip-list>
+        </mat-form-field>
+  </form>
+</div>
