@@ -19,7 +19,7 @@ public class TransactionHandler {
 
     @GetMapping(value = "/all", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
-    public List<Transaction> gettAllTransactions() {
+    public List<Transaction> getAllTransactions() {
         return transactionRepository.findAll(PageRequest.of(0, 10)).getContent();
     }
     @PostMapping(value = "", produces = APPLICATION_JSON_VALUE)
