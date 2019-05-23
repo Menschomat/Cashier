@@ -2,8 +2,8 @@ import { Component, OnInit, Input } from "@angular/core";
 import { OverviewData } from "src/app/model/overview-data";
 import { MatDialogConfig, MatDialog } from "@angular/material";
 import { NewTransactionDialogComponent } from "../new-transaction-dialog/new-transaction-dialog.component";
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { TransactionService } from 'src/app/services/transaction.service';
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { TransactionService } from "src/app/services/transaction.service";
 
 export interface PeriodicElement {
   name: string;
@@ -24,9 +24,12 @@ export class OverviewCardComponent implements OnInit {
   data = {} as OverviewData;
 
   displayedColumns: string[] = ["dateTime", "title", "amount", "tags"];
-  constructor(private dialog: MatDialog, private transactionService: TransactionService) {}
+  constructor(
+    private dialog: MatDialog,
+    private transactionService: TransactionService
+  ) {}
   ngOnInit() {
-    this.transactionService.getLatesTransactions().subscribe(res =>{
+    this.transactionService.getLatesTransactions().subscribe(res => {
       this.data.lastTransactions = res;
     });
   }
@@ -37,6 +40,12 @@ export class OverviewCardComponent implements OnInit {
     dialogConfig.autoFocus = true;
     dialogConfig.minWidth = "40%";
 
-    this.dialog.open(NewTransactionDialogComponent, dialogConfig);
+    let dialogRef = this.dialog.open(
+      NewTransactionDialogComponent,
+      dialogConfig
+    );
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
   }
 }

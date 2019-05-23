@@ -41,6 +41,8 @@ import { BookingCardComponent } from './components/booking-card/booking-card.com
 import { OverviewCardComponent } from './components/overview-card/overview-card.component';
 import { NewTransactionDialogComponent } from './components/new-transaction-dialog/new-transaction-dialog.component';
 import { HttpClientModule } from '@angular/common/http'; 
+import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -86,7 +88,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatSortModule,
     MatPaginatorModule,
     FontAwesomeModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
