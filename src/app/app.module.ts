@@ -40,6 +40,7 @@ import { MainNavComponent } from './components/main-nav/main-nav.component';
 import { BookingCardComponent } from './components/booking-card/booking-card.component';
 import { OverviewCardComponent } from './components/overview-card/overview-card.component';
 import { NewTransactionDialogComponent } from './components/new-transaction-dialog/new-transaction-dialog.component';
+import { HttpClientModule } from '@angular/common/http'; 
 
 @NgModule({
   declarations: [
@@ -84,7 +85,8 @@ import { NewTransactionDialogComponent } from './components/new-transaction-dial
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent],

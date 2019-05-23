@@ -3,6 +3,7 @@ import { OverviewData } from "src/app/model/overview-data";
 import { MatDialogConfig, MatDialog } from "@angular/material";
 import { NewTransactionDialogComponent } from "../new-transaction-dialog/new-transaction-dialog.component";
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { TransactionService } from 'src/app/services/transaction.service';
 
 export interface PeriodicElement {
   name: string;
@@ -23,9 +24,12 @@ export class OverviewCardComponent implements OnInit {
   data = {} as OverviewData;
 
   displayedColumns: string[] = ["dateTime", "title", "amount", "tags"];
-  constructor(private dialog: MatDialog) {}
-
-  ngOnInit() {}
+  constructor(private dialog: MatDialog, private transactionService: TransactionService) {}
+  ngOnInit() {
+    this.transactionService.getLatesTransactions().subscribe(res =>{
+      this.data.lastTransactions = res;
+    });
+  }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
 
