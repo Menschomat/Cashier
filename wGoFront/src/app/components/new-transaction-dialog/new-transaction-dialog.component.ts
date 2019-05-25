@@ -7,6 +7,7 @@ import { Tag } from "src/app/model/tag";
 import { TagService } from "src/app/services/tag.service";
 import { NewTransaction } from "src/app/model/new-transaction";
 import { Transaction } from "src/app/model/transaction";
+import * as moment from 'moment';
 @Component({
   selector: "app-new-transaction-dialog",
   templateUrl: "./new-transaction-dialog.component.html",
@@ -73,7 +74,7 @@ export class NewTransactionDialogComponent implements OnInit {
     this.dialogRef.close();
   }
   isOk(){
-    if(this.output.transaction.title.length > 0 && this.output.transaction.amount != 0){
+    if(this.output.transaction.title.length > 0 && this.output.transaction.amount != 0 &&  moment(this.output.transaction.date, "MM/DD/YYYY", true).isValid()){
       return true;
     }
     return false;

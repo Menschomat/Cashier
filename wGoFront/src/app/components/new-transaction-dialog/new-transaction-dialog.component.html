@@ -24,8 +24,21 @@
       <input
         matInput
         placeholder="Betrag"
+        type="number"
         [(ngModel)]="output.transaction.amount"
       />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Datum"
+        type="date"
+        [matDatepicker]="picker"
+        [(ngModel)]="output.transaction.date"
+
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker" disabled="false"></mat-datepicker-toggle>
+      <mat-datepicker #picker disabled="false"></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field class="example-chip-list">

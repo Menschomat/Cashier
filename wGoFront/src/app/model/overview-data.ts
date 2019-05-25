@@ -1,7 +1,7 @@
 import { Transaction } from './transaction';
 
 export interface OverviewData {
-    totalIn :Number;
-    totalOut : Number;
+    totalIn :number;
+    totalOut : number;
     lastTransactions: Transaction[];
 }

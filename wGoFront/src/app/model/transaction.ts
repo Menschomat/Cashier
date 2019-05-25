@@ -1,8 +1,8 @@
 import { Tag } from './tag';
 
 export interface Transaction {
-  amount: Number;
-  date: String;
-  title: String;
-  tagIds: String[];
+  amount: number;
+  date: string;
+  title: string;
+  tagIds: string[];
 }
