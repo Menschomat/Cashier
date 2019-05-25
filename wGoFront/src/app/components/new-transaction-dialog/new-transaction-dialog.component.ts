@@ -21,6 +21,9 @@ export class NewTransactionDialogComponent implements OnInit {
     this.output.tags = [];
     this.output.transaction = {} as Transaction;
     this.output.transaction.tagIds = [];
+    this.output.transaction.amount = 0;
+    this.output.transaction.title = "";
+    this.output.transaction.date = "";
   }
 
   faClose = faTimes;
@@ -68,6 +71,12 @@ export class NewTransactionDialogComponent implements OnInit {
   ngOnInit() {}
   close() {
     this.dialogRef.close();
+  }
+  isOk(){
+    if(this.output.transaction.title.length > 0 && this.output.transaction.amount != 0){
+      return true;
+    }
+    return false;
   }
   onSubmit() {
     this.output.tags.forEach(tag => {

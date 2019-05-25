@@ -51,7 +51,7 @@
       </mat-chip-list>
     </mat-form-field>
   </div>
-  <button mat-raised-button color="primary" (click)="onSubmit()">
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!isOk()">
     Hinzufügen
   </button>
 </div>

@@ -58,4 +58,7 @@ export class TagService {
   public getAllTags() {
     return this.httpClient.get<Tag[]>(`${this.apiURL}/all`);
   }
+  public addList(tags:Tag[]){
+    return this.httpClient.post(`${this.apiURL}/all`, tags);
+  }
 }
