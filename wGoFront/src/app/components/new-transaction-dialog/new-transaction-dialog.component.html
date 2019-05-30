@@ -11,7 +11,7 @@
       <fa-icon style="font-size: 1.7em;" [icon]="faClose"></fa-icon>
     </button>
   </div>
-  <form style="display: flex; flex-direction:column" [formGroup]="newTransactionForm">
+  <form style="display: flex; flex-direction:column" [formGroup]="newTransactionForm" (ngSubmit)="onSubmit()">
     <mat-form-field>
       <input
         matInput
@@ -65,7 +65,7 @@
         />
       </mat-chip-list>
     </mat-form-field>
-    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!isOk()">
+    <button mat-raised-button color="primary" type="submit" [disabled]="!newTransactionForm.valid">
         Hinzufügen
       </button>
   </form>

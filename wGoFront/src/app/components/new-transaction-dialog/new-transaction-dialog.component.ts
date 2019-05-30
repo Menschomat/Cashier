@@ -39,7 +39,7 @@ export class NewTransactionDialogComponent implements OnInit {
   createForm() {
     this.newTransactionForm = this.fb.group({
       title: ["", Validators.required],
-      amount:[0, Validators.required],
+      amount:[0, Validators.pattern('^[-+]?[0-9]*\.?[0-9]+$')],
       date:["",Validators.required]
     });
   }
