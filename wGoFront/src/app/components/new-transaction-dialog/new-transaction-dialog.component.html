@@ -11,12 +11,13 @@
       <fa-icon style="font-size: 1.7em;" [icon]="faClose"></fa-icon>
     </button>
   </div>
-  <div style="display: flex; flex-direction:column">
+  <form style="display: flex; flex-direction:column" [formGroup]="newTransactionForm">
     <mat-form-field>
       <input
         matInput
         placeholder="Titel"
-        [(ngModel)]="output.transaction.title"
+        formControlName="title" id="title"
+        required
       />
     </mat-form-field>
 
@@ -25,7 +26,8 @@
         matInput
         placeholder="Betrag"
         type="number"
-        [(ngModel)]="output.transaction.amount"
+        formControlName="amount" id="amount"
+        required
       />
     </mat-form-field>
     <mat-form-field>
@@ -34,8 +36,8 @@
         placeholder="Datum"
         type="date"
         [matDatepicker]="picker"
-        [(ngModel)]="output.transaction.date"
-
+        formControlName="date" id="date" 
+        required    
       />
       <mat-datepicker-toggle matSuffix [for]="picker" disabled="false"></mat-datepicker-toggle>
       <mat-datepicker #picker disabled="false"></mat-datepicker>
@@ -63,8 +65,9 @@
         />
       </mat-chip-list>
     </mat-form-field>
-  </div>
-  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!isOk()">
-    Hinzufügen
-  </button>
+    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!isOk()">
+        Hinzufügen
+      </button>
+  </form>
+  
 </div>

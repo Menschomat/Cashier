@@ -41,7 +41,8 @@ import { BookingCardComponent } from './components/booking-card/booking-card.com
 import { OverviewCardComponent } from './components/overview-card/overview-card.component';
 import { NewTransactionDialogComponent } from './components/new-transaction-dialog/new-transaction-dialog.component';
 import { HttpClientModule } from '@angular/common/http'; 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TransactionCardComponent } from './components/transaction-card/transaction-card.component';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { FormsModule } from '@angular/forms';
     MainNavComponent,
     BookingCardComponent,
     OverviewCardComponent,
-    NewTransactionDialogComponent
+    NewTransactionDialogComponent,
+    TransactionCardComponent
   ],
   imports: [
     BrowserModule,
@@ -90,7 +92,8 @@ import { FormsModule } from '@angular/forms';
     FontAwesomeModule,
     HttpClientModule,
     MatNativeDateModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [MatDatepickerModule],
   bootstrap: [AppComponent],

@@ -7,17 +7,20 @@ import { Tag } from "src/app/model/tag";
 import { TagService } from "src/app/services/tag.service";
 import { NewTransaction } from "src/app/model/new-transaction";
 import { Transaction } from "src/app/model/transaction";
-import * as moment from 'moment';
+import * as moment from "moment";
+import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms";
 @Component({
   selector: "app-new-transaction-dialog",
   templateUrl: "./new-transaction-dialog.component.html",
   styleUrls: ["./new-transaction-dialog.component.scss"]
 })
 export class NewTransactionDialogComponent implements OnInit {
+  public newTransactionForm: FormGroup;
   output = {} as NewTransaction;
   constructor(
     private dialogRef: MatDialogRef<NewTransactionDialogComponent>,
-    private tagService: TagService
+    private tagService: TagService,
+    private fb: FormBuilder
   ) {
     this.output.tags = [];
     this.output.transaction = {} as Transaction;
@@ -33,7 +36,13 @@ export class NewTransactionDialogComponent implements OnInit {
   removable = true;
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, SPACE, COMMA, SEMICOLON];
-
+  createForm() {
+    this.newTransactionForm = this.fb.group({
+      title: ["", Validators.required],
+      amount:[0, Validators.required],
+      date:["",Validators.required]
+    });
+  }
   add(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;
@@ -69,12 +78,18 @@ export class NewTransactionDialogComponent implements OnInit {
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.createForm();
+  }
   close() {
     this.dialogRef.close();
   }
-  isOk(){
-    if(this.output.transaction.title.length > 0 && this.output.transaction.amount != 0 &&  moment(this.output.transaction.date, "MM/DD/YYYY", true).isValid()){
+  isOk() {
+    if (
+      this.output.transaction.title.length > 0 &&
+      this.output.transaction.amount != 0 &&
+      moment(this.output.transaction.date, "MM/DD/YYYY", true).isValid()
+    ) {
       return true;
     }
     return false;

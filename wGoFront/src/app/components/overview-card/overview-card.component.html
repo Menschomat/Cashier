@@ -2,19 +2,21 @@
   <mat-card-header>
     <mat-card-title>Infos</mat-card-title>
   </mat-card-header>
-  <hr />
-  <mat-card-content>
+  <hr *ngIf="!loading" />
+  <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+  <mat-card-content *ngIf="!loading">
     <p>Kontostand: 0€</p>
-    <p>Ausgaben: {{data.totalIn}}</p>
-    <p>Einahmen: {{data.totalOut}}</p>
+    <p>Ausgaben: {{ data.totalIn }}</p>
+    <p>Einahmen: {{ data.totalOut }}</p>
   </mat-card-content>
 </mat-card>
 <mat-card class="overviewCard mat-elevation-z8">
   <mat-card-header>
     <mat-card-title>Letzte Umsätze</mat-card-title>
   </mat-card-header>
-  <hr />
-  <mat-card-content>
+  <hr *ngIf="!loading" />
+  <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+  <mat-card-content *ngIf="!loading">
     <table mat-table [dataSource]="data.lastTransactions" style="width: 100%">
       <!--- Note that these columns can be defined in any order.
               The actual rendered columns are set as a property on the row definition" -->
@@ -59,7 +61,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
   </mat-card-content>
-  <mat-card-actions style="display: flex;">
+  <mat-card-actions style="display: flex;" *ngIf="!loading">
     <div style="flex: 1;"></div>
     <button mat-raised-button color="primary" (click)="openDialog()">
       Hinzufügen <fa-icon [icon]="faPlus"></fa-icon>

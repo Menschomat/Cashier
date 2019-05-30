@@ -19,7 +19,7 @@ export interface PeriodicElement {
 })
 export class OverviewCardComponent implements OnInit {
   faPlus = faPlus;
-
+  loading = false;
   @Input()
   data = {} as OverviewData;
 
@@ -29,8 +29,10 @@ export class OverviewCardComponent implements OnInit {
     private transactionService: TransactionService
   ) {}
   ngOnInit() {
+    this.loading = true;
     this.transactionService.getLatesTransactions().subscribe(res => {
       this.data.lastTransactions = res;
+      this.loading = false;
     });
   }
   openDialog() {
