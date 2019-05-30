@@ -12,4 +12,7 @@ export class TransactionService {
   public getLatesTransactions() {
     return this.httpClient.get<Transaction[]>(`${this.apiURL}/all`);
   }
+  public addSingleTransaction(toAdd:Transaction){
+    return this.httpClient.post<Transaction[]>(`${this.apiURL}`,toAdd);
+  }
 }

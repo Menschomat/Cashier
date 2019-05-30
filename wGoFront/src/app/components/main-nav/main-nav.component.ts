@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { faTrafficLight } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-main-nav',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./main-nav.component.scss']
 })
 export class MainNavComponent implements OnInit {
-
+  faTraffic = faTrafficLight;
   constructor() { }
 
   ngOnInit() {

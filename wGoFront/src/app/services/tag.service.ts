@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Tag } from "../model/tag";
-import { HttpClient } from '@angular/common/http';
+import { HttpClient } from "@angular/common/http";
 
 @Injectable({
   providedIn: "root"
@@ -49,16 +49,38 @@ export class TagService {
     "#607D8B"
   ];
   apiURL: string = "http://localhost:8080/tag";
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+    this.getAllTags();
+  }
+  allTags: Tag[] = [];
 
   getColor() {
     return this.colors[Math.floor(Math.random() * this.colors.length)];
   }
 
   public getAllTags() {
-    return this.httpClient.get<Tag[]>(`${this.apiURL}/all`);
+    if (this.allTags.length === 0) {
+      this.httpClient.get<Tag[]>(`${this.apiURL}/all`).subscribe(tags => {
+        this.allTags = tags;
+        return this.allTags;
+      });
+    } else {
+      return this.allTags;
+    }
   }
-  public addList(tags:Tag[]){
-    return this.httpClient.post(`${this.apiURL}/all`, tags);
+
+  public getTagDataFromRepo(tag: Tag): Tag {
+    return (this.allTags.find(t => t.title === tag.title) ? this.allTags.find(t => t.title === tag.title) : tag);
+  }
+
+  public addTags(tags: Tag[]) {
+    tags.forEach(tag => {
+      if (!this.allTags.includes(tag)) {
+        this.allTags.push(tag);
+      }
+    });
+  }
+  public saveAndUpdateTagList() {
+    return this.httpClient.post(`${this.apiURL}/all`, this.allTags).subscribe();
   }
 }
