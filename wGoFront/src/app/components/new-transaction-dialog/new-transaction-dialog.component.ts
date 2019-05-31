@@ -1,5 +1,9 @@
-import { Component, OnInit } from "@angular/core";
-import { MatDialogRef } from "@angular/material";
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
+import {
+  MatDialogRef,
+  MatAutocomplete,
+  MatAutocompleteSelectedEvent
+} from "@angular/material";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { COMMA, ENTER, SPACE, SEMICOLON } from "@angular/cdk/keycodes";
 import { MatChipInputEvent } from "@angular/material";
@@ -7,6 +11,8 @@ import { Tag } from "src/app/model/tag";
 import { TagService } from "src/app/services/tag.service";
 import { NewTransaction } from "src/app/model/new-transaction";
 import { Transaction } from "src/app/model/transaction";
+import { Observable } from "rxjs";
+import { map, startWith } from "rxjs/operators";
 import * as moment from "moment";
 import {
   FormGroup,
@@ -22,6 +28,10 @@ import {
 export class NewTransactionDialogComponent implements OnInit {
   public newTransactionForm: FormGroup;
   output = {} as NewTransaction;
+  allTags: Tag[] = [];
+  filteredTags: Observable<string[]>;
+  tagCtrl = new FormControl();
+  @ViewChild("taginput") tagInput: ElementRef<HTMLInputElement>;
   constructor(
     private dialogRef: MatDialogRef<NewTransactionDialogComponent>,
     private tagService: TagService,
@@ -33,6 +43,13 @@ export class NewTransactionDialogComponent implements OnInit {
     this.output.transaction.amount = 0;
     this.output.transaction.title = "";
     this.output.transaction.date = "";
+    this.allTags = this.tagService.getAllTags();
+    this.filteredTags = this.tagCtrl.valueChanges.pipe(
+      startWith(null),
+      map((tagid: string | null) =>
+        tagid ? this._filter(tagid) : this.allTags.map(t => t.title).slice()
+      )
+    );
   }
 
   faClose = faTimes;
@@ -53,22 +70,30 @@ export class NewTransactionDialogComponent implements OnInit {
     const value = event.value;
 
     // Add our fruit
+    this.addTag(value);
+
+    // Reset the input value
+    if (input) {
+      input.value = "";
+    }
+  }
+  private addTag(value: string) {
     if ((value || "").trim()) {
       var found = false;
       for (var i = 0; i < this.output.tags.length; i++) {
-        if (this.output.tags[i].title.toLocaleLowerCase().trim() == value.toLocaleLowerCase().trim()) {
+        if (
+          this.output.tags[i].title.toLocaleLowerCase().trim() ==
+          value.toLocaleLowerCase().trim()
+        ) {
           found = true;
           break;
         }
       }
       if (!found) {
-        this.output.tags.push(this.tagService.getTag(value.toLocaleLowerCase().trim()));
+        this.output.tags.push(
+          this.tagService.getTag(value.toLocaleLowerCase().trim())
+        );
       }
-    }
-
-    // Reset the input value
-    if (input) {
-      input.value = "";
     }
   }
 
@@ -95,5 +120,18 @@ export class NewTransactionDialogComponent implements OnInit {
     this.output.transaction.title = this.newTransactionForm.value.title;
     this.output.transaction.date = this.newTransactionForm.value.date;
     this.dialogRef.close(this.output);
+  }
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.addTag(event.option.viewValue);
+    this.tagInput.nativeElement.value = "";
+    this.tagCtrl.setValue(null);
+  }
+
+  private _filter(value: string): string[] {
+    return this.allTags
+      .map(t => t.title)
+      .filter(
+        t => t.toLowerCase().indexOf(value.toLocaleLowerCase().trim()) === 0
+      );
   }
 }

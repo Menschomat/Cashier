@@ -23,7 +23,7 @@ public class TagHandler {
     @GetMapping(value = "/all", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public List<Tag> getAllTags() {
-        return tagRepository.findAll(PageRequest.of(0, 10)).getContent();
+        return tagRepository.findAll();
     }
 
     @GetMapping(value = "/title", produces = APPLICATION_JSON_VALUE)

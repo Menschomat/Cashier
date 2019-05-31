@@ -20,12 +20,18 @@ public class TransactionHandler {
     @GetMapping(value = "/all", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public List<Transaction> getAllTransactions() {
-        return transactionRepository.findAll(PageRequest.of(0, 10)).getContent();
+        return transactionRepository.findAll();
     }
     @PostMapping(value = "", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public  List<Transaction> addTransaction(@RequestBody Transaction toAdd) {
-         transactionRepository.insert(toAdd);
-        return transactionRepository.findAll(PageRequest.of(0, 10)).getContent();
+         transactionRepository.save(toAdd);
+        return getAllTransactions();
+    }
+    @DeleteMapping(value = "", produces = APPLICATION_JSON_VALUE)
+    @CrossOrigin
+    public  List<Transaction> deleteTransactions(@RequestBody List<Transaction> toDelete) {
+        transactionRepository.deleteAll(toDelete);
+        return getAllTransactions();
     }
 }

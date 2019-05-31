@@ -43,7 +43,7 @@ import { NewTransactionDialogComponent } from './components/new-transaction-dial
 import { HttpClientModule } from '@angular/common/http'; 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TransactionCardComponent } from './components/transaction-card/transaction-card.component';
-
+import {MatBadgeModule} from '@angular/material/badge';
 
 @NgModule({
   declarations: [
@@ -93,7 +93,8 @@ import { TransactionCardComponent } from './components/transaction-card/transact
     HttpClientModule,
     MatNativeDateModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatBadgeModule
   ],
   providers: [MatDatepickerModule],
   bootstrap: [AppComponent],
