@@ -47,7 +47,7 @@ export class NewTransactionDialogComponent implements OnInit {
     this.filteredTags = this.tagCtrl.valueChanges.pipe(
       startWith(null),
       map((tagid: string | null) =>
-        tagid ? this._filter(tagid) : this.allTags.map(t => t.title).slice()
+        tagid ? this._filter(tagid) : []
       )
     );
   }
@@ -128,6 +128,9 @@ export class NewTransactionDialogComponent implements OnInit {
   }
 
   private _filter(value: string): string[] {
+    if(value.length < 1){
+      return [];
+    }
     return this.allTags
       .map(t => t.title)
       .filter(
