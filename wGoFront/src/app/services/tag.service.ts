@@ -70,8 +70,8 @@ export class TagService {
   }
 
   public getTag(tagid: string): Tag {
-    return this.allTags.find(t => t.title === tagid)
-      ? this.allTags.find(t => t.title === tagid)
+    return this.allTags.find(t => t.title.toLocaleLowerCase().trim() === tagid.toLocaleLowerCase().trim())
+      ? this.allTags.find(t => t.title.toLocaleLowerCase().trim() === tagid.toLocaleLowerCase().trim())
       : { title: tagid, color: this.getColor() };
   }
 

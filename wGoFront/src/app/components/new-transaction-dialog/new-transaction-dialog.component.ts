@@ -40,7 +40,7 @@ export class NewTransactionDialogComponent implements OnInit {
   selectable = true;
   removable = true;
   addOnBlur = true;
-  readonly separatorKeysCodes: number[] = [ENTER, SPACE, COMMA, SEMICOLON];
+  readonly separatorKeysCodes: number[] = [ENTER, SPACE, COMMA];
   createForm() {
     this.newTransactionForm = this.fb.group({
       title: ["", Validators.required],
@@ -56,13 +56,13 @@ export class NewTransactionDialogComponent implements OnInit {
     if ((value || "").trim()) {
       var found = false;
       for (var i = 0; i < this.output.tags.length; i++) {
-        if (this.output.tags[i].title == value.trim()) {
+        if (this.output.tags[i].title.toLocaleLowerCase().trim() == value.toLocaleLowerCase().trim()) {
           found = true;
           break;
         }
       }
       if (!found) {
-        this.output.tags.push(this.tagService.getTag(value.trim()));
+        this.output.tags.push(this.tagService.getTag(value.toLocaleLowerCase().trim()));
       }
     }
 
@@ -88,6 +88,7 @@ export class NewTransactionDialogComponent implements OnInit {
   }
   onSubmit() {
     this.output.tags.forEach(tag => {
+      tag.title = tag.title.toLocaleLowerCase().trim();
       this.output.transaction.tagIds.push(tag.title);
     });
     this.output.transaction.amount = this.newTransactionForm.value.amount;
