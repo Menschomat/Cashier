@@ -73,7 +73,7 @@ export class OverviewCardComponent implements OnInit {
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.minWidth = "40%";
+ 
     dialogConfig.data = tag;
 
     let dialogRef = this.dialog.open(TagEditorComponent, dialogConfig);

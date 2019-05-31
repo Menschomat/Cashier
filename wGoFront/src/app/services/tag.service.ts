@@ -57,6 +57,9 @@ export class TagService {
   getColor() {
     return this.colors[Math.floor(Math.random() * this.colors.length)];
   }
+  getColorPreset(){
+    return this.colors;
+  }
 
   public getAllTags() {
     if (this.allTags.length === 0) {

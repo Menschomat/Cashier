@@ -11,14 +11,22 @@ import { TagService } from "src/app/services/tag.service";
 })
 export class TagEditorComponent implements OnInit {
   faClose = faTimes;
+  colorPreset:string[] = [];
   constructor(
     @Inject(MAT_DIALOG_DATA) public tag: Tag,
     private dialogRef: MatDialogRef<TagEditorComponent>,
     private tagService: TagService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.colorPreset = this.tagService.getColorPreset();
+    console.log(this.tag);
+  }
   close() {
     this.dialogRef.close();
+  }
+  selectColor(event:any){
+    this.tag.color=event;
+    this.tagService.saveAndUpdateTagList();
   }
 }
