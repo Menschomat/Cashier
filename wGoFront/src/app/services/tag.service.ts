@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Tag } from "../model/tag";
 import { HttpClient } from "@angular/common/http";
+import { StatusServiceService } from "./status-service.service";
 
 @Injectable({
   providedIn: "root"
@@ -49,15 +50,19 @@ export class TagService {
     "#607D8B"
   ];
   apiURL: string = "http://localhost:8080/tag";
-  constructor(private httpClient: HttpClient) {
+  constructor(
+    private httpClient: HttpClient,
+    private statusService: StatusServiceService
+  ) {
     this.getAllTags();
   }
+
   allTags: Tag[] = [];
 
   getColor() {
     return this.colors[Math.floor(Math.random() * this.colors.length)];
   }
-  getColorPreset(){
+  getColorPreset() {
     return this.colors;
   }
 
@@ -73,9 +78,16 @@ export class TagService {
   }
 
   public getTag(tagid: string): Tag {
-    return this.allTags.find(t => t.title.toLocaleLowerCase().trim() === tagid.toLocaleLowerCase().trim())
-      ? this.allTags.find(t => t.title.toLocaleLowerCase().trim() === tagid.toLocaleLowerCase().trim())
-      : { title: tagid, color: this.getColor() };
+    return this.allTags.find(
+      t =>
+        t.title.toLocaleLowerCase().trim() === tagid.toLocaleLowerCase().trim()
+    )
+      ? this.allTags.find(
+          t =>
+            t.title.toLocaleLowerCase().trim() ===
+            tagid.toLocaleLowerCase().trim()
+        )
+      : { title: tagid, color: this.getColor(), id: undefined };
   }
 
   public addTags(tags: Tag[]) {
@@ -84,8 +96,13 @@ export class TagService {
         this.allTags.push(tag);
       }
     });
+    this.statusService.sendMessage({ saved: false });
   }
   public saveAndUpdateTagList() {
-    return this.httpClient.post(`${this.apiURL}/all`, this.allTags).subscribe();
+    return this.httpClient
+      .post(`${this.apiURL}/all`, this.allTags)
+      .subscribe(data => {
+        this.statusService.sendMessage({ saved: true });
+      });
   }
 }

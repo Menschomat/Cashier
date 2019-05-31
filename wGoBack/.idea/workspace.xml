@@ -4,6 +4,7 @@
     <list default="true" id="946b7aa5-49e9-448f-af62-6835b46208ab" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../wGoFront/src/app/components/overview-card/overview-card.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../wGoFront/src/app/components/overview-card/overview-card.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../wGoFront/src/app/components/tag-editor/tag-editor.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../wGoFront/src/app/components/tag-editor/tag-editor.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../wGoFront/src/app/services/tag.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../wGoFront/src/app/services/tag.service.ts" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />

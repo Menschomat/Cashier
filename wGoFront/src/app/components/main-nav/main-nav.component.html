@@ -7,11 +7,10 @@
     <button
       mat-mini-fab
       color="primary"
-      matBadge="8"
       matBadgeColor="accent"
       matTooltip="Alles Gespeichert"
     >
-      <fa-icon [icon]="faTraffic" style=" color: lightgreen;"></fa-icon>
+      <fa-icon [icon]="faTraffic" [ngStyle]="{'color': status.saved ? 'lightgreen' : 'orange'}"></fa-icon>
     </button>
   </mat-toolbar-row>
 </mat-toolbar>

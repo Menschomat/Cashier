@@ -56,7 +56,6 @@ export class OverviewCardComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.loading = true;
-        console.log(result);
         this.tagService.addTags(result.tags);
         this.tagService.saveAndUpdateTagList();
         this.transactionService
@@ -78,9 +77,6 @@ export class OverviewCardComponent implements OnInit {
 
     let dialogRef = this.dialog.open(TagEditorComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log(result);
-      }
     });
   }
 }
