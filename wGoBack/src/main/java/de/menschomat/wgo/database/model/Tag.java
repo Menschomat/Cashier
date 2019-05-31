@@ -1,15 +1,18 @@
 package de.menschomat.wgo.database.model;
 
+import org.springframework.data.annotation.Id;
+
 public class Tag {
-    public String name;
+    @Id
+    public String id;
+    public String title = "";
     public String color = "gray";
 
-    public Tag(String name) {
-        this.name = name;
+    public Tag() {
     }
 
-    public Tag(String name, String color) {
-        this.name = name;
+    public Tag(String title, String color) {
+        this.title = title;
         this.color = color;
     }
 
@@ -17,6 +20,6 @@ public class Tag {
     public String toString() {
         return String.format(
                 "Tag[name=%s, color='%s']",
-                name, color);
+                title, color);
     }
 }

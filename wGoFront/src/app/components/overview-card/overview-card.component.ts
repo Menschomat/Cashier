@@ -4,6 +4,7 @@ import { MatDialogConfig, MatDialog } from "@angular/material";
 import { NewTransactionDialogComponent } from "../new-transaction-dialog/new-transaction-dialog.component";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { TransactionService } from "src/app/services/transaction.service";
+import { TagService } from "src/app/services/tag.service";
 
 export interface PeriodicElement {
   name: string;
@@ -26,7 +27,8 @@ export class OverviewCardComponent implements OnInit {
   displayedColumns: string[] = ["dateTime", "title", "amount", "tags"];
   constructor(
     private dialog: MatDialog,
-    private transactionService: TransactionService
+    private transactionService: TransactionService,
+    private tagService: TagService
   ) {}
   ngOnInit() {
     this.loading = true;
@@ -34,6 +36,9 @@ export class OverviewCardComponent implements OnInit {
       this.data.lastTransactions = res;
       this.loading = false;
     });
+  }
+  getTagForTagID(tID:string){
+    return this.tagService.getTag(tID);
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
@@ -47,7 +52,18 @@ export class OverviewCardComponent implements OnInit {
       dialogConfig
     );
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+      if (result) {
+        this.loading = true;
+        console.log(result);
+        this.tagService.addTags(result.tags);
+        this.tagService.saveAndUpdateTagList();
+        this.transactionService
+          .addSingleTransaction(result.transaction)
+          .subscribe(res => {
+            this.data.lastTransactions = res;
+            this.loading = false;
+          });
+      }
     });
   }
 }

@@ -24,8 +24,8 @@ public class TransactionHandler {
     }
     @PostMapping(value = "", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
-    public  String addTransaction(@RequestBody Transaction toAdd) {
+    public  List<Transaction> addTransaction(@RequestBody Transaction toAdd) {
          transactionRepository.insert(toAdd);
-         return "Added";
+        return transactionRepository.findAll(PageRequest.of(0, 10)).getContent();
     }
 }

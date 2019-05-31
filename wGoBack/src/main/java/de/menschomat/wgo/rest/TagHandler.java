@@ -23,26 +23,26 @@ public class TagHandler {
     @GetMapping(value = "/all", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public List<Tag> getAllTags() {
-        return tagRepository.findAll();
+        return tagRepository.findAll(PageRequest.of(0, 10)).getContent();
     }
 
-    @GetMapping(value = "/name", produces = APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/title", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public List<Tag> getTagsByTitles(@RequestBody List<String> list) {
-        return tagRepository.findAllByNameIn(list);
+        return tagRepository.findAllByTitleIn(list);
     }
 
     @PostMapping(value = "", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
-    public String addTag(@RequestBody Tag toAdd) {
-        tagRepository.insert(toAdd);
-        return "Added";
+    public  List<Tag> addTag(@RequestBody Tag toAdd) {
+        tagRepository.save(toAdd);
+        return getAllTags();
     }
 
     @PostMapping(value = "/all", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
-    public String addAllTags(@RequestBody List<Tag> tags) {
-        tagRepository.insert(tags);
-        return "Added";
+    public  List<Tag> addAllTags(@RequestBody List<Tag> tags) {
+        tagRepository.saveAll(tags);
+        return getAllTags();
     }
 }

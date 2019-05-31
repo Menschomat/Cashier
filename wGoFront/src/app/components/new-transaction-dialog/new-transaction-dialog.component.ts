@@ -8,7 +8,12 @@ import { TagService } from "src/app/services/tag.service";
 import { NewTransaction } from "src/app/model/new-transaction";
 import { Transaction } from "src/app/model/transaction";
 import * as moment from "moment";
-import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms";
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl
+} from "@angular/forms";
 @Component({
   selector: "app-new-transaction-dialog",
   templateUrl: "./new-transaction-dialog.component.html",
@@ -39,8 +44,8 @@ export class NewTransactionDialogComponent implements OnInit {
   createForm() {
     this.newTransactionForm = this.fb.group({
       title: ["", Validators.required],
-      amount:[0, Validators.pattern('^[-+]?[0-9]*\.?[0-9]+$')],
-      date:["",Validators.required]
+      amount: [0, Validators.pattern("^[-+]?[0-9]*.?[0-9]+$")],
+      date: ["", Validators.required]
     });
   }
   add(event: MatChipInputEvent): void {
@@ -57,10 +62,7 @@ export class NewTransactionDialogComponent implements OnInit {
         }
       }
       if (!found) {
-        this.output.tags.push({
-          title: value.trim(),
-          color: this.tagService.getColor()
-        });
+        this.output.tags.push(this.tagService.getTag(value.trim()));
       }
     }
 
@@ -84,20 +86,13 @@ export class NewTransactionDialogComponent implements OnInit {
   close() {
     this.dialogRef.close();
   }
-  isOk() {
-    if (
-      this.output.transaction.title.length > 0 &&
-      this.output.transaction.amount != 0 &&
-      moment(this.output.transaction.date, "MM/DD/YYYY", true).isValid()
-    ) {
-      return true;
-    }
-    return false;
-  }
   onSubmit() {
     this.output.tags.forEach(tag => {
       this.output.transaction.tagIds.push(tag.title);
     });
+    this.output.transaction.amount = this.newTransactionForm.value.amount;
+    this.output.transaction.title = this.newTransactionForm.value.title;
+    this.output.transaction.date = this.newTransactionForm.value.date;
     this.dialogRef.close(this.output);
   }
 }

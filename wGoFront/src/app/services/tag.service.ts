@@ -69,8 +69,10 @@ export class TagService {
     }
   }
 
-  public getTagDataFromRepo(tag: Tag): Tag {
-    return (this.allTags.find(t => t.title === tag.title) ? this.allTags.find(t => t.title === tag.title) : tag);
+  public getTag(tagid: string): Tag {
+    return this.allTags.find(t => t.title === tagid)
+      ? this.allTags.find(t => t.title === tagid)
+      : { title: tagid, color: this.getColor() };
   }
 
   public addTags(tags: Tag[]) {
