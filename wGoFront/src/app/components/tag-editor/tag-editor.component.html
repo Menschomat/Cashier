@@ -1,0 +1,20 @@
+<div style="display: flex; flex-direction:column;">
+  <div style="display: flex; flex-direction:row;">
+    <h1>Hashtag bearbeiten:</h1>
+    <div style="flex: 1;"></div>
+    <button
+      style="margin-top: 1.2em;"
+      mat-mini-fab
+      color="warn"
+      (click)="close()"
+    >
+      <fa-icon style="font-size: 1.7em;" [icon]="faClose"></fa-icon>
+    </button>
+  </div>
+  <p>
+    {{ tag.title }}
+  </p>
+  <p>
+    {{ tag.color }}
+  </p>
+</div>

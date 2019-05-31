@@ -25,7 +25,7 @@
       <ng-container matColumnDef="dateTime">
         <th mat-header-cell *matHeaderCellDef>Datum</th>
         <td mat-cell *matCellDef="let transaction">
-          {{ transaction.date | date: 'dd.MM.yyyy'}}
+          {{ transaction.date | date: "dd.MM.yyyy" }}
         </td>
       </ng-container>
 
@@ -51,8 +51,9 @@
             <mat-chip
               [ngStyle]="{ backgroundColor: getTagForTagID(tag).color }"
               *ngFor="let tag of transaction.tagIds"
-              >{{ getTagForTagID(tag).title }}</mat-chip
-            >
+              (click) = "openEdit(getTagForTagID(tag))"
+              >#{{ getTagForTagID(tag).title }}
+            </mat-chip>
           </mat-chip-list>
         </td>
       </ng-container>
@@ -63,7 +64,7 @@
   </mat-card-content>
   <mat-card-actions style="display: flex;" *ngIf="!loading">
     <div style="flex: 1;"></div>
-    <button mat-raised-button color="primary" (click)="openDialog()">
+    <button mat-raised-button color="primary" (click)="openNewTransaction()">
       Hinzufügen <fa-icon [icon]="faPlus"></fa-icon>
     </button>
   </mat-card-actions>

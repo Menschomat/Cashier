@@ -46,9 +46,7 @@ export class NewTransactionDialogComponent implements OnInit {
     this.allTags = this.tagService.getAllTags();
     this.filteredTags = this.tagCtrl.valueChanges.pipe(
       startWith(null),
-      map((tagid: string | null) =>
-        tagid ? this._filter(tagid) : []
-      )
+      map((tagid: string | null) => (tagid ? this._filter(tagid) : []))
     );
   }
 
@@ -76,14 +74,16 @@ export class NewTransactionDialogComponent implements OnInit {
     if (input) {
       input.value = "";
     }
+    this.clearAutocomplete();
   }
   private addTag(value: string) {
-    if ((value || "").trim()) {
+    let toAdd = value.replace("#", "");
+    if ((toAdd || "").trim()) {
       var found = false;
       for (var i = 0; i < this.output.tags.length; i++) {
         if (
           this.output.tags[i].title.toLocaleLowerCase().trim() ==
-          value.toLocaleLowerCase().trim()
+          toAdd.toLocaleLowerCase().trim()
         ) {
           found = true;
           break;
@@ -91,7 +91,7 @@ export class NewTransactionDialogComponent implements OnInit {
       }
       if (!found) {
         this.output.tags.push(
-          this.tagService.getTag(value.toLocaleLowerCase().trim())
+          this.tagService.getTag(toAdd.toLocaleLowerCase().trim())
         );
       }
     }
@@ -123,18 +123,23 @@ export class NewTransactionDialogComponent implements OnInit {
   }
   selected(event: MatAutocompleteSelectedEvent): void {
     this.addTag(event.option.viewValue);
+    this.clearAutocomplete();
+  }
+  private clearAutocomplete() {
     this.tagInput.nativeElement.value = "";
     this.tagCtrl.setValue(null);
   }
 
   private _filter(value: string): string[] {
-    if(value.length < 1){
+    let filterValue = value
+      .toLocaleLowerCase()
+      .trim()
+      .replace("#", "");
+    if (filterValue.length < 1) {
       return [];
     }
     return this.allTags
       .map(t => t.title)
-      .filter(
-        t => t.toLowerCase().indexOf(value.toLocaleLowerCase().trim()) === 0
-      );
+      .filter(t => t.toLowerCase().indexOf(filterValue) === 0);
   }
 }

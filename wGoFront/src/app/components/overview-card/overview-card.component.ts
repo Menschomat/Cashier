@@ -5,6 +5,8 @@ import { NewTransactionDialogComponent } from "../new-transaction-dialog/new-tra
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { TransactionService } from "src/app/services/transaction.service";
 import { TagService } from "src/app/services/tag.service";
+import { Tag } from "src/app/model/tag";
+import { TagEditorComponent } from "../tag-editor/tag-editor.component";
 
 export interface PeriodicElement {
   name: string;
@@ -37,10 +39,10 @@ export class OverviewCardComponent implements OnInit {
       this.loading = false;
     });
   }
-  getTagForTagID(tID:string){
+  getTagForTagID(tID: string) {
     return this.tagService.getTag(tID);
   }
-  openDialog() {
+  openNewTransaction() {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = true;
@@ -63,6 +65,21 @@ export class OverviewCardComponent implements OnInit {
             this.data.lastTransactions = res;
             this.loading = false;
           });
+      }
+    });
+  }
+  openEdit(tag: Tag) {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.minWidth = "40%";
+    dialogConfig.data = tag;
+
+    let dialogRef = this.dialog.open(TagEditorComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result);
       }
     });
   }

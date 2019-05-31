@@ -44,7 +44,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TransactionCardComponent } from './components/transaction-card/transaction-card.component';
 import {MatBadgeModule} from '@angular/material/badge';
-
+import { MccColorPickerModule } from 'material-community-components';
+import { TagEditorComponent } from './components/tag-editor/tag-editor.component';
+ 
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,7 +54,8 @@ import {MatBadgeModule} from '@angular/material/badge';
     BookingCardComponent,
     OverviewCardComponent,
     NewTransactionDialogComponent,
-    TransactionCardComponent
+    TransactionCardComponent,
+    TagEditorComponent
   ],
   imports: [
     BrowserModule,
@@ -94,10 +97,11 @@ import {MatBadgeModule} from '@angular/material/badge';
     MatNativeDateModule,
     FormsModule,
     ReactiveFormsModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MccColorPickerModule
   ],
   providers: [MatDatepickerModule],
   bootstrap: [AppComponent],
-  entryComponents: [NewTransactionDialogComponent]
+  entryComponents: [NewTransactionDialogComponent, TagEditorComponent]
 })
 export class AppModule { }

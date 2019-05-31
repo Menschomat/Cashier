@@ -52,7 +52,7 @@
           (removed)="remove(tag)"
           [ngStyle]="{ 'background-color': tag.color }"
         >
-          {{ tag.title }}
+          #{{ tag.title }}
           <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
         </mat-chip>
         <input
@@ -69,7 +69,7 @@
     </mat-form-field>
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
       <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
-        {{tag}}
+        #{{tag}}
       </mat-option>
     </mat-autocomplete>
     <button mat-raised-button color="primary" type="submit" [disabled]="!newTransactionForm.valid">
