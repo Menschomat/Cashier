@@ -47,6 +47,8 @@
       <mat-chip-list #chipList>
         <mat-chip
           *ngFor="let tag of output.tags"
+          class="mat-elevation-z2"
+          style="color: rgba(255,255,255,0.9)"
           [selectable]="selectable"
           [removable]="removable"
           (removed)="remove(tag)"
