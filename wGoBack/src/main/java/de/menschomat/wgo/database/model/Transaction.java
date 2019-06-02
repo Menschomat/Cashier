@@ -2,6 +2,7 @@ package de.menschomat.wgo.database.model;
 
 import org.springframework.data.annotation.Id;
 
+import java.util.Date;
 import java.util.List;
 
 public class Transaction {
@@ -12,14 +13,14 @@ public class Transaction {
     public String title;
     public Float amount;
 
-    public String date;
+    public Date date;
 
     public List<String> tagIds;
 
     public Transaction() {
     }
 
-    public Transaction(String title, String date, Float amount, List<String> tagIds) {
+    public Transaction(String title, Date date, Float amount, List<String> tagIds) {
         this.title = title;
         this.date = date;
         this.amount = amount;
