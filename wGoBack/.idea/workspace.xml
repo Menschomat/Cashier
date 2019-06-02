@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="946b7aa5-49e9-448f-af62-6835b46208ab" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../wGoFront/src/app/components/new-transaction-dialog/new-transaction-dialog.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../wGoFront/src/app/components/new-transaction-dialog/new-transaction-dialog.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../wGoFront/src/app/components/overview-card/overview-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../wGoFront/src/app/components/overview-card/overview-card.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../wGoFront/src/app/components/overview-card/overview-card.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../wGoFront/src/app/components/overview-card/overview-card.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../wGoFront/src/app/components/tag-editor/tag-editor.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../wGoFront/src/app/components/tag-editor/tag-editor.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../wGoFront/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../wGoFront/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../wGoFront/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../wGoFront/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../wGoFront/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../wGoFront/src/app/app.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../wGoFront/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../wGoFront/src/app/app.module.ts" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -42,7 +42,7 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/de/menschomat/wgo/rest/TransactionHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="410">
+            <state relative-caret-position="250">
               <caret line="32" column="48" selection-start-line="32" selection-start-column="30" selection-end-line="32" selection-end-column="48" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -325,18 +325,18 @@
       <workItem from="1558642732151" duration="870000" />
       <workItem from="1558775997582" duration="168000" />
       <workItem from="1558776301331" duration="4049000" />
-      <workItem from="1559209477132" duration="3804000" />
+      <workItem from="1559209477132" duration="4102000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15676000" />
+    <option name="totallyTimeSpent" value="15974000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26495728" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26495728" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -346,7 +346,7 @@
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.47614107" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.47614107" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -488,7 +488,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/de/menschomat/wgo/rest/TransactionHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="410">
+        <state relative-caret-position="250">
           <caret line="32" column="48" selection-start-line="32" selection-start-column="30" selection-end-line="32" selection-end-column="48" />
           <folding>
             <element signature="imports" expanded="true" />

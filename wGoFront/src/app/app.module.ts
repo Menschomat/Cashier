@@ -46,6 +46,7 @@ import { TransactionCardComponent } from './components/transaction-card/transact
 import {MatBadgeModule} from '@angular/material/badge';
 import { MccColorPickerModule } from 'material-community-components';
 import { TagEditorComponent } from './components/tag-editor/tag-editor.component';
+import { ChartCardComponent } from './components/chart-card/chart-card.component';
  
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { TagEditorComponent } from './components/tag-editor/tag-editor.component
     OverviewCardComponent,
     NewTransactionDialogComponent,
     TransactionCardComponent,
-    TagEditorComponent
+    TagEditorComponent,
+    ChartCardComponent
   ],
   imports: [
     BrowserModule,
