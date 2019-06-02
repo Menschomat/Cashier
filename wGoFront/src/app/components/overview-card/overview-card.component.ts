@@ -13,6 +13,7 @@ import { Tag } from "src/app/model/tag";
 import { TagEditorComponent } from "../tag-editor/tag-editor.component";
 import { SelectionModel } from "@angular/cdk/collections";
 import { Transaction } from "src/app/model/transaction";
+import { StatusServiceService } from 'src/app/services/status-service.service';
 
 @Component({
   selector: "app-overview-card",
@@ -38,7 +39,8 @@ export class OverviewCardComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private transactionService: TransactionService,
-    private tagService: TagService
+    private tagService: TagService,
+    private statusService:StatusServiceService
   ) {}
   ngOnInit() {
     this.loading = true;
@@ -80,6 +82,7 @@ export class OverviewCardComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.loading = true;
+        this.statusService.sendMessage({saved:false});
         this.tagService.addTags(result.tags);
         this.tagService.saveAndUpdateTagList();
         this.transactionService
@@ -88,19 +91,21 @@ export class OverviewCardComponent implements OnInit {
             this.data.lastTransactions = res;
             this.dataSource.data = res;
             this.loading = false;
+            this.statusService.sendMessage({saved:true});
           });
       }
     });
   }
   deleteTransactions(tList: Transaction[]) {
+    this.statusService.sendMessage({saved:false});
     tList.forEach(tag => {
       this.selection.deselect(tag);
     })
     this.transactionService.deleteTransactions(tList).subscribe(res =>{
       this.data.lastTransactions = res;
       this.dataSource.data = res;
+      this.statusService.sendMessage({saved:true});
     })
-    console.log(tList);
   }
   openEdit(tag: Tag) {
     const dialogConfig = new MatDialogConfig();

@@ -1,6 +1,12 @@
-.overviewCard{
+:host(){
+    display: flex;
+    flex: 1;
+    
+}
+.chartCard{
     margin: 2em;
     max-width: 50vw;
     min-width: 410px;
     margin-top:0;
+    flex:1;
 }

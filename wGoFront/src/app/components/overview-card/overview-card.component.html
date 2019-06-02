@@ -1,17 +1,5 @@
 <mat-card class="overviewCard mat-elevation-z8">
   <mat-card-header>
-    <mat-card-title>Infos</mat-card-title>
-  </mat-card-header>
-  <hr *ngIf="!loading" />
-  <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
-  <mat-card-content *ngIf="!loading">
-    <p>Kontostand: 0€</p>
-    <p>Ausgaben: {{ data.totalIn }}</p>
-    <p>Einahmen: {{ data.totalOut }}</p>
-  </mat-card-content>
-</mat-card>
-<mat-card class="overviewCard mat-elevation-z8">
-  <mat-card-header>
     <mat-card-title>Letzte Umsätze</mat-card-title>
   </mat-card-header>
   <hr *ngIf="!loading" />
