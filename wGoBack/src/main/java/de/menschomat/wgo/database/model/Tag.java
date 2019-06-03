@@ -7,13 +7,15 @@ public class Tag {
     public String id;
     public String title = "";
     public String color = "gray";
+    public String linkedUserID;
 
     public Tag() {
     }
 
-    public Tag(String title, String color) {
+    public Tag(String title, String color, String linkedUserID) {
         this.title = title;
         this.color = color;
+        this.linkedUserID = linkedUserID;
     }
 
     @Override

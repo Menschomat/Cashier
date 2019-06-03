@@ -9,22 +9,21 @@ public class Transaction {
 
     @Id
     public String id;
-
     public String title;
     public Float amount;
-
     public Date date;
-
     public List<String> tagIds;
+    public String linkedUserID;
 
     public Transaction() {
     }
 
-    public Transaction(String title, Date date, Float amount, List<String> tagIds) {
+    public Transaction(String title, Date date, Float amount, List<String> tagIds, String linkedUserID) {
         this.title = title;
         this.date = date;
         this.amount = amount;
         this.tagIds = tagIds;
+        this.linkedUserID = linkedUserID;
     }
 
     @Override

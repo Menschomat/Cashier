@@ -3,4 +3,5 @@ export interface Transaction {
   date: string;
   title: string;
   tagIds: string[];
+  linkedUserID: string;
 }

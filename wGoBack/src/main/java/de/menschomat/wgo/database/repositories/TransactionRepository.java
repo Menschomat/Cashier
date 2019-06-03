@@ -1,5 +1,6 @@
 package de.menschomat.wgo.database.repositories;
 
+import de.menschomat.wgo.database.model.Tag;
 import de.menschomat.wgo.database.model.Transaction;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -14,5 +15,7 @@ public interface TransactionRepository extends MongoRepository<Transaction, Stri
     public List<Transaction> findAllByTagIdsContains(String id);
 
     public List<Transaction> findAllByDateBetween(Date from, Date to);
+
+    public List<Transaction> findAllByLinkedUserID(String linkedUserID);
 
 }

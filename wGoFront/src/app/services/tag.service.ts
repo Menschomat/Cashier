@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Tag } from "../model/tag";
 import { HttpClient } from "@angular/common/http";
 import { StatusServiceService } from "./status-service.service";
+import { UserService } from "./user.service";
 
 @Injectable({
   providedIn: "root"
@@ -49,10 +50,11 @@ export class TagService {
     "#9E9E9E",
     "#607D8B"
   ];
-  apiURL: string = "http://localhost:8080/tag";
+  apiURL: string = "/api/tag";
   constructor(
     private httpClient: HttpClient,
-    private statusService: StatusServiceService
+    private statusService: StatusServiceService,
+    private userService: UserService
   ) {
     this.getAllTags();
   }
@@ -87,12 +89,19 @@ export class TagService {
             t.title.toLocaleLowerCase().trim() ===
             tagid.toLocaleLowerCase().trim()
         )
-      : { title: tagid, color: this.getColor(), id: undefined };
+      : {
+          title: tagid,
+          color: this.getColor(),
+          linkedUserID: this.userService.getUser(),
+          id: undefined
+        };
   }
 
   public addTags(tags: Tag[]) {
     tags.forEach(tag => {
       if (!this.allTags.includes(tag)) {
+        tag.linkedUserID = this.userService.getUser().id;
+        console.log(tag);
         this.allTags.push(tag);
       }
     });
