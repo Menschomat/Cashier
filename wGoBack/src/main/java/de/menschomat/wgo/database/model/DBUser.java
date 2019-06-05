@@ -3,27 +3,28 @@ package de.menschomat.wgo.database.model;
 import org.springframework.data.annotation.Id;
 
 import java.util.Date;
-import java.util.List;
 
-public class User {
+public class DBUser {
     @Id
     public String id;
+    public String username;
     public String email;
     public String name;
     public String surname;
     public Date dateOfBirth;
-    public String passwordHash;
+    public String password;
     public Boolean initialized = false;
 
-    public User(){
+    public DBUser(){
 
     };
-    public User(String email, String name, String surname, Date dateOfBirth, String passwordHash, Boolean initialized) {
+    public DBUser(String email, String name, String surname, String username, Date dateOfBirth, String password, Boolean initialized) {
         this.email = email;
         this.name = name;
+        this.username = username;
         this.surname = surname;
         this.dateOfBirth = dateOfBirth;
-        this.passwordHash = passwordHash;
+        this.password = password;
         this.initialized = initialized;
     }
 

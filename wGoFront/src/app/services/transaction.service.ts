@@ -8,6 +8,7 @@ import { UserService } from "./user.service";
 })
 export class TransactionService {
   apiURL: string = "/api/transaction";
+
   constructor(private httpClient: HttpClient, private uService: UserService) {
     this.httpClient.get<any>("/api/init/checkup/firstTime").subscribe();
   }
@@ -21,7 +22,9 @@ export class TransactionService {
   }
   public deleteTransactions(toDelete: Transaction[]) {
     const httpOptions = {
-      headers: new HttpHeaders({ "Content-Type": "application/json" }),
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
       body: toDelete
     };
     return this.httpClient.delete<Transaction[]>(`${this.apiURL}`, httpOptions);

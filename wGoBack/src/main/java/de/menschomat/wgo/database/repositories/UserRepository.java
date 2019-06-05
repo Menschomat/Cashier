@@ -1,16 +1,18 @@
 package de.menschomat.wgo.database.repositories;
 
-import de.menschomat.wgo.database.model.User;
+import de.menschomat.wgo.database.model.DBUser;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-public interface UserRepository extends MongoRepository<User, String> {
+public interface UserRepository extends MongoRepository<DBUser, String> {
 
-    public User findByEmail(String id);
+    public DBUser findByEmail(String id);
 
-    public List<User> findAllBySurname(String surname);
+    public DBUser findByUsername(String username);
 
-    public List<User> findAllByName(String name);
+    public List<DBUser> findAllBySurname(String surname);
+
+    public List<DBUser> findAllByName(String name);
 
 }

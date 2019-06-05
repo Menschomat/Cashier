@@ -40,13 +40,17 @@ import { MainNavComponent } from './components/main-nav/main-nav.component';
 import { BookingCardComponent } from './components/booking-card/booking-card.component';
 import { OverviewCardComponent } from './components/overview-card/overview-card.component';
 import { NewTransactionDialogComponent } from './components/new-transaction-dialog/new-transaction-dialog.component';
-import { HttpClientModule } from '@angular/common/http'; 
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'; 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TransactionCardComponent } from './components/transaction-card/transaction-card.component';
 import {MatBadgeModule} from '@angular/material/badge';
 import { MccColorPickerModule } from 'material-community-components';
 import { TagEditorComponent } from './components/tag-editor/tag-editor.component';
 import { ChartCardComponent } from './components/chart-card/chart-card.component';
+import { HomeComponent } from './components/home/home.component';
+import { LoginComponent } from './components/login/login.component';
+import { JwtInterceptor } from './helpers/jwt.interceptor';
+import { ErrorInterceptor } from './helpers/error.interceptor';
  
 @NgModule({
   declarations: [
@@ -57,7 +61,9 @@ import { ChartCardComponent } from './components/chart-card/chart-card.component
     NewTransactionDialogComponent,
     TransactionCardComponent,
     TagEditorComponent,
-    ChartCardComponent
+    ChartCardComponent,
+    HomeComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -102,7 +108,10 @@ import { ChartCardComponent } from './components/chart-card/chart-card.component
     MatBadgeModule,
     MccColorPickerModule
   ],
-  providers: [MatDatepickerModule],
+  providers: [MatDatepickerModule,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
   entryComponents: [NewTransactionDialogComponent, TagEditorComponent]
 })
