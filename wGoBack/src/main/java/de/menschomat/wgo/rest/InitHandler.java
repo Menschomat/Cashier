@@ -1,7 +1,6 @@
 package de.menschomat.wgo.rest;
 
 import de.menschomat.wgo.database.repositories.UserRepository;
-import de.menschomat.wgo.rest.model.UserSessionData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;

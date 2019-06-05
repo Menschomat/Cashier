@@ -18,7 +18,7 @@ public class UserHandler {
 
     @Autowired
     private UserRepository userRepository;
-    
+
 
     @GetMapping(value = "/all", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
