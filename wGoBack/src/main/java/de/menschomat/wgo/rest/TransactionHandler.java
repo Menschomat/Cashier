@@ -31,6 +31,7 @@ public class TransactionHandler {
     @PostMapping(value = "", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public List<Transaction> addTransaction(Authentication authentication, @RequestBody Transaction toAdd) {
+        toAdd.linkedUserID = userRepository.findByUsername(authentication.getName()).id;
         transactionRepository.save(toAdd);
         return getAllTransactions(authentication);
     }

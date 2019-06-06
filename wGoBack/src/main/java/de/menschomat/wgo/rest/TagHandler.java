@@ -36,16 +36,13 @@ public class TagHandler {
         return tagRepository.findAllByTitleIn(list);
     }
 
-    @PostMapping(value = "", produces = APPLICATION_JSON_VALUE)
-    @CrossOrigin
-    public List<Tag> addTag(Authentication authentication, @RequestBody Tag toAdd) {
-        tagRepository.save(toAdd);
-        return getAllTags(authentication);
-    }
 
     @PostMapping(value = "/all", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public List<Tag> addAllTags(Authentication authentication, @RequestBody List<Tag> tags) {
+        tags.forEach(tag -> {
+            tag.linkedUserID = userRepository.findByUsername(authentication.getName()).id;
+        });
         tagRepository.saveAll(tags);
         return getAllTags(authentication);
     }

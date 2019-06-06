@@ -3,6 +3,7 @@ import { Tag } from "../model/tag";
 import { HttpClient } from "@angular/common/http";
 import { StatusServiceService } from "./status-service.service";
 import { UserService } from "./user.service";
+import { Subscription } from "rxjs";
 
 @Injectable({
   providedIn: "root"
@@ -51,15 +52,20 @@ export class TagService {
     "#607D8B"
   ];
   apiURL: string = "/api/tag";
+  subscription: Subscription;
+  allTags: Tag[] = [];
   constructor(
     private httpClient: HttpClient,
     private statusService: StatusServiceService,
     private userService: UserService
   ) {
+    this.subscription = this.statusService.getMessage().subscribe(status => {
+      if (status.loggedIn == false) { // Clear tag Cache after Logout!
+        this.allTags = [];
+      }
+    });
     this.getAllTags();
   }
-
-  allTags: Tag[] = [];
 
   getColor() {
     return this.colors[Math.floor(Math.random() * this.colors.length)];

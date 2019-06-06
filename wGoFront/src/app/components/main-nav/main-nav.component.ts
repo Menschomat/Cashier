@@ -1,9 +1,12 @@
 import { Component, OnInit } from "@angular/core";
-import { faTrafficLight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faTrafficLight,
+  faUserCircle,
+  faSignOutAlt
+} from "@fortawesome/free-solid-svg-icons";
 import { Subscription } from "rxjs";
-import { TagService } from "src/app/services/tag.service";
 import { StatusServiceService } from "src/app/services/status-service.service";
-import { Status } from 'src/app/model/status';
+import { UserService } from "src/app/services/user.service";
 
 @Component({
   selector: "app-main-nav",
@@ -11,15 +14,31 @@ import { Status } from 'src/app/model/status';
   styleUrls: ["./main-nav.component.scss"]
 })
 export class MainNavComponent implements OnInit {
-  faTraffic = faTrafficLight;
-  status: Status = {} as Status;
+  faUser = faUserCircle;
+  faSignout = faSignOutAlt;
   subscription: Subscription;
-  constructor(private statusService: StatusServiceService) {
-    this.status.saved = true;
+  currentUser: String;
+  constructor(
+    private statusService: StatusServiceService,
+    private userService: UserService
+  ) {
     this.subscription = this.statusService.getMessage().subscribe(status => {
-      this.status = status;
+      if (status.loggedIn) {
+        this.userService.getUser().subscribe(user => {
+          this.currentUser = user.username;
+        });
+      } else if (status.loggedIn == false) {
+        this.currentUser = "";
+      }
     });
   }
+  isLoggedin() {
+    return localStorage.getItem("cashierUserToken") ? true : false;
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.userService.getUser().subscribe(user => {
+      this.currentUser = user.username;
+    });
+  }
 }

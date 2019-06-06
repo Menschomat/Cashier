@@ -9,10 +9,10 @@ export class StatusServiceService {
   constructor() { }
   private subject = new Subject<any>();
 
-  sendMessage(message: Status) {
+  sendMessage(message: any) {
     this.subject.next(message);
   }
-  getMessage(): Observable<Status> {
+  getMessage(): Observable<any> {
     return this.subject.asObservable();
   }
 }
