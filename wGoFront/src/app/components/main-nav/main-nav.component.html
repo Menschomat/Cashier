@@ -1,15 +1,21 @@
 <mat-toolbar color="primary" class="mat-elevation-z8">
   <mat-toolbar-row>
-    <span>Cashier</span>
+    <span><fa-icon [icon]="faMoney"></fa-icon> Cashier</span>
     <span class="example-spacer"></span>
     <p>development-version</p>
     <span class="example-spacer"></span>
     <div *ngIf="isLoggedin()" [matMenuTriggerFor]="menu">
       <fa-icon [icon]="faUser"></fa-icon>
-      {{ currentUser }}
+      {{ userstring }}
     </div>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item style="text-align: center" [routerLink]="['/login']">Logout <fa-icon [icon]="faSignout"></fa-icon></button>
+      <button
+        mat-menu-item
+        style="text-align: center"
+        [routerLink]="['/login']"
+      >
+        Logout <fa-icon [icon]="faSignout"></fa-icon>
+      </button>
     </mat-menu>
   </mat-toolbar-row>
 </mat-toolbar>

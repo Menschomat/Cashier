@@ -2,7 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import {
   faTrafficLight,
   faUserCircle,
-  faSignOutAlt
+  faSignOutAlt,
+  faMoneyBillWaveAlt,
+  faMoneyBillWave
 } from "@fortawesome/free-solid-svg-icons";
 import { Subscription } from "rxjs";
 import { StatusServiceService } from "src/app/services/status-service.service";
@@ -16,29 +18,34 @@ import { UserService } from "src/app/services/user.service";
 export class MainNavComponent implements OnInit {
   faUser = faUserCircle;
   faSignout = faSignOutAlt;
+  faMoney = faMoneyBillWave;
   subscription: Subscription;
-  currentUser: String;
+  userstring: String;
   constructor(
     private statusService: StatusServiceService,
     private userService: UserService
   ) {
     this.subscription = this.statusService.getMessage().subscribe(status => {
       if (status.loggedIn) {
-        this.userService.getUser().subscribe(user => {
-          this.currentUser = user.username;
-        });
+        this.initUserString();
       } else if (status.loggedIn == false) {
-        this.currentUser = "";
+        this.userstring = "";
       }
     });
   }
   isLoggedin() {
     return localStorage.getItem("cashierUserToken") ? true : false;
   }
-
-  ngOnInit() {
+  initUserString() {
     this.userService.getUser().subscribe(user => {
-      this.currentUser = user.username;
+      if (user.name && user.surname) {
+        this.userstring = `${user.name.charAt(0)}. ${user.surname}`;
+      } else {
+        this.userstring = user.username;
+      }
     });
+  }
+  ngOnInit() {
+    this.initUserString();
   }
 }
