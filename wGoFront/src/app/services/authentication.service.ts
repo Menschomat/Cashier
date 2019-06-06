@@ -19,8 +19,6 @@ export class AuthenticationService {
       )
       .pipe(
         map(resp => {
-          console.log(resp);
-
           // login successful if there's a jwt token in the response
           if (resp.headers.get("Authorization")) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
@@ -37,7 +35,7 @@ export class AuthenticationService {
   }
 
   logout() {
-      
+
     // remove user from local storage to log user out
     localStorage.removeItem("cashierUserToken");
     this.statusService.sendMessage({ loggedIn: false });

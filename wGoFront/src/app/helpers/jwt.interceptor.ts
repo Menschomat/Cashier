@@ -18,38 +18,3 @@ export class JwtInterceptor implements HttpInterceptor {
     return next.handle(req);
   }
 }
-// export class JwtInterceptor implements HttpInterceptor {
-
-//     private APIToken = null;
-//     private defaultApplicationHeaders = {
-//         'Content-Type': 'application/json'
-//     }
-
-//     buildRequestHeaders():HttpHeaders {
-
-//         let headers = this.defaultApplicationHeaders;
-//         // set API-Token if available
-//         if(this.APIToken !== null) {
-//             let authHeaderTpl = `${this.APIToken}`;
-//             headers['Authorization'] = authHeaderTpl
-//         }
-
-//         return new HttpHeaders(headers);
-//     }
-
-//     constructor() {
-//         this.APIToken = localStorage.getItem('cashierUserToken')
-//         console.log(this.APIToken);
-//     }
-
-//     intercept(req: HttpRequest<any>, next: HttpHandler) {
-       
-//         const headers = this.buildRequestHeaders();
-//         const authReq = req.clone({ setHeaders:{
-//             Authorization:this.APIToken
-//         } });
-//         console.log(authReq);
-
-//         return next.handle(authReq);
-//     }
-// }

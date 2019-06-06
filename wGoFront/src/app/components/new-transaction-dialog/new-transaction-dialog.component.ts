@@ -43,7 +43,7 @@ export class NewTransactionDialogComponent implements OnInit {
     this.output.transaction.amount = 0;
     this.output.transaction.title = "";
     this.output.transaction.date = "";
-    this.allTags = this.tagService.getAllTags();
+    this.allTags = this.tagService.allTags;
     this.filteredTags = this.tagCtrl.valueChanges.pipe(
       startWith(null),
       map((tagid: string | null) => (tagid ? this._filter(tagid) : []))

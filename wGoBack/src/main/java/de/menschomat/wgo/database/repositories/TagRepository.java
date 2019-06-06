@@ -16,4 +16,6 @@ public interface TagRepository extends MongoRepository<Tag, String> {
 
     public List<Tag> findAllByTitleIn(List<String> list);
 
+    public Tag findByTitleAndLinkedUserID(String title, String linkedUserId);
+
 }

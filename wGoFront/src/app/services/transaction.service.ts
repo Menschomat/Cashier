@@ -17,7 +17,6 @@ export class TransactionService {
   }
   public addSingleTransaction(toAdd: Transaction) {
     toAdd.linkedUserID = this.uService.getUser().id;
-    console.log(toAdd);
     return this.httpClient.post<Transaction[]>(`${this.apiURL}`, toAdd);
   }
   public deleteTransactions(toDelete: Transaction[]) {

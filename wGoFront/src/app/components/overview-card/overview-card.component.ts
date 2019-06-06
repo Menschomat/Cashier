@@ -65,7 +65,7 @@ export class OverviewCardComponent implements OnInit {
       : this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
-  getTagForTagID(tID: string) {
+  getTagForTagID(tID: string) {    
     return this.tagService.getTag(tID);
   }
   openNewTransaction() {

@@ -54,6 +54,8 @@ export class TagService {
   apiURL: string = "/api/tag";
   subscription: Subscription;
   allTags: Tag[] = [];
+
+
   constructor(
     private httpClient: HttpClient,
     private statusService: StatusServiceService,
@@ -62,6 +64,9 @@ export class TagService {
     this.subscription = this.statusService.getMessage().subscribe(status => {
       if (status.loggedIn == false) { // Clear tag Cache after Logout!
         this.allTags = [];
+      }
+      if (status.loggedIn == true) {
+        this.getAllTags();
       }
     });
     this.getAllTags();
@@ -107,7 +112,6 @@ export class TagService {
     tags.forEach(tag => {
       if (!this.allTags.includes(tag)) {
         tag.linkedUserID = this.userService.getUser().id;
-        console.log(tag);
         this.allTags.push(tag);
       }
     });
@@ -115,9 +119,10 @@ export class TagService {
   }
   public saveAndUpdateTagList() {
     return this.httpClient
-      .post(`${this.apiURL}/all`, this.allTags)
+      .post<Tag[]>(`${this.apiURL}/all`, this.allTags)
       .subscribe(data => {
         this.statusService.sendMessage({ saved: true });
+        this.allTags = data;
       });
   }
 }
