@@ -4,7 +4,7 @@
 
 ## What is Cashier?
 
-Cashier is an tracking an monitoring tool for your personal cashflow. Many people still use a book or an Excel-Table for their household book. 
+Cashier is an tracking and monitoring tool for your personal cashflow. Many people still use a book or an Excel-Table as their household book. 
 
 Cashier moves the household book to the web.
 
