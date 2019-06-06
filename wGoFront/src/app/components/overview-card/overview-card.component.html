@@ -3,25 +3,23 @@
     <mat-card-title>Letzte Umsätze</mat-card-title>
     <div style="flex: 1;"></div>
     <mat-form-field style="padding-right: 2em;">
-        <input
-          matInput
-          placeholder="Von"
-          [matDatepicker]="pickerFrom"
-          required    
-        />
-        <mat-datepicker-toggle matSuffix [for]="pickerFrom" disabled="false"></mat-datepicker-toggle>
-        <mat-datepicker #pickerFrom disabled="false"></mat-datepicker>
-      </mat-form-field>
-      <mat-form-field>
-          <input
-            matInput
-            placeholder="Bis"
-            [matDatepicker]="pickerTo"
-            required    
-          />
-          <mat-datepicker-toggle matSuffix [for]="pickerTo" disabled="false"></mat-datepicker-toggle>
-          <mat-datepicker #pickerTo disabled="false"></mat-datepicker>
-        </mat-form-field>
+      <input matInput placeholder="Von" [matDatepicker]="pickerFrom" required />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="pickerFrom"
+        disabled="false"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #pickerFrom disabled="false"></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Bis" [matDatepicker]="pickerTo" required />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="pickerTo"
+        disabled="false"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #pickerTo disabled="false"></mat-datepicker>
+    </mat-form-field>
   </mat-card-header>
   <hr *ngIf="!loading" />
   <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
