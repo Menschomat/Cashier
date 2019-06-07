@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import de.menschomat.wgo.database.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,6 +23,9 @@ import org.springframework.security.web.authentication.AbstractAuthenticationPro
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
+
+    @Autowired
+    UserRepository userRepository;
 
     public JWTLoginFilter(String url, AuthenticationManager authManager) {
         super(new AntPathRequestMatcher(url));
@@ -44,20 +49,15 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
             username = json.get("username");
             password = json.get("password");
         }
-
-
-        System.out.printf("JWTLoginFilter.attemptAuthentication: username/password= %s,%s", username, password);
-        System.out.println();
-
+        System.out.printf("JWTLoginFilter.attemptAuthentication: username/password= %s,%s", userRepository.findByUsername(username).id, password);
         return getAuthenticationManager()
-                .authenticate(new UsernamePasswordAuthenticationToken(username, password, Collections.emptyList()));
+                .authenticate(new UsernamePasswordAuthenticationToken(userRepository.findByUsername(username).id, password, Collections.emptyList()));
     }
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
 
-        System.out.println("JWTLoginFilter.successfulAuthentication:");
 
         // Write Authorization to Headers of Response.
         TokenAuthenticationService.addAuthentication(response, authResult.getName());

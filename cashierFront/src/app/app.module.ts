@@ -51,6 +51,7 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { ErrorInterceptor } from './helpers/error.interceptor';
+import { NgxCurrencyModule } from "ngx-currency";
  
 @NgModule({
   declarations: [
@@ -106,7 +107,8 @@ import { ErrorInterceptor } from './helpers/error.interceptor';
     FormsModule,
     ReactiveFormsModule,
     MatBadgeModule,
-    MccColorPickerModule
+    MccColorPickerModule,
+    NgxCurrencyModule
   ],
   providers: [MatDatepickerModule,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

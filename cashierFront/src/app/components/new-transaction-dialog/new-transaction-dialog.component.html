@@ -11,12 +11,17 @@
       <fa-icon style="font-size: 1.7em;" [icon]="faClose"></fa-icon>
     </button>
   </div>
-  <form style="display: flex; flex-direction:column" [formGroup]="newTransactionForm" (ngSubmit)="onSubmit()">
+  <form
+    style="display: flex; flex-direction:column"
+    [formGroup]="newTransactionForm"
+    (ngSubmit)="onSubmit()"
+  >
     <mat-form-field>
       <input
         matInput
         placeholder="Titel"
-        formControlName="title" id="title"
+        formControlName="title"
+        id="title"
         required
       />
     </mat-form-field>
@@ -25,9 +30,11 @@
       <input
         matInput
         placeholder="Betrag"
-        type="number"
-        formControlName="amount" id="amount"
+        formControlName="amount"
+        id="amount"
         required
+        currencyMask
+        [options]="{ prefix: '', align: 'left', suffix: '€', thousands: '.', decimal: ',' }"
       />
     </mat-form-field>
     <mat-form-field>
@@ -35,10 +42,15 @@
         matInput
         placeholder="Datum"
         [matDatepicker]="picker"
-        formControlName="date" id="date" 
-        required    
+        formControlName="date"
+        id="date"
+        required
       />
-      <mat-datepicker-toggle matSuffix [for]="picker" disabled="false"></mat-datepicker-toggle>
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="picker"
+        disabled="false"
+      ></mat-datepicker-toggle>
       <mat-datepicker #picker disabled="false"></mat-datepicker>
     </mat-form-field>
 
@@ -68,14 +80,21 @@
         />
       </mat-chip-list>
     </mat-form-field>
-    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      (optionSelected)="selected($event)"
+    >
       <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
-        #{{tag}}
+        #{{ tag }}
       </mat-option>
     </mat-autocomplete>
-    <button mat-raised-button color="primary" type="submit" [disabled]="!newTransactionForm.valid">
-        Hinzufügen
-      </button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!newTransactionForm.valid"
+    >
+      Hinzufügen
+    </button>
   </form>
-  
 </div>

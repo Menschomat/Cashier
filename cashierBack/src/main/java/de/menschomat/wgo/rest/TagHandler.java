@@ -28,7 +28,7 @@ public class TagHandler {
     @GetMapping(value = "/all", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public List<Tag> getAllTags(Authentication authentication) {
-        return tagRepository.findAllByLinkedUserID(userRepository.findByUsername(authentication.getName()).id);
+        return tagRepository.findAllByLinkedUserID(authentication.getName());
     }
 
     @GetMapping(value = "/title", produces = APPLICATION_JSON_VALUE)
@@ -41,17 +41,8 @@ public class TagHandler {
     @PostMapping(value = "/all", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public List<Tag> addAllTags(Authentication authentication, @RequestBody List<Tag> tags) {
-        String userID = userRepository.findByUsername(authentication.getName()).id;
-       /* String userID = userRepository.findByUsername(authentication.getName()).id;
-        List<Tag> userTags = tagRepository.findAllByLinkedUserID(userID);
-        List<Tag> out = tags.stream().filter(tag -> userTags.stream().anyMatch(t -> t.title.equals(tag.title))).map(tag -> userTags.stream().filter(t -> t.title.equals(tag.title)).findFirst().get()).collect(Collectors.toList());
-        List<Tag> idChanged = tags.stream().filter(tag -> userTags.stream().noneMatch(t -> t.title.equals(tag.title))).collect(Collectors.toList());
-        idChanged.forEach(tag -> {
-            tag.linkedUserID = userID;
-        });
-        out.addAll(idChanged);*/
         tags.forEach(tag -> {
-            tag.linkedUserID = userID;
+            tag.linkedUserID = authentication.getName();
         });
         System.out.println(tags);
         tagRepository.saveAll(tags);
