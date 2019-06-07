@@ -25,13 +25,13 @@ public class TransactionHandler {
     @GetMapping(value = "/all", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public List<Transaction> getAllTransactions(Authentication authentication) {
-        return transactionRepository.findAllByLinkedUserID(userRepository.findByUsername(authentication.getName()).id);
+        return transactionRepository.findAllByLinkedUserID(authentication.getName());
     }
 
     @PostMapping(value = "", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public List<Transaction> addTransaction(Authentication authentication, @RequestBody Transaction toAdd) {
-        toAdd.linkedUserID = userRepository.findByUsername(authentication.getName()).id;
+        toAdd.linkedUserID = authentication.getName();
         transactionRepository.save(toAdd);
         return getAllTransactions(authentication);
     }

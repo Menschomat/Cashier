@@ -30,7 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //
                 // Add Filter 1 - JWTLoginFilter
                 //
-                .addFilterBefore(new JWTLoginFilter("/api/users/login", authenticationManager()),
+                .addFilterBefore(jwtLoginFilter(),
                         UsernamePasswordAuthenticationFilter.class)
                 //
                 // Add Filter 2 - JWTAuthenticationFilter
@@ -41,8 +41,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
  
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        return bCryptPasswordEncoder;
+        return new BCryptPasswordEncoder();
+    }
+    @Bean
+    public JWTLoginFilter jwtLoginFilter() throws Exception {
+        return new JWTLoginFilter("/api/users/login", authenticationManager());
     }
 
     @Override

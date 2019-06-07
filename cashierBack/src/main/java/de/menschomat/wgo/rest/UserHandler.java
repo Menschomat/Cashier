@@ -30,7 +30,7 @@ public class UserHandler {
     @CrossOrigin
     public DBUser getUser(Authentication authentication) {
 
-        return userRepository.findByUsername(authentication.getName());
+        return userRepository.findById(authentication.getName()).get();
     }
 
     @PostMapping(value = "", produces = APPLICATION_JSON_VALUE)
