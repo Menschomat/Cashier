@@ -29,6 +29,6 @@ public class InitHandler {
     @CrossOrigin
     public Boolean checkFirstTime(Authentication authentication) {
 
-        return userRepository.findByUsername(authentication.getName()).initialized;
+        return userRepository.findById(authentication.getName()).get().initialized;
     }
 }
