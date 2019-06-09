@@ -46,12 +46,13 @@ import { TransactionCardComponent } from './components/transaction-card/transact
 import {MatBadgeModule} from '@angular/material/badge';
 import { MccColorPickerModule } from 'material-community-components';
 import { TagEditorComponent } from './components/tag-editor/tag-editor.component';
-import { ChartCardComponent } from './components/chart-card/chart-card.component';
+import { ChartCardComponent } from './components/charts/chart-card/chart-card.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { ErrorInterceptor } from './helpers/error.interceptor';
 import { NgxCurrencyModule } from "ngx-currency";
+import { StackBarChartCardComponent } from './components/charts/stack-bar-chart-card/stack-bar-chart-card.component';
  
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { NgxCurrencyModule } from "ngx-currency";
     TagEditorComponent,
     ChartCardComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    StackBarChartCardComponent
   ],
   imports: [
     BrowserModule,

@@ -27,8 +27,11 @@ public class MongoUserDetailsService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("DBUser not found");
         }
+        if (user.role == null) {
+            user.role = "USER";
+        }
 
-        List<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("user"));
+        List<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_" + user.role));
         return new User(user.id, user.password, authorities);
     }
 }

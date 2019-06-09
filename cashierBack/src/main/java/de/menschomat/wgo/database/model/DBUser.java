@@ -14,11 +14,12 @@ public class DBUser {
     public Date dateOfBirth;
     public String password;
     public Boolean initialized = false;
+    public String role;
 
     public DBUser(){
 
     };
-    public DBUser(String email, String name, String surname, String username, Date dateOfBirth, String password, Boolean initialized) {
+    public DBUser(String email, String name, String surname, String username, Date dateOfBirth, String password, Boolean initialized, String role) {
         this.email = email;
         this.name = name;
         this.username = username;
@@ -26,6 +27,7 @@ public class DBUser {
         this.dateOfBirth = dateOfBirth;
         this.password = password;
         this.initialized = initialized;
+        this.role = role;
     }
 
 }
