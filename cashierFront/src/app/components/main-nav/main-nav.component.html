@@ -9,11 +9,10 @@
       {{ userstring }}
     </div>
     <mat-menu #menu="matMenu">
-      <button
-        mat-menu-item
-        style="text-align: center"
-        [routerLink]="['/login']"
-      >
+      <button mat-menu-item style="text-align:right" [routerLink]="['/settings']">
+        Einstellungen <fa-icon [icon]="faUserCog"></fa-icon>
+      </button>
+      <button mat-menu-item style="text-align: right" [routerLink]="['/login']">
         Logout <fa-icon [icon]="faSignout"></fa-icon>
       </button>
     </mat-menu>

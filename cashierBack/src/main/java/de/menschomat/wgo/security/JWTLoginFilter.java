@@ -55,7 +55,7 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
         DBUser user = userRepository.findByUsername(username);
         System.out.printf("JWTLoginFilter.attemptAuthentication: username/password= %s,%s", user.id, password);
         if (user.role == null) {
-            user.role = "ROLE_USER";
+            user.role = "USER";
         }
         List<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_" + user.role));
         return getAuthenticationManager()

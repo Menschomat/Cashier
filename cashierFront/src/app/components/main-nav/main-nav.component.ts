@@ -1,10 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import {
-  faTrafficLight,
   faUserCircle,
   faSignOutAlt,
-  faMoneyBillWaveAlt,
-  faMoneyBillWave
+  faMoneyBillWave,
+  faUserCog
 } from "@fortawesome/free-solid-svg-icons";
 import { Subscription } from "rxjs";
 import { StatusServiceService } from "src/app/services/status-service.service";
@@ -19,6 +18,7 @@ export class MainNavComponent implements OnInit {
   faUser = faUserCircle;
   faSignout = faSignOutAlt;
   faMoney = faMoneyBillWave;
+  faUserCog = faUserCog;
   subscription: Subscription;
   userstring: String;
   constructor(
