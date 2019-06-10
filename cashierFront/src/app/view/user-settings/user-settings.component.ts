@@ -7,6 +7,9 @@ import {
   AbstractControl
 } from "@angular/forms";
 import { RegistrationValidator } from "src/app/helpers/register.validator";
+import { UserService } from "src/app/services/user.service";
+import { HttpErrorResponse } from "@angular/common/http";
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: "app-user-settings",
@@ -15,8 +18,13 @@ import { RegistrationValidator } from "src/app/helpers/register.validator";
 })
 export class UserSettingsComponent implements OnInit {
   public newPasswordForm: FormGroup;
+  changeNotPossible: boolean = false;
 
-  constructor(private newPasswordFormBuilder: FormBuilder) {}
+  constructor(
+    private newPasswordFormBuilder: FormBuilder,
+    private userService: UserService,
+    private snackBar: MatSnackBar
+  ) {}
   createForm() {
     this.newPasswordForm = this.newPasswordFormBuilder.group(
       {
@@ -32,5 +40,28 @@ export class UserSettingsComponent implements OnInit {
   ngOnInit() {
     this.createForm();
   }
-  onPWChange() {}
+  onPWChange() {
+    if (this.newPasswordForm.valid) {
+      this.userService
+        .changePassword(
+          this.newPasswordForm.value.currentPW,
+          this.newPasswordForm.value.password
+        )
+        .subscribe(
+          repsonse => {
+            this.openSnackBar("Passwort geändert!","Close","success-dialog")
+          },
+          (error: HttpErrorResponse) => {
+            this.openSnackBar("Aktuelles Passwort möglicherweise falsch!","Close","error-dialog")
+          }
+        );
+    }
+  }
+  openSnackBar(message: string, action: string, panelclass:string) {
+    this.snackBar.open(message, action, {
+      duration: 10000,
+      verticalPosition: 'top',
+      panelClass: [panelclass]
+    });
+}
 }
