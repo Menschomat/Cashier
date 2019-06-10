@@ -1,23 +1,53 @@
-<mat-card style="margin: 2em;">
-  <mat-card-title>
-    Nutzereinstellungen
-  </mat-card-title>
-  <mat-card-content style="display: flex; flex-direction:column">
-    <div style="display: flex; flex: 1; flex-direction:column">
-      <mat-form-field>
-        <input matInput placeholder="Input" />
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="Input" />
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="Input" />
-      </mat-form-field>
-    </div>
-  </mat-card-content>
-</mat-card>
-<mat-card style="margin: 2em;">
-  <mat-card-title>
-    Oberfläche
-  </mat-card-title>
-</mat-card>
+<div style="display: flex; flex-direction: row">
+  <mat-card style="margin: 2em;">
+    <mat-card-title>
+      Passwort ändern
+    </mat-card-title>
+    <mat-card-content style="display: flex; flex-direction:column">
+      <form
+        style="display: flex; flex: 1; flex-direction:column"
+        [formGroup]="newPasswordForm"
+        (ngSubmit)="onPWChange()"
+      >
+        <mat-form-field>
+          <input
+            matInput
+            type="password"
+            formControlName="currentPW"
+            id="currentPW"
+            required
+            placeholder="Aktuelles Passwort"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            formControlName="password"
+            id="password"
+            required
+            type="password"
+            placeholder="Neues Passwort"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            formControlName="repeatPassword"
+            id="repeatPassword"
+            required
+            type="password"
+            placeholder="Neues Passwort wiederholen"
+          />
+        </mat-form-field>
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="!newPasswordForm.valid"
+        >
+          Hinzufügen
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

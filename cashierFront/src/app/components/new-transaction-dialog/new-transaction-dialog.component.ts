@@ -5,7 +5,7 @@ import {
   MatAutocompleteSelectedEvent
 } from "@angular/material";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { COMMA, ENTER, SPACE, SEMICOLON } from "@angular/cdk/keycodes";
+import { COMMA, ENTER, SPACE } from "@angular/cdk/keycodes";
 import { MatChipInputEvent } from "@angular/material";
 import { Tag } from "src/app/model/tag";
 import { TagService } from "src/app/services/tag.service";
@@ -13,7 +13,6 @@ import { NewTransaction } from "src/app/model/new-transaction";
 import { Transaction } from "src/app/model/transaction";
 import { Observable } from "rxjs";
 import { map, startWith } from "rxjs/operators";
-import * as moment from "moment";
 import {
   FormGroup,
   FormBuilder,
