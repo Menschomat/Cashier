@@ -3,15 +3,11 @@ package de.menschomat.wgo.rest;
 
 import de.menschomat.wgo.database.model.Tag;
 import de.menschomat.wgo.database.repositories.TagRepository;
-import de.menschomat.wgo.database.repositories.UserRepository;
-import de.menschomat.wgo.rest.model.UserSessionData;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -19,11 +15,11 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping("/api/tag")
 public class TagHandler {
 
-    @Autowired
-    private TagRepository tagRepository;
+    private final TagRepository tagRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    public TagHandler(TagRepository tagRepository) {
+        this.tagRepository = tagRepository;
+    }
 
     @GetMapping(value = "/all", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin

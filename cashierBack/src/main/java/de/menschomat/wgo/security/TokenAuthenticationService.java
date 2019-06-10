@@ -17,16 +17,16 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 public class TokenAuthenticationService {
 
-    static final long EXPIRATIONTIME = 864_000_000; // 10 days
+    private static final long EXPIRATIONTIME = 864_000_000; // 10 days
 
-    static final String SECRET = "ThisIsASecret";
+    private static final String SECRET = "ThisIsASecret";
 
-    static final String TOKEN_PREFIX = "Bearer";
+    private static final String TOKEN_PREFIX = "Bearer";
 
-    static final String HEADER_STRING = "Authorization";
+    private static final String HEADER_STRING = "Authorization";
     private static final String AUTHORITIES_KEY = "ROLES";
 
-    public static void addAuthentication(HttpServletResponse res, Authentication authentication) {
+    static void addAuthentication(HttpServletResponse res, Authentication authentication) {
         final String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));

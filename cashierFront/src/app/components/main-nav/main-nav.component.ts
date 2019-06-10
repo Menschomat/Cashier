@@ -3,7 +3,9 @@ import {
   faUserCircle,
   faSignOutAlt,
   faMoneyBillWave,
-  faUserCog
+  faUserCog,
+  faCogs,
+  faCog
 } from "@fortawesome/free-solid-svg-icons";
 import { Subscription } from "rxjs";
 import { StatusServiceService } from "src/app/services/status-service.service";
@@ -19,8 +21,10 @@ export class MainNavComponent implements OnInit {
   faSignout = faSignOutAlt;
   faMoney = faMoneyBillWave;
   faUserCog = faUserCog;
+  faCog = faCog;
   subscription: Subscription;
   userstring: String;
+  user: any;
   constructor(
     private statusService: StatusServiceService,
     private userService: UserService
@@ -38,12 +42,21 @@ export class MainNavComponent implements OnInit {
   }
   initUserString() {
     this.userService.getUser().subscribe(user => {
+      console.log(user);
+
+      this.user = user;
       if (user.name && user.surname) {
         this.userstring = `${user.name.charAt(0)}. ${user.surname}`;
       } else {
         this.userstring = user.username;
       }
     });
+  }
+  userIsAdmin(user: any) {
+    if (user && user.role === "ADMIN") {
+      return true;
+    }
+    return false;
   }
   ngOnInit() {
     this.initUserString();

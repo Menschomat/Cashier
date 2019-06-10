@@ -55,6 +55,7 @@ export class UserSettingsComponent implements OnInit {
             this.router.navigate(['/login']);
           },
           (error: HttpErrorResponse) => {
+            this.createForm();
             this.openSnackBar("Aktuelles Passwort möglicherweise falsch!","Close","error-dialog")
           }
         );

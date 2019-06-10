@@ -1,15 +1,38 @@
-<mat-toolbar color="primary" class="mat-elevation-z8">
-  <mat-toolbar-row>
-    <span><fa-icon [icon]="faMoney"></fa-icon> Cashier</span>
-    <span class="example-spacer"></span>
-    <p>development-version</p>
-    <span class="example-spacer"></span>
-    <div *ngIf="isLoggedin()" [matMenuTriggerFor]="menu">
-      <fa-icon [icon]="faUser"></fa-icon>
-      {{ userstring }}
-    </div>
+<mat-toolbar color="primary" class="mat-elevation-z8" style="justify-content: center;">
+
+  <mat-toolbar-row >
+      <button style="font-size: 1em; position: absolute;left: 45vw;" mat-button>
+          <fa-icon [icon]="faMoney"></fa-icon> Cashier
+        </button>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+
     <mat-menu #menu="matMenu">
-      <button mat-menu-item style="text-align:right" [routerLink]="['/settings']">
+      <button mat-menu-item *ngIf="userIsAdmin(user)" [routerLink]="['/admin']">Admin <fa-icon [icon]="faCog"></fa-icon></button>
+      <button mat-menu-item>Transaktionen</button>
+      <button mat-menu-item>Auswertung</button>
+    </mat-menu>
+    <button mat-icon-button [routerLink]="['/']">
+      <mat-icon>home</mat-icon>
+    </button>
+
+    <span class="example-spacer"></span>
+    <button
+      style="font-size: 1em;"
+      mat-button
+      *ngIf="isLoggedin()"
+      [matMenuTriggerFor]="userMenu"
+    >
+      <fa-icon style="font-size: 1.2em;" [icon]="faUser"></fa-icon>
+      {{ userstring }}
+    </button>
+    <mat-menu #userMenu="matMenu">
+      <button
+        mat-menu-item
+        style="text-align:right"
+        [routerLink]="['/settings']"
+      >
         Einstellungen <fa-icon [icon]="faUserCog"></fa-icon>
       </button>
       <button mat-menu-item style="text-align: right" [routerLink]="['/login']">
