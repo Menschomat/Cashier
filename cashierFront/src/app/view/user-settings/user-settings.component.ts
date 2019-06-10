@@ -10,6 +10,7 @@ import { RegistrationValidator } from "src/app/helpers/register.validator";
 import { UserService } from "src/app/services/user.service";
 import { HttpErrorResponse } from "@angular/common/http";
 import { MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
 
 @Component({
   selector: "app-user-settings",
@@ -23,7 +24,8 @@ export class UserSettingsComponent implements OnInit {
   constructor(
     private newPasswordFormBuilder: FormBuilder,
     private userService: UserService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {}
   createForm() {
     this.newPasswordForm = this.newPasswordFormBuilder.group(
@@ -49,7 +51,8 @@ export class UserSettingsComponent implements OnInit {
         )
         .subscribe(
           repsonse => {
-            this.openSnackBar("Passwort geändert!","Close","success-dialog")
+            this.openSnackBar("Passwort geändert!","Close","success-dialog");
+            this.router.navigate(['/login']);
           },
           (error: HttpErrorResponse) => {
             this.openSnackBar("Aktuelles Passwort möglicherweise falsch!","Close","error-dialog")
