@@ -55,6 +55,8 @@ import { NgxCurrencyModule } from "ngx-currency";
 import { StackBarChartCardComponent } from './components/charts/stack-bar-chart-card/stack-bar-chart-card.component';
 import { AdministrationComponent } from './view/administration/administration.component';
 import { UserSettingsComponent } from './view/user-settings/user-settings.component';
+import { UserListComponent } from './view/administration/user-list/user-list.component';
+import { UserEditDialogComponent } from './view/administration/user-edit-dialog/user-edit-dialog.component';
  
 @NgModule({
   declarations: [
@@ -70,7 +72,9 @@ import { UserSettingsComponent } from './view/user-settings/user-settings.compon
     LoginComponent,
     StackBarChartCardComponent,
     AdministrationComponent,
-    UserSettingsComponent
+    UserSettingsComponent,
+    UserListComponent,
+    UserEditDialogComponent
   ],
   imports: [
     BrowserModule,

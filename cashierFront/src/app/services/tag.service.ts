@@ -103,7 +103,7 @@ export class TagService {
       : {
           title: tagid,
           color: this.getColor(),
-          linkedUserID: this.userService.getUser(),
+          linkedUserID: undefined,
           id: undefined
         };
   }
@@ -111,13 +111,14 @@ export class TagService {
   public addTags(tags: Tag[]) {
     tags.forEach(tag => {
       if (!this.allTags.includes(tag)) {
-        tag.linkedUserID = this.userService.getUser().id;
         this.allTags.push(tag);
       }
     });
     this.statusService.sendMessage({ saved: false });
   }
   public saveAndUpdateTagList() {
+    console.log(this.allTags);
+    
     return this.httpClient
       .post<Tag[]>(`${this.apiURL}/all`, this.allTags)
       .subscribe(data => {

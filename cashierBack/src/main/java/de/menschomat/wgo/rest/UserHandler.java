@@ -29,16 +29,6 @@ public class UserHandler {
         this.userRepository = userRepository;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping(value = "/all", produces = APPLICATION_JSON_VALUE)
-    @CrossOrigin
-    public List<RestUser> getAllUsers() {
-        return userRepository
-                .findAll()
-                .stream()
-                .map(RestUser::new)
-                .collect(Collectors.toList());
-    }
 
     @GetMapping(value = "/current", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
@@ -69,6 +59,17 @@ public class UserHandler {
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body("CURRENT_WRONG");
+    }
+    // ADMIN Role required
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping(value = "/all", produces = APPLICATION_JSON_VALUE)
+    @CrossOrigin
+    public List<RestUser> getAllUsers() {
+        return userRepository
+                .findAll()
+                .stream()
+                .map(RestUser::new)
+                .collect(Collectors.toList());
     }
 
     @PreAuthorize("hasRole('ADMIN')")
