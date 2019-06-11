@@ -2,9 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import {
   FormGroup,
   Validators,
-  FormBuilder,
-  ValidatorFn,
-  AbstractControl
+  FormBuilder
 } from "@angular/forms";
 import { RegistrationValidator } from "src/app/helpers/register.validator";
 import { UserService } from "src/app/services/user.service";
@@ -56,7 +54,7 @@ export class UserSettingsComponent implements OnInit {
           },
           (error: HttpErrorResponse) => {
             this.createForm();
-            this.openSnackBar("Aktuelles Passwort möglicherweise falsch!","Close","error-dialog")
+            this.openSnackBar("Aktuelles Passwort möglicherweise falsch!","Close","error-dialog");
           }
         );
     }

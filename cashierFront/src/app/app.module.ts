@@ -125,6 +125,6 @@ import { UserEditDialogComponent } from './view/administration/user-edit-dialog/
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
-  entryComponents: [NewTransactionDialogComponent, TagEditorComponent]
+  entryComponents: [NewTransactionDialogComponent, TagEditorComponent, UserEditDialogComponent]
 })
 export class AppModule { }

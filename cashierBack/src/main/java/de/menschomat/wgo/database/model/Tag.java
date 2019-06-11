@@ -1,7 +1,9 @@
 package de.menschomat.wgo.database.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document
 public class Tag {
     @Id
     public String id;

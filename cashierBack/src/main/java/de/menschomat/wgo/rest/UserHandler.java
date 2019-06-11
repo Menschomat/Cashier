@@ -1,6 +1,9 @@
 package de.menschomat.wgo.rest;
 
+import com.mongodb.BulkWriteException;
 import de.menschomat.wgo.database.model.DBUser;
+import de.menschomat.wgo.database.repositories.TagRepository;
+import de.menschomat.wgo.database.repositories.TransactionRepository;
 import de.menschomat.wgo.database.repositories.UserRepository;
 import de.menschomat.wgo.rest.model.ChangePWModel;
 import de.menschomat.wgo.rest.model.RestUser;
@@ -12,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,10 +27,14 @@ public class UserHandler {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final TagRepository tagRepository;
+    private final TransactionRepository transactionRepository;
 
-    public UserHandler(BCryptPasswordEncoder passwordEncoder, UserRepository userRepository) {
+    public UserHandler(BCryptPasswordEncoder passwordEncoder, UserRepository userRepository, TagRepository tagRepository, TransactionRepository transactionRepository) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
+        this.tagRepository = tagRepository;
+        this.transactionRepository = transactionRepository;
     }
 
 
@@ -40,9 +48,14 @@ public class UserHandler {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
-    public List<RestUser> saveAndUpdateUsers(@RequestBody List<DBUser> toAdd) {
+    public List<RestUser> saveAndUpdateUsers(@RequestBody List<DBUser> toAdd, HttpServletResponse response) {
         toAdd.forEach(user -> user.password = passwordEncoder.encode(user.password));
-        userRepository.saveAll(toAdd);
+        try {
+            userRepository.saveAll(toAdd);
+        } catch (Exception e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+
         return getAllUsers();
     }
 
@@ -60,6 +73,7 @@ public class UserHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body("CURRENT_WRONG");
     }
+
     // ADMIN Role required
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/all", produces = APPLICATION_JSON_VALUE)
@@ -85,6 +99,10 @@ public class UserHandler {
     @DeleteMapping(value = "", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public List<RestUser> deleteUsers(@RequestBody List<DBUser> toDelete) {
+        toDelete.forEach(user -> {
+            tagRepository.deleteAll(tagRepository.findAllByLinkedUserID(user.id));
+            transactionRepository.deleteAll(transactionRepository.findAllByLinkedUserID(user.id));
+        });
         userRepository.deleteAll(toDelete);
         return getAllUsers();
     }
