@@ -59,6 +59,9 @@ export class UserListComponent implements OnInit {
       : this.dataSource.data.forEach(row => this.selection.select(row));
   }
   deleteUsers(toDel: FrontendUser[]) {
+    toDel.forEach(u => {
+      this.selection.deselect(u);
+    });
     this.userAdminService.deleteUseres(toDel).subscribe(users => {
       this.dataSource.data = users;
       this.users = users;
