@@ -42,8 +42,6 @@ export class MainNavComponent implements OnInit {
   }
   initUserString() {
     this.userService.getUser().subscribe(user => {
-      console.log(user);
-
       this.user = user;
       if (user.name && user.surname) {
         this.userstring = `${user.name.charAt(0)}. ${user.surname}`;

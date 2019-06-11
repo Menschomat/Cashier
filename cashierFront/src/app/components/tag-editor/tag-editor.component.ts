@@ -29,8 +29,6 @@ export class TagEditorComponent implements OnInit {
   selectColor(event:any){
     this.statusService.sendMessage({saved:false});
     this.tag.color=event;
-    console.log(this.tag.color);
-    
     this.tagService.saveAndUpdateTagList();
   }
 }

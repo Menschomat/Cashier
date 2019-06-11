@@ -48,7 +48,7 @@ public class UserHandler {
 
     @PostMapping(value = "/password", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
-    public ResponseEntity<String> saveAndUpdateUsers(Authentication authentication, @RequestBody ChangePWModel changePWModel) {
+    public ResponseEntity<String> updatePassword(Authentication authentication, @RequestBody ChangePWModel changePWModel) {
         DBUser toModify = userRepository.findById(authentication.getName()).get();
         if (passwordEncoder.matches(changePWModel.getOldPW(), toModify.password)) {
             System.out.println(changePWModel.getNewPW());
