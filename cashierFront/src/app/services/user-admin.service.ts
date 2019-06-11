@@ -17,4 +17,13 @@ export class UserAdminService {
   public saveAndUpdateUsers(users:DbUser[]): Subscribable<FrontendUser[]>{
     return this.httpClient.post<FrontendUser[]>("/api/user",users);
   }
+  public deleteUseres(toDelete: FrontendUser[]) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      body: toDelete
+    };
+    return this.httpClient.delete<FrontendUser[]>("/api/user", httpOptions);
+  }
 }

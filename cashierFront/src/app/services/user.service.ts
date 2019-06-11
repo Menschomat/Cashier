@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { FrontendUser } from '../model/frontend-user';
 
 @Injectable({
   providedIn: "root"
@@ -21,4 +22,5 @@ export class UserService {
       { responseType: "text" as "json" }
     );
   }
+
 }
