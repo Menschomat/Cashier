@@ -6,6 +6,7 @@ import de.menschomat.wgo.rest.model.PageInfo;
 import de.menschomat.wgo.rest.model.TransactionResult;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,8 +33,23 @@ public class TransactionHandler {
 
     @GetMapping(value = "/paged", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
-    public TransactionResult getPaged(Authentication authentication, @RequestParam int size, @RequestParam int page) {
-        Page<Transaction> resultPage = transactionRepository.findByLinkedUserID(authentication.getName(), PageRequest.of(page, size));
+    public TransactionResult getPaged(Authentication authentication,
+                                      @RequestParam int size,
+                                      @RequestParam int page,
+                                      @RequestParam(value = "sortBy", required = false) String sortBy,
+                                      @RequestParam(value = "sortDir", required = false) String sortDir) {
+        PageRequest pageRequest;
+        if (sortBy != null) {
+            if (sortDir != null && sortDir.equals("asc")) {
+                pageRequest = PageRequest.of(page, size, Sort.by(sortBy));
+            } else {
+                pageRequest = PageRequest.of(page, size, Sort.by(sortBy).descending());
+            }
+        } else {
+            pageRequest = PageRequest.of(page, size);
+        }
+        Page<Transaction> resultPage = transactionRepository.findByLinkedUserID(authentication.getName(), pageRequest);
+
         return new TransactionResult(resultPage.getTotalPages(), resultPage.getTotalElements(), resultPage.getContent());
     }
 
