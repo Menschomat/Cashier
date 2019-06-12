@@ -6,9 +6,11 @@ import { AuthGuard } from "./auth/auth.guard";
 import { AdminGuard } from "./auth/admin.guard";
 import { AdministrationComponent } from "./view/administration/administration.component";
 import { UserSettingsComponent } from "./view/user-settings/user-settings.component";
+import { TransactionsComponent } from './view/transactions/transactions.component';
 
 const appRoutes: Routes = [
   { path: "", component: HomeComponent, canActivate: [AuthGuard] },
+  { path: "transactions", component: TransactionsComponent, canActivate: [AuthGuard] },
   { path: "login", component: LoginComponent },
   {
     path: "admin",

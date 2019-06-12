@@ -57,6 +57,7 @@ import { AdministrationComponent } from './view/administration/administration.co
 import { UserSettingsComponent } from './view/user-settings/user-settings.component';
 import { UserListComponent } from './view/administration/user-list/user-list.component';
 import { UserEditDialogComponent } from './view/administration/user-edit-dialog/user-edit-dialog.component';
+import { TransactionsComponent } from './view/transactions/transactions.component';
  
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import { UserEditDialogComponent } from './view/administration/user-edit-dialog/
     AdministrationComponent,
     UserSettingsComponent,
     UserListComponent,
-    UserEditDialogComponent
+    UserEditDialogComponent,
+    TransactionsComponent
   ],
   imports: [
     BrowserModule,

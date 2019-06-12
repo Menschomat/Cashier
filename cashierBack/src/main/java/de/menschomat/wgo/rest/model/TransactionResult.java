@@ -22,10 +22,21 @@ public class TransactionResult {
     }
 
     public int totalPages;
+
+    public long getTotalEntries() {
+        return totalEntries;
+    }
+
+    public void setTotalEntries(long totalEntries) {
+        this.totalEntries = totalEntries;
+    }
+
+    public long totalEntries;
     public List<Transaction> transactions;
 
-    public TransactionResult(int totalPages, List<Transaction> content) {
+    public TransactionResult(int totalPages, long totalEntries, List<Transaction> content) {
         this.totalPages = totalPages;
+        this.totalEntries = totalEntries;
         this.transactions = content;
     }
 }

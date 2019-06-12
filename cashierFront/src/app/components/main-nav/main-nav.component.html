@@ -1,16 +1,27 @@
-<mat-toolbar color="primary" class="mat-elevation-z8" style="justify-content: center;">
-
-  <mat-toolbar-row >
-      <button style="font-size: 1em; position: absolute;left: 45vw;" mat-button [routerLink]="['/']">
-          <fa-icon [icon]="faMoney"></fa-icon> Cashier
-        </button>
+<mat-toolbar
+  color="primary"
+  class="mat-elevation-z8"
+  style="justify-content: center;"
+>
+  <mat-toolbar-row>
+    <button
+      style="font-size: 1em; position: absolute;left: 45vw;"
+      mat-button
+      [routerLink]="['/']"
+    >
+      <fa-icon [icon]="faMoney"></fa-icon> Cashier
+    </button>
     <button mat-icon-button [matMenuTriggerFor]="menu">
       <mat-icon>menu</mat-icon>
     </button>
 
     <mat-menu #menu="matMenu">
-      <button mat-menu-item *ngIf="userIsAdmin(user)" [routerLink]="['/admin']">Admin <fa-icon [icon]="faCog"></fa-icon></button>
-      <button mat-menu-item>Transaktionen</button>
+      <button mat-menu-item *ngIf="userIsAdmin(user)" [routerLink]="['/admin']">
+        Admin <fa-icon [icon]="faCog"></fa-icon>
+      </button>
+      <button mat-menu-item [routerLink]="['/transactions']">
+        Transaktionen
+      </button>
       <button mat-menu-item>Auswertung</button>
     </mat-menu>
     <button mat-icon-button [routerLink]="['/']">

@@ -34,7 +34,7 @@ public class TransactionHandler {
     @CrossOrigin
     public TransactionResult getPaged(Authentication authentication, @RequestParam int size, @RequestParam int page) {
         Page<Transaction> resultPage = transactionRepository.findByLinkedUserID(authentication.getName(), PageRequest.of(page, size));
-        return new TransactionResult(resultPage.getTotalPages(), resultPage.getContent());
+        return new TransactionResult(resultPage.getTotalPages(), resultPage.getTotalElements(), resultPage.getContent());
     }
 
     @GetMapping(value = "/paged/len", produces = APPLICATION_JSON_VALUE)
@@ -48,7 +48,7 @@ public class TransactionHandler {
     @CrossOrigin
     public TransactionResult getNumOfPages(Authentication authentication, @RequestParam Date from, @RequestParam Date to, @RequestParam int page, @RequestParam int size) {
         Page<Transaction> resultPage = transactionRepository.findByDateBetweenAndLinkedUserID(from, to, authentication.getName(), PageRequest.of(page, size));
-        return new TransactionResult(resultPage.getTotalPages(), resultPage.getContent());
+        return new TransactionResult(resultPage.getTotalPages(), resultPage.getTotalElements(), resultPage.getContent());
     }
 
     @PostMapping(value = "", produces = APPLICATION_JSON_VALUE)
