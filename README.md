@@ -9,16 +9,22 @@ Cashier is a tracking and monitoring tool for your personal cashflow. Many peopl
 Cashier moves the household book to the web.
 
 ## Features:
-* Multiuser-Support
-* Incoming/Outgoing money
-* Hashtag system (nice and fancy)
-* Secure login via OAuth
-* Fast
+:construction: TODO/InProgress
 
-## Plans:
-* User roles (Admin, Editor)
-* Docker
-* Standalone mode (Json as storage)
+:white_check_mark: Done
+
+* Multiuser-Support :white_check_mark:
+* Roles (Admin/User) :white_check_mark:
+* Transaction list with pagebased-loading and sorting :white_check_mark:
+* Incoming/Outgoing money :white_check_mark:
+* Fully editable Users :construction:
+* Fully editable Transactions :construction:
+* Fancy Charts :construction:
+* Hashtag system (nice and fancy) :white_check_mark:
+* Docker support :construction:
+* Standalone mode (Json as storage) :construction:
+* Secure login via OAuth :white_check_mark: 
+* Fast :white_check_mark:
 
 ## Technology:
 
