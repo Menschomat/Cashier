@@ -1,8 +1,8 @@
 package de.menschomat.wgo.database.repositories;
 
-import de.menschomat.wgo.database.model.Tag;
 import de.menschomat.wgo.database.model.Transaction;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Date;
@@ -17,5 +17,11 @@ public interface TransactionRepository extends MongoRepository<Transaction, Stri
     public List<Transaction> findAllByDateBetween(Date from, Date to);
 
     public List<Transaction> findAllByLinkedUserID(String linkedUserID);
+
+    public Page<Transaction> findByLinkedUserID(String linkedUserID, Pageable pageable);
+
+    public Page<Transaction> findByDateBetweenAndLinkedUserID(Date from, Date to, String linkedUserID, Pageable pageable);
+
+    public List<Transaction> findAllByLinkedUserIDOrderByDate(String linkedUserID, Pageable pageable);
 
 }
