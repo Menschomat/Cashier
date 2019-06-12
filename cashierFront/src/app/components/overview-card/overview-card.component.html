@@ -22,7 +22,11 @@
     </mat-form-field>
   </mat-card-header>
   <hr *ngIf="!loading" />
-  <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+  <mat-progress-bar
+          *ngIf="loading"
+          mode="indeterminate"
+          style="position: absolute;"
+        ></mat-progress-bar>
   <mat-card-content *ngIf="!loading">
     <table mat-table [dataSource]="dataSource" style="width: 100%">
       <!--- Note that these columns can be defined in any order.

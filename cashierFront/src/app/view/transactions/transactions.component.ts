@@ -6,6 +6,11 @@ import { merge, Observable, of as observableOf } from "rxjs";
 import { catchError, map, startWith, switchMap } from "rxjs/operators";
 import { TransactionService } from "src/app/services/transaction.service";
 import { Transaction } from "src/app/model/transaction";
+import { TagService } from "src/app/services/tag.service";
+import { NewTransactionDialogComponent } from "src/app/components/new-transaction-dialog/new-transaction-dialog.component";
+import { MatDialogConfig, MatDialog } from "@angular/material";
+import { StatusServiceService } from "src/app/services/status-service.service";
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 /**
  * @title Table retrieving data through HTTP
@@ -16,9 +21,9 @@ import { Transaction } from "src/app/model/transaction";
   templateUrl: "transactions.component.html"
 })
 export class TransactionsComponent implements AfterViewInit {
-  displayedColumns: string[] = ["date","title", "amount"];
+  displayedColumns: string[] = ["date", "title", "amount", "tags"];
   data: Transaction[] = [];
-
+  faPlus = faPlus;
   resultsLength = 0;
   isLoadingResults = true;
   isRateLimitReached = false;
@@ -26,7 +31,12 @@ export class TransactionsComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private transactionService: TransactionService) {}
+  constructor(
+    private transactionService: TransactionService,
+    private tagService: TagService,
+    private statusService: StatusServiceService,
+    private dialog: MatDialog
+  ) {}
 
   ngAfterViewInit() {
     // this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
@@ -55,5 +65,35 @@ export class TransactionsComponent implements AfterViewInit {
         })
       )
       .subscribe(data => (this.data = data));
+  }
+  getTagForTagID(tID: string) {
+    return this.tagService.getTag(tID);
+  }
+  openNewTransaction() {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.minWidth = "40%";
+
+    let dialogRef = this.dialog.open(
+      NewTransactionDialogComponent,
+      dialogConfig
+    );
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.isLoadingResults = true;
+        this.statusService.sendMessage({ saved: false });
+        this.tagService.addTags(result.tags);
+        this.tagService.saveAndUpdateTagList();
+        this.transactionService
+          .addSingleTransaction(result.transaction)
+          .subscribe(res => {
+            this.ngAfterViewInit();
+            this.isLoadingResults = false;
+            this.statusService.sendMessage({ saved: true });
+          });
+      }
+    });
   }
 }
