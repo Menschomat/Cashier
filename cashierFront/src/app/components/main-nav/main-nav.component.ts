@@ -5,7 +5,10 @@ import {
   faMoneyBillWave,
   faUserCog,
   faCogs,
-  faCog
+  faCog,
+  faHome,
+  faTable,
+  faChartLine
 } from "@fortawesome/free-solid-svg-icons";
 import { Subscription } from "rxjs";
 import { StatusServiceService } from "src/app/services/status-service.service";
@@ -22,6 +25,9 @@ export class MainNavComponent implements OnInit {
   faMoney = faMoneyBillWave;
   faUserCog = faUserCog;
   faCog = faCog;
+  faHome = faHome;
+  faTable = faTable;
+  faChart = faChartLine;
   subscription: Subscription;
   userstring: String;
   user: any;

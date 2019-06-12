@@ -16,7 +16,7 @@ import { Transaction } from "src/app/model/transaction";
   templateUrl: "transactions.component.html"
 })
 export class TransactionsComponent implements AfterViewInit {
-  displayedColumns: string[] = ["date", "amount", "title"];
+  displayedColumns: string[] = ["date","title", "amount"];
   data: Transaction[] = [];
 
   resultsLength = 0;

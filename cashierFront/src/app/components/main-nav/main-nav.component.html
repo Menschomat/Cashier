@@ -16,18 +16,19 @@
     </button>
 
     <mat-menu #menu="matMenu">
-      <button mat-menu-item *ngIf="userIsAdmin(user)" [routerLink]="['/admin']">
-        Admin <fa-icon [icon]="faCog"></fa-icon>
+      <button mat-menu-item [routerLink]="['/']">
+        Übersicht <fa-icon [icon]="faHome"></fa-icon>
       </button>
       <button mat-menu-item [routerLink]="['/transactions']">
-        Transaktionen
+        Transaktionen <fa-icon [icon]="faTable"></fa-icon>
       </button>
-      <button mat-menu-item>Auswertung</button>
+      <button mat-menu-item disabled>
+        Auswertung <fa-icon [icon]="faChart"></fa-icon>
+      </button>
+      <button mat-menu-item [disabled]="!userIsAdmin(user)" [routerLink]="['/admin']">
+        Admin <fa-icon [icon]="faCog"></fa-icon>
+      </button>
     </mat-menu>
-    <button mat-icon-button [routerLink]="['/']">
-      <mat-icon>home</mat-icon>
-    </button>
-
     <span class="example-spacer"></span>
     <button
       style="font-size: 1em;"
