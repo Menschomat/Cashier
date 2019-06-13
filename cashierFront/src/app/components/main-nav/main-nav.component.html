@@ -25,7 +25,11 @@
       <button mat-menu-item disabled>
         Auswertung <fa-icon [icon]="faChart"></fa-icon>
       </button>
-      <button mat-menu-item [disabled]="!userIsAdmin(user)" [routerLink]="['/admin']">
+      <button
+        mat-menu-item
+        [disabled]="!userIsAdmin(user)"
+        [routerLink]="['/admin']"
+      >
         Admin <fa-icon [icon]="faCog"></fa-icon>
       </button>
     </mat-menu>
@@ -40,6 +44,16 @@
       {{ userstring }}
     </button>
     <mat-menu #userMenu="matMenu">
+      <button mat-menu-item style="text-align:right" (click)="switchDark()">
+        <div *ngIf="!dark">
+          Theme: Dunkel
+          <fa-icon [icon]="faMoon"></fa-icon>
+        </div>
+        <div *ngIf="dark">
+          Theme: Hell
+          <fa-icon [icon]="faSun"></fa-icon>
+        </div>
+      </button>
       <button
         mat-menu-item
         style="text-align:right"

@@ -1,3 +1,5 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<app-main-nav></app-main-nav>
-<router-outlet></router-outlet>
+<div  [ngClass]="darkMode ? 'mat-app-dark':'mat-app-light'" style="max-height: 100vh; min-height: 100vh;">
+  <app-main-nav (darkOut)="darkModeChange($event)"></app-main-nav>
+  <router-outlet></router-outlet>
+</div>

@@ -15,7 +15,7 @@ export class TransactionService {
     this.httpClient.get<any>("/api/init/checkup/firstTime").subscribe();
   }
   public getLatesTransactions() {
-    return this.httpClient.get<Transaction[]>(`${this.apiURL}/all`);
+    return this.httpClient.get<Transaction[]>(`${this.apiURL}/latest`);
   }
   public addSingleTransaction(toAdd: Transaction) {
     toAdd.linkedUserID = this.uService.getUser().id;

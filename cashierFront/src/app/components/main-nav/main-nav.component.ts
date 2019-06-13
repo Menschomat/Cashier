@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import {
   faUserCircle,
   faSignOutAlt,
@@ -8,7 +8,9 @@ import {
   faCog,
   faHome,
   faTable,
-  faChartLine
+  faChartLine,
+  faMoon,
+  faSun
 } from "@fortawesome/free-solid-svg-icons";
 import { Subscription } from "rxjs";
 import { StatusServiceService } from "src/app/services/status-service.service";
@@ -20,6 +22,8 @@ import { UserService } from "src/app/services/user.service";
   styleUrls: ["./main-nav.component.scss"]
 })
 export class MainNavComponent implements OnInit {
+  @Output() darkOut: EventEmitter<boolean> = new EventEmitter<boolean>();
+  dark: boolean = false;
   faUser = faUserCircle;
   faSignout = faSignOutAlt;
   faMoney = faMoneyBillWave;
@@ -28,6 +32,8 @@ export class MainNavComponent implements OnInit {
   faHome = faHome;
   faTable = faTable;
   faChart = faChartLine;
+  faMoon = faMoon;
+  faSun = faSun;
   subscription: Subscription;
   userstring: String;
   user: any;
@@ -42,6 +48,11 @@ export class MainNavComponent implements OnInit {
         this.userstring = "";
       }
     });
+  }
+  switchDark() {
+    this.dark = !this.dark;
+    localStorage.setItem("darkTheme", this.dark.toString());
+    this.darkOut.emit(this.dark);
   }
   isLoggedin() {
     return localStorage.getItem("cashierUserToken") ? true : false;
@@ -63,8 +74,10 @@ export class MainNavComponent implements OnInit {
     return false;
   }
   ngOnInit() {
-    if(localStorage.getItem("cashierUserToken")){
+    this.dark = localStorage.getItem("darkTheme") == "true";
+    this.darkOut.emit(this.dark);
+    if (localStorage.getItem("cashierUserToken")) {
       this.initUserString();
-    };
+    }
   }
 }

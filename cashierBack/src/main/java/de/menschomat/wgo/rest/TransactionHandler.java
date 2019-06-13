@@ -31,6 +31,12 @@ public class TransactionHandler {
         return transactionRepository.findAllByLinkedUserID(authentication.getName());
     }
 
+    @GetMapping(value = "/latest", produces = APPLICATION_JSON_VALUE)
+    @CrossOrigin
+    public List<Transaction> getLatestTransactions(Authentication authentication) {
+        return transactionRepository.findByLinkedUserID(authentication.getName(), PageRequest.of(0, 5, Sort.by("date").descending())).getContent();
+    }
+
     @GetMapping(value = "/paged", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public TransactionResult getPaged(Authentication authentication,
@@ -72,19 +78,20 @@ public class TransactionHandler {
     public List<Transaction> addTransaction(Authentication authentication, @RequestBody Transaction toAdd) {
         toAdd.linkedUserID = authentication.getName();
         transactionRepository.save(toAdd);
-        return getAllTransactions(authentication);
+        return getLatestTransactions(authentication);
     }
 
     @DeleteMapping(value = "", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public List<Transaction> deleteTransactions(Authentication authentication, @RequestBody List<Transaction> toDelete) {
         transactionRepository.deleteAll(toDelete);
-        return getAllTransactions(authentication);
+        return getLatestTransactions(authentication);
     }
+
     @DeleteMapping(value = "/id", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public List<Transaction> deleteTransactionsByID(Authentication authentication, @RequestBody List<String> toDelete) {
         transactionRepository.deleteAllById(toDelete);
-        return getAllTransactions(authentication);
+        return getLatestTransactions(authentication);
     }
 }
