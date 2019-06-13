@@ -30,6 +30,15 @@ export class TransactionService {
     };
     return this.httpClient.delete<Transaction[]>(`${this.apiURL}`, httpOptions);
   }
+  public deleteTransactionsById(toDelete: string[]) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json"
+      }),
+      body: toDelete
+    };
+    return this.httpClient.delete<Transaction[]>(`${this.apiURL}/id`, httpOptions);
+  }
   public getPaged(
     size: number,
     page: number,

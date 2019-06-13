@@ -81,4 +81,10 @@ public class TransactionHandler {
         transactionRepository.deleteAll(toDelete);
         return getAllTransactions(authentication);
     }
+    @DeleteMapping(value = "/id", produces = APPLICATION_JSON_VALUE)
+    @CrossOrigin
+    public List<Transaction> deleteTransactionsByID(Authentication authentication, @RequestBody List<String> toDelete) {
+        transactionRepository.deleteAllById(toDelete);
+        return getAllTransactions(authentication);
+    }
 }

@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import io.jsonwebtoken.*;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 
@@ -36,18 +38,26 @@ public class TokenAuthenticationService {
         res.addHeader(HEADER_STRING, TOKEN_PREFIX + " " + JWT);
     }
 
-    public static Authentication getAuthentication(HttpServletRequest request) {
+    public static Authentication getAuthentication(HttpServletRequest request) throws BadCredentialsException {
         String token = request.getHeader(HEADER_STRING);
         if (token != null) {
-            Jws<Claims> claimsJws = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX, ""));
+            String user;
+            final Collection authorities;
+            try {
+                Jws<Claims> claimsJws = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX, ""));
+                user = claimsJws.getBody().getSubject();
+                final Claims claims = claimsJws.getBody();
+                authorities = Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
+                        .map(SimpleGrantedAuthority::new)
+                        .collect(Collectors.toList());
+                return user != null ? new UsernamePasswordAuthenticationToken(user, null, authorities) : null;
+            } catch (Exception e) {
+                throw new BadCredentialsException("Invalid token");
+            }
+
             // parse the token.
-            String user = claimsJws.getBody().getSubject();
-            final Claims claims = claimsJws.getBody();
-            final Collection authorities =
-                    Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
-                            .map(SimpleGrantedAuthority::new)
-                            .collect(Collectors.toList());
-            return user != null ? new UsernamePasswordAuthenticationToken(user, null, authorities) : null;
+
+
         }
         return null;
     }

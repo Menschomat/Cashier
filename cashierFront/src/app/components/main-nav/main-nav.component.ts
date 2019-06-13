@@ -63,6 +63,8 @@ export class MainNavComponent implements OnInit {
     return false;
   }
   ngOnInit() {
-    this.initUserString();
+    if(localStorage.getItem("cashierUserToken")){
+      this.initUserString();
+    };
   }
 }

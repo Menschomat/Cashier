@@ -10,7 +10,8 @@ import { TagService } from "src/app/services/tag.service";
 import { NewTransactionDialogComponent } from "src/app/components/new-transaction-dialog/new-transaction-dialog.component";
 import { MatDialogConfig, MatDialog } from "@angular/material";
 import { StatusServiceService } from "src/app/services/status-service.service";
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faTrash, faTrashAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { SelectionModel } from '@angular/cdk/collections';
 
 /**
  * @title Table retrieving data through HTTP
@@ -21,9 +22,12 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
   templateUrl: "transactions.component.html"
 })
 export class TransactionsComponent implements AfterViewInit {
-  displayedColumns: string[] = ["date", "title", "amount", "tags"];
+  displayedColumns: string[] = ["select","date", "title", "amount", "tags"];
   data: Transaction[] = [];
+  selection = new SelectionModel<String>(true, []);
   faPlus = faPlus;
+  faTrash = faTrashAlt;
+  faTimes = faTimes;
   resultsLength = 0;
   isLoadingResults = true;
   isRateLimitReached = false;
@@ -68,6 +72,16 @@ export class TransactionsComponent implements AfterViewInit {
   }
   getTagForTagID(tID: string) {
     return this.tagService.getTag(tID);
+  }
+  deleteTransactions(tList: string[]) {
+    this.statusService.sendMessage({saved:false});
+    tList.forEach(id => {
+      this.selection.deselect(id);
+    })
+    this.transactionService.deleteTransactionsById(tList).subscribe(res =>{
+      this.ngAfterViewInit();
+      this.statusService.sendMessage({saved:true});
+    })
   }
   openNewTransaction() {
     const dialogConfig = new MatDialogConfig();

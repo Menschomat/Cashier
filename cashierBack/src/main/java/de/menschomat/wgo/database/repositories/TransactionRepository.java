@@ -24,4 +24,6 @@ public interface TransactionRepository extends MongoRepository<Transaction, Stri
 
     public List<Transaction> findAllByLinkedUserIDOrderByDate(String linkedUserID, Pageable pageable);
 
+    public  void  deleteAllById(List<String> ids);
+
 }
