@@ -30,5 +30,6 @@ export class TagEditorComponent implements OnInit {
     this.statusService.sendMessage({saved:false});
     this.tag.color=event;
     this.tagService.saveAndUpdateTagList();
+    this.dialogRef.close();
   }
 }

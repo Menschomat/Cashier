@@ -1,0 +1,15 @@
+<mat-nav-list>
+  <mat-list-item mat-list-item [routerLink]="['/']">
+    Übersicht <fa-icon [icon]="faHome"></fa-icon>
+  </mat-list-item>
+  <mat-list-item mat-list-item [routerLink]="['/transactions']">
+    Transaktionen <fa-icon [icon]="faTable"></fa-icon>
+  </mat-list-item>
+  <mat-list-item
+    mat-list-item
+    *ngIf="userIsAdmin(user)"
+    [routerLink]="['/admin']"
+  >
+    Admin <fa-icon [icon]="faCog"></fa-icon>
+  </mat-list-item>
+</mat-nav-list>

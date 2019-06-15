@@ -11,28 +11,9 @@
     >
       <fa-icon [icon]="faMoney"></fa-icon> Cashier
     </button>
-    <button mat-icon-button [matMenuTriggerFor]="menu">
+    <button mat-icon-button (click)="toggleSideBar()" *ngIf="isLoggedin()">
       <mat-icon>menu</mat-icon>
     </button>
-
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item [routerLink]="['/']">
-        Übersicht <fa-icon [icon]="faHome"></fa-icon>
-      </button>
-      <button mat-menu-item [routerLink]="['/transactions']">
-        Transaktionen <fa-icon [icon]="faTable"></fa-icon>
-      </button>
-      <button mat-menu-item disabled>
-        Auswertung <fa-icon [icon]="faChart"></fa-icon>
-      </button>
-      <button
-        mat-menu-item
-        [disabled]="!userIsAdmin(user)"
-        [routerLink]="['/admin']"
-      >
-        Admin <fa-icon [icon]="faCog"></fa-icon>
-      </button>
-    </mat-menu>
     <span class="example-spacer"></span>
     <button
       style="font-size: 1em;"
@@ -61,7 +42,7 @@
       >
         Einstellungen <fa-icon [icon]="faUserCog"></fa-icon>
       </button>
-      <button mat-menu-item style="text-align: right" [routerLink]="['/login']">
+      <button mat-menu-item style="text-align: right" (click)="logout()" [routerLink]="['/login']">
         Logout <fa-icon [icon]="faSignout"></fa-icon>
       </button>
     </mat-menu>

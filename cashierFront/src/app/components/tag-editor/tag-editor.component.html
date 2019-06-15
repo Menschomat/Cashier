@@ -1,39 +1,43 @@
 <div style="display: flex; flex-direction:column;">
-  <div style="display: flex; flex-direction:row;">
-    <h1>#{{tag.title}}</h1>
+  <div style="display: flex; flex-direction:row; ">
+    <h1 style="margin: 0; position: relative; top: -0.25em;">
+      #{{ tag.title }}
+    </h1>
     <div style="flex: 1;"></div>
     <button
-      style="margin-top: 1.2em; margin-left: 2em;"
-      mat-mini-fab
+      style="position: relative; top: -0.5em; right: -0.5em;"
+      mat-icon-button
       color="warn"
       (click)="close()"
     >
       <fa-icon style="font-size: 1.7em;" [icon]="faClose"></fa-icon>
     </button>
   </div>
-  <div style="display: flex; flex-direction: column;">
-    <div style="display: flex; flex-direction: row;">
-      <mcc-color-picker
-        [selectedColor]="tag.color"
-        [usedColorStart]="colorPreset"
-        [hideEmptyUsedColors]="true"
-        [usedColorLabel]="'Vorgaben'"
-        [btnConfirm]="'Speichern'"
-        [btnCancel]="'Abbruch'"
-        [hideColorPickerSelector] = "true"
-        [hideButtons]="true"
-        style="padding: 1em 1em 0 0;"
-        (selected)="selectColor($event)"
-      ></mcc-color-picker>
-      <mat-form-field style="flex: 1; width:100%;">
-        <input
-          matInput
-          placeholder="Titel"
-          id="title"
-          [(ngModel)]="tag.color"
-          required
+  <div style="display: flex; flex-direction: column;" style="max-width: 20vw">
+    <div
+      style="display: flex; flex-direction: row;justify-content: center; flex-wrap: wrap; width: 100%"
+    >
+      <svg
+      class="color-svg"
+        *ngFor="let color of colorPreset"
+        (click)="selectColor(color)"
+        style="width: 1.9em; height:1.9em; padding: 0.25em;"
+      >
+        <circle
+          cx="0.7em"
+          cy="0.7em"
+          r="0.7em"
+          [attr.fill]="color"
         />
-      </mat-form-field>
+      </svg>
     </div>
   </div>
+  <button
+    mat-raised-button
+    color="primary"
+    style="flex: 1; margin-top:0.5em;"
+    disabled
+  >
+    Details
+  </button>
 </div>

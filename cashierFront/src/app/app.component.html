@@ -1,5 +1,28 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div  [ngClass]="darkMode ? 'mat-app-dark':'mat-app-light'" style="max-height: 100vh; min-height: 100vh;">
-  <app-main-nav (darkOut)="darkModeChange($event)"></app-main-nav>
-  <router-outlet></router-outlet>
+<div
+  class="example-container"
+  [class.example-is-mobile]="mobileQuery.matches"
+  [ngClass]="darkMode ? 'mat-app-dark' : 'mat-app-light'"
+>
+  <app-main-nav
+    (toggleSide)="snav.toggle()"
+    (darkOut)="darkModeChange($event)"
+    (logoutEvent)="snav.close()"
+  ></app-main-nav>
+  <mat-sidenav-container
+    class="example-sidenav-container"
+    [style.marginTop.px]="mobileQuery.matches ? 56 : 0"
+  >
+    <mat-sidenav
+      #snav
+      [mode]="mobileQuery.matches ? 'over' : 'side'"
+      [fixedInViewport]="mobileQuery.matches"
+      fixedTopGap="56"
+    >
+      <app-sidebar-content></app-sidebar-content>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>

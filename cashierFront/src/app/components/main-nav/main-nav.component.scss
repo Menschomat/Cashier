@@ -1,9 +1,8 @@
 :host{
     top:0;
     z-index: 200;
-    position: fixed;
+    position: sticky;
     width: 100%;
-    max-height: 5em;
 }
 .example-spacer {
   flex: 1 1 auto;

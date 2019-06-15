@@ -1,31 +1,17 @@
-import { Component, OnInit, Output, EventEmitter } from "@angular/core";
-import {
-  faUserCircle,
-  faSignOutAlt,
-  faMoneyBillWave,
-  faUserCog,
-  faCogs,
-  faCog,
-  faHome,
-  faTable,
-  faChartLine,
-  faMoon,
-  faSun
-} from "@fortawesome/free-solid-svg-icons";
-import { Subscription } from "rxjs";
-import { StatusServiceService } from "src/app/services/status-service.service";
-import { UserService } from "src/app/services/user.service";
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { StatusServiceService } from 'src/app/services/status-service.service';
+import { UserService } from 'src/app/services/user.service';
+import { faChartLine, faTable, faHome, faCog, faUserCog, faMoneyBillWave, faSignOutAlt, faUserCircle, faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: "app-main-nav",
-  templateUrl: "./main-nav.component.html",
-  styleUrls: ["./main-nav.component.scss"]
+  selector: 'app-sidebar-content',
+  templateUrl: './sidebar-content.component.html',
+  styleUrls: ['./sidebar-content.component.scss']
 })
-export class MainNavComponent implements OnInit {
+export class SidebarContentComponent implements OnInit {
+
   @Output() darkOut: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() toggleSide: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() logoutEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
   dark: boolean = false;
   faUser = faUserCircle;
   faSignout = faSignOutAlt;
@@ -42,7 +28,7 @@ export class MainNavComponent implements OnInit {
   user: any;
   constructor(
     private statusService: StatusServiceService,
-    private userService: UserService,
+    private userService: UserService
   ) {
     this.subscription = this.statusService.getMessage().subscribe(status => {
       if (status.loggedIn) {
@@ -56,9 +42,6 @@ export class MainNavComponent implements OnInit {
     this.dark = !this.dark;
     localStorage.setItem("darkTheme", this.dark.toString());
     this.darkOut.emit(this.dark);
-  }
-  toggleSideBar(){
-    this.toggleSide.emit(true);
   }
   isLoggedin() {
     return localStorage.getItem("cashierUserToken") ? true : false;
@@ -85,8 +68,5 @@ export class MainNavComponent implements OnInit {
     if (localStorage.getItem("cashierUserToken")) {
       this.initUserString();
     }
-  }
-  logout(){
-    this.logoutEvent.emit();
   }
 }
