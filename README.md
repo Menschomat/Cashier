@@ -2,6 +2,17 @@
 
 > ## First relase of Cashier is still in development!
 
+## Things to do for release:
+:construction: TODO/InProgress
+
+:white_check_mark: Done
+
+* Implementation of Scheduled-Transactions in backend :white_check_mark:
+* Implementation of Scheduled-Transactions in frontend :construction:
+* Implementation of rudimental summary for timespan :construction:
+* Docker-Image :construction:
+* (JUnit test for backend) :construction:
+
 ## What is Cashier?
 
 Cashier is a tracking and monitoring tool for your personal cashflow. Many people still use paper or an Excel-sheet as their budget book.
@@ -15,6 +26,7 @@ Cashier moves the household book to the web.
 
 :white_check_mark: Done
 
+* Scheduled-Transactions in backend :construction:
 * Multiuser-Support :white_check_mark:
 * Darkmode :white_check_mark:
 * Roles (Admin/User) :white_check_mark:
