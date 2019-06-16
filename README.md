@@ -50,6 +50,8 @@ Cashier moves the household book to the web.
 
 ## Development (You'll get more information after first release-version is ready):
 
+>User `admin` is created at first startup with password `admin123` !
+
 ### 1) Requirements:
 * JDK 8+
 * NodeJs + NPM
@@ -70,6 +72,6 @@ You will need a runing Mongo-DB-Server (without login at the moment) on default-
 
 The backend is am Maven-Project, so make sure you installed all dependencies.
 
-### 2.3) Working with backend:
+### 2.3) Working with frontend:
 
 The frontend uses npm for packagemanagement. Run `npm install` to install all dependencies. To start the dev-server run `ng serve --proxy-config proxy.conf.json`.
