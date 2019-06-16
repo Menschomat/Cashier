@@ -60,6 +60,12 @@ import { UserEditDialogComponent } from './view/administration/user-edit-dialog/
 import { TransactionsComponent } from './view/transactions/transactions.component';
 import { SidebarContentComponent } from './view/main-wrapper/sidebar-content/sidebar-content.component';
 import { MainWrapperComponent } from './view/main-wrapper/main-wrapper.component';
+import { OverlayContainer } from '@angular/cdk/overlay';
+import { ThemeService } from './services/theme.service';
+import { TagDetailComponent } from './view/tag-detail/tag-detail.component';
+import { ChangePasswordComponent } from './view/user-settings/change-password/change-password.component';
+import { EditUserComponent } from './view/user-settings/edit-user/edit-user.component';
+import { GravatarModule } from  'ngx-gravatar';
  
 @NgModule({
   declarations: [
@@ -80,7 +86,10 @@ import { MainWrapperComponent } from './view/main-wrapper/main-wrapper.component
     UserEditDialogComponent,
     TransactionsComponent,
     SidebarContentComponent,
-    MainWrapperComponent
+    MainWrapperComponent,
+    TagDetailComponent,
+    ChangePasswordComponent,
+    EditUserComponent
   ],
   imports: [
     BrowserModule,
@@ -124,7 +133,8 @@ import { MainWrapperComponent } from './view/main-wrapper/main-wrapper.component
     ReactiveFormsModule,
     MatBadgeModule,
     MccColorPickerModule,
-    NgxCurrencyModule
+    NgxCurrencyModule,
+    GravatarModule
   ],
   providers: [MatDatepickerModule,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
@@ -133,4 +143,7 @@ import { MainWrapperComponent } from './view/main-wrapper/main-wrapper.component
   bootstrap: [AppComponent],
   entryComponents: [NewTransactionDialogComponent, TagEditorComponent, UserEditDialogComponent]
 })
-export class AppModule { }
+export class AppModule { 
+ 
+
+}

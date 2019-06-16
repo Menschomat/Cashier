@@ -16,6 +16,7 @@ import { Subscription } from "rxjs";
 import { StatusServiceService } from "src/app/services/status-service.service";
 import { UserService } from "src/app/services/user.service";
 import { ThemeService } from 'src/app/services/theme.service';
+import { FrontendUser } from 'src/app/model/user-management/frontend-user';
 
 @Component({
   selector: "app-main-nav",
@@ -39,13 +40,14 @@ export class MainNavComponent implements OnInit {
   faSun = faSun;
   subscription: Subscription;
   userstring: String;
-  user: any;
+  user: FrontendUser = {} as FrontendUser;
   theme:string;
   constructor(
     private statusService: StatusServiceService,
     private userService: UserService,
     private themeService: ThemeService
   ) {
+    this.user.email = "";
     this.theme = this.themeService.getTheme();
     this.subscription = this.statusService.getMessage().subscribe(status => {
       if (status.loggedIn) {

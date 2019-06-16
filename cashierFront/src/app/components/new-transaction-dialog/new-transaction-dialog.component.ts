@@ -19,6 +19,7 @@ import {
   Validators,
   FormControl
 } from "@angular/forms";
+import { ThemeService } from 'src/app/services/theme.service';
 @Component({
   selector: "app-new-transaction-dialog",
   templateUrl: "./new-transaction-dialog.component.html",
@@ -34,7 +35,8 @@ export class NewTransactionDialogComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<NewTransactionDialogComponent>,
     private tagService: TagService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private themeService:ThemeService
   ) {
     this.output.tags = [];
     this.output.transaction = {} as Transaction;
@@ -55,6 +57,7 @@ export class NewTransactionDialogComponent implements OnInit {
   removable = true;
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, SPACE, COMMA];
+  
   createForm() {
     this.newTransactionForm = this.fb.group({
       title: ["", Validators.required],

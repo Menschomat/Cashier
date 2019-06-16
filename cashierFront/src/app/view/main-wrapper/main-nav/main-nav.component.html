@@ -21,7 +21,7 @@
       *ngIf="isLoggedin()"
       [matMenuTriggerFor]="userMenu"
     >
-      <fa-icon style="font-size: 1.2em;" [icon]="faUser"></fa-icon>
+    <img style="max-height:1.5em; max-width:1.5em;position: relative; top:-0.1em;" ngxGravatar [email]="user?.email">
       {{ userstring }}
     </button>
     <mat-menu #userMenu="matMenu">

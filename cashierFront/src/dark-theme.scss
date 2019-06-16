@@ -12,7 +12,7 @@ $accent: mat-palette($mat-blue-grey, 500, 200, 700);
 //$background-color: map_get($mat-blue-grey, 50);
 
 // The warn palette is optional (defaults to red).
-$warn: mat-palette($mat-blue);
+$warn: mat-palette($mat-red);
 
 // Create the theme object (a Sass map containing all of the palettes).
 $theme: mat-dark-theme($primary, $accent, $warn);

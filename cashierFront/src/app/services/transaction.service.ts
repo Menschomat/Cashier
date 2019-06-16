@@ -18,7 +18,6 @@ export class TransactionService {
     return this.httpClient.get<Transaction[]>(`${this.apiURL}/latest`);
   }
   public addSingleTransaction(toAdd: Transaction) {
-    toAdd.linkedUserID = this.uService.getUser().id;
     return this.httpClient.post<Transaction[]>(`${this.apiURL}`, toAdd);
   }
   public deleteTransactions(toDelete: Transaction[]) {

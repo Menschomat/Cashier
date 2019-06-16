@@ -1,5 +1,6 @@
 package de.menschomat.wgo.database.model;
 
+import de.menschomat.wgo.rest.model.RestUser;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.IndexDirection;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -23,6 +24,14 @@ public class DBUser {
 
     public DBUser() {
 
+    }
+
+    public void updateFromRestUser(RestUser rUser) {
+        this.username = rUser.username;
+        this.dateOfBirth = rUser.dateOfBirth;
+        this.email = rUser.email;
+        this.name = rUser.name;
+        this.surname = rUser.surname;
     }
 
     public DBUser(String email, String name, String surname, String username, Date dateOfBirth, String password, Boolean initialized, String role) {

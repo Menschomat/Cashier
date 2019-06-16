@@ -40,7 +40,7 @@ export class OverviewCardComponent implements OnInit {
     private dialog: MatDialog,
     private transactionService: TransactionService,
     private tagService: TagService,
-    private statusService:StatusServiceService
+    private statusService:StatusServiceService,
   ) {}
   ngOnInit() {
     this.loading = true;
@@ -74,7 +74,7 @@ export class OverviewCardComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.minWidth = "40%";
-
+  
     let dialogRef = this.dialog.open(
       NewTransactionDialogComponent,
       dialogConfig

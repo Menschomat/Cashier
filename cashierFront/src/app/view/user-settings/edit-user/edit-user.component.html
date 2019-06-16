@@ -1,0 +1,23 @@
+<mat-card style="margin: 2em; min-width: 300px;" class="mat-elevation-z8">
+  <mat-card-title>
+    Details ändern
+  </mat-card-title>
+  <mat-card-content style="display:flex; flex-direction:column">
+    <mat-form-field class="example-full-width">
+      <input matInput [(ngModel)]="user.email" placeholder="E-Mail">
+    </mat-form-field>
+    <!-- <mat-form-field class="example-full-width">
+      <input matInput [(ngModel)]="user.dateOfBirth" placeholder="Geburtstag">
+    </mat-form-field> -->
+    <mat-form-field class="example-full-width">
+      <input matInput [(ngModel)]="user.name" placeholder="Vorname">
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input matInput [(ngModel)]="user.surname" placeholder="Nachname">
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="submitUserdata()" [disabled]="equalCheck(changeCheckUser,user)">
+      Ändern
+    </button>
+  </mat-card-content>
+
+</mat-card>
