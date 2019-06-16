@@ -3,6 +3,7 @@ package de.menschomat.wgo.configuration;
 import de.menschomat.wgo.database.repositories.ScheduleRepository;
 import de.menschomat.wgo.database.repositories.TransactionRepository;
 import de.menschomat.wgo.scheduleing.ScheduleTaskService;
+import org.bson.types.ObjectId;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
@@ -30,7 +31,8 @@ public class AppConfig {
                 @Override
                 public void run() {
                     scheduledTask.transaction.date = new Date(System.currentTimeMillis());
-                    transactionRepository.save(scheduledTask.transaction);
+                    scheduledTask.transaction.id = new ObjectId();
+                    transactionRepository.insert(scheduledTask.transaction);
                 }
             }, scheduledTask.cronTab);
         });

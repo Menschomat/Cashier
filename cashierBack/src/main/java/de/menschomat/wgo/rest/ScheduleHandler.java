@@ -5,6 +5,7 @@ import de.menschomat.wgo.database.repositories.ScheduleRepository;
 import de.menschomat.wgo.database.repositories.TransactionRepository;
 import de.menschomat.wgo.rest.model.ScheduleInformation;
 import de.menschomat.wgo.scheduleing.ScheduleTaskService;
+import org.bson.types.ObjectId;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,14 +42,15 @@ public class ScheduleHandler {
     @PostMapping(value = "", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public List<ScheduledTask> addScheduleTask(Authentication authentication, @RequestBody ScheduleInformation scheduleInformation) {
+        scheduleInformation.toSchedule.id = new ObjectId();
+        scheduleInformation.toSchedule.linkedUserID = authentication.getName();
         ScheduledTask toAdd = new ScheduledTask(UUID.randomUUID().toString(), scheduleInformation.toSchedule, authentication.getName(), scheduleInformation.crontab);
         scheduleRepository.save(toAdd);
         scheduleTaskService.addTaskToScheduler(toAdd.id, new Runnable() {
             @Override
             public void run() {
                 scheduleInformation.toSchedule.date = new Date(System.currentTimeMillis());
-                scheduleInformation.toSchedule.linkedUserID = authentication.getName();
-                transactionRepository.save(scheduleInformation.toSchedule);
+                transactionRepository.insert(scheduleInformation.toSchedule);
             }
         }, scheduleInformation.crontab);
         return getScheduleTask(authentication);

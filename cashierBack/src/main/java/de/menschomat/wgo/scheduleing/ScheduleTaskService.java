@@ -1,5 +1,6 @@
 package de.menschomat.wgo.scheduleing;
 
+import org.bson.types.ObjectId;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.TaskScheduler;
@@ -19,7 +20,7 @@ public class ScheduleTaskService {
     ThreadPoolTaskScheduler scheduler;
     
     // A map for keeping scheduled tasks
-    Map<String, ScheduledFuture<?>> jobsMap = new HashMap<>();
+    Map<String , ScheduledFuture<?>> jobsMap = new HashMap<>();
     
     public ScheduleTaskService() {
         this.scheduler = new ThreadPoolTaskScheduler();
@@ -28,7 +29,7 @@ public class ScheduleTaskService {
     
     
     // Schedule Task to be executed every night at 00 or 12 am
-    public void addTaskToScheduler(String  id, Runnable task, String cronString) {
+    public void addTaskToScheduler(String id, Runnable task, String cronString) {
         ScheduledFuture<?> scheduledTask = scheduler.schedule(task, new CronTrigger(cronString, TimeZone.getTimeZone(TimeZone.getDefault().getID())));
         jobsMap.put(id, scheduledTask);
     }
