@@ -1,6 +1,4 @@
-import { Component, ChangeDetectorRef } from "@angular/core";
-import { MediaMatcher } from '@angular/cdk/layout';
-import { Subscription } from 'rxjs';
+import { Component } from "@angular/core";
 
 @Component({
   selector: "app-root",

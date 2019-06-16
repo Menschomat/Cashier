@@ -15,6 +15,7 @@ import {
 import { Subscription } from "rxjs";
 import { StatusServiceService } from "src/app/services/status-service.service";
 import { UserService } from "src/app/services/user.service";
+import { ThemeService } from 'src/app/services/theme.service';
 
 @Component({
   selector: "app-main-nav",
@@ -39,10 +40,13 @@ export class MainNavComponent implements OnInit {
   subscription: Subscription;
   userstring: String;
   user: any;
+  theme:string;
   constructor(
     private statusService: StatusServiceService,
     private userService: UserService,
+    private themeService: ThemeService
   ) {
+    this.theme = this.themeService.getTheme();
     this.subscription = this.statusService.getMessage().subscribe(status => {
       if (status.loggedIn) {
         this.initUserString();
@@ -52,11 +56,13 @@ export class MainNavComponent implements OnInit {
     });
   }
   switchDark() {
-    this.dark = !this.dark;
-    localStorage.setItem("darkTheme", this.dark.toString());
-    this.darkOut.emit(this.dark);
+    if (this.theme === "light") {
+      this.theme = this.themeService.setTheme("dark");
+    } else if(this.theme === "dark"){
+      this.theme = this.themeService.setTheme("light");
+    }
   }
-  toggleSideBar(){
+  toggleSideBar() {
     this.toggleSide.emit(true);
   }
   isLoggedin() {
@@ -85,7 +91,7 @@ export class MainNavComponent implements OnInit {
       this.initUserString();
     }
   }
-  logout(){
+  logout() {
     this.logoutEvent.emit();
   }
 }

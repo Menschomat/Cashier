@@ -26,11 +26,11 @@
     </button>
     <mat-menu #userMenu="matMenu">
       <button mat-menu-item style="text-align:right" (click)="switchDark()">
-        <div *ngIf="!dark">
+        <div *ngIf="theme === 'light'">
           Theme: Dunkel
           <fa-icon [icon]="faMoon"></fa-icon>
         </div>
-        <div *ngIf="dark">
+        <div *ngIf="theme === 'dark'">
           Theme: Hell
           <fa-icon [icon]="faSun"></fa-icon>
         </div>

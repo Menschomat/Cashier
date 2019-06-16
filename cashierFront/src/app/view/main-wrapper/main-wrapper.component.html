@@ -1,7 +1,7 @@
 <div
   class="example-container"
   [class.example-is-mobile]="mobileQuery.matches"
-  [ngClass]="darkMode ? 'mat-app-dark' : 'mat-app-light'"
+  [ngClass]="getCurrentTheme() === 'dark' ? 'mat-app-dark' : 'mat-app-light'"
 >
   <app-main-nav
     (toggleSide)="snav.toggle()"

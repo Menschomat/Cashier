@@ -1,6 +1,7 @@
 import { Component, ChangeDetectorRef } from "@angular/core";
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';
+import { ThemeService } from 'src/app/services/theme.service';
 
 @Component({
   selector: 'app-main-wrapper',
@@ -9,9 +10,9 @@ import { Subscription } from 'rxjs';
 })
 export class MainWrapperComponent {
   darkMode: boolean;
+  theme: string;
   subscription: Subscription;
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
-    this.darkMode = localStorage.getItem("darkTheme") == "true";
+  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private themeService:ThemeService) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -19,6 +20,9 @@ export class MainWrapperComponent {
   title = "Cashier";
   darkModeChange(event) {
     this.darkMode = event;
+  }
+  getCurrentTheme(){
+    return this.themeService.getTheme();
   }
   mobileQuery: MediaQueryList;
 
