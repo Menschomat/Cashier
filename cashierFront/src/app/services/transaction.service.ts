@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Transaction } from "../model/transaction";
+import { Transaction } from "../model/transaction-management/transaction";
 import { UserService } from "./user.service";
 import { Observable } from "rxjs";
-import { TransactionResponse } from "../model/TransactionResponse";
+import { TransactionResponse } from "../model/transaction-management/TransactionResponse";
 
 @Injectable({
   providedIn: "root"

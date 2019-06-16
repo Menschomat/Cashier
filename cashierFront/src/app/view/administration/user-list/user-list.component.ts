@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { UserService } from "src/app/services/user.service";
 import { UserAdminService } from "src/app/services/user-admin.service";
-import { FrontendUser } from "src/app/model/frontend-user";
+import { FrontendUser } from "src/app/model/user-management/frontend-user";
 import {
   MatTableDataSource,
   MatDialogConfig,
@@ -12,7 +12,7 @@ import { SelectionModel } from "@angular/cdk/collections";
 import { faTrash, faPlus, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { UserEditDialogComponent } from "../user-edit-dialog/user-edit-dialog.component";
 import { HttpErrorResponse } from "@angular/common/http";
-import { DbUser } from "src/app/model/db-user";
+import { DbUser } from "src/app/model/user-management/db-user";
 
 @Component({
   selector: "app-user-list",

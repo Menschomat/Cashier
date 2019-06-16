@@ -36,21 +36,21 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { MainNavComponent } from './components/main-nav/main-nav.component';
+import { MainNavComponent } from './view/main-wrapper/main-nav/main-nav.component';
 import { BookingCardComponent } from './components/booking-card/booking-card.component';
-import { OverviewCardComponent } from './components/overview-card/overview-card.component';
+import { OverviewCardComponent } from './view/home/overview-card/overview-card.component';
 import { NewTransactionDialogComponent } from './components/new-transaction-dialog/new-transaction-dialog.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'; 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TransactionCardComponent } from './components/transaction-card/transaction-card.component';
+import { TransactionCardComponent } from './view/transactions/transaction-card/transaction-card.component';
 import {MatBadgeModule} from '@angular/material/badge';
 import { MccColorPickerModule } from 'material-community-components';
 import { TagEditorComponent } from './components/tag-editor/tag-editor.component';
 import { ChartCardComponent } from './components/charts/chart-card/chart-card.component';
 import { HomeComponent } from './view/home/home.component';
 import { LoginComponent } from './view/login/login.component';
-import { JwtInterceptor } from './helpers/jwt.interceptor';
-import { ErrorInterceptor } from './helpers/error.interceptor';
+import { JwtInterceptor } from './auth/helpers/jwt.interceptor';
+import { ErrorInterceptor } from './auth/helpers/error.interceptor';
 import { NgxCurrencyModule } from "ngx-currency";
 import { StackBarChartCardComponent } from './components/charts/stack-bar-chart-card/stack-bar-chart-card.component';
 import { AdministrationComponent } from './view/administration/administration.component';
@@ -58,7 +58,8 @@ import { UserSettingsComponent } from './view/user-settings/user-settings.compon
 import { UserListComponent } from './view/administration/user-list/user-list.component';
 import { UserEditDialogComponent } from './view/administration/user-edit-dialog/user-edit-dialog.component';
 import { TransactionsComponent } from './view/transactions/transactions.component';
-import { SidebarContentComponent } from './components/sidebar-content/sidebar-content.component';
+import { SidebarContentComponent } from './view/main-wrapper/sidebar-content/sidebar-content.component';
+import { MainWrapperComponent } from './view/main-wrapper/main-wrapper.component';
  
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { SidebarContentComponent } from './components/sidebar-content/sidebar-co
     UserListComponent,
     UserEditDialogComponent,
     TransactionsComponent,
-    SidebarContentComponent
+    SidebarContentComponent,
+    MainWrapperComponent
   ],
   imports: [
     BrowserModule,

@@ -7,10 +7,10 @@ import {
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { COMMA, ENTER, SPACE } from "@angular/cdk/keycodes";
 import { MatChipInputEvent } from "@angular/material";
-import { Tag } from "src/app/model/tag";
+import { Tag } from "src/app/model/hashtag-system/tag";
 import { TagService } from "src/app/services/tag.service";
-import { NewTransaction } from "src/app/model/new-transaction";
-import { Transaction } from "src/app/model/transaction";
+import { NewTransaction } from "src/app/model/transaction-management/new-transaction";
+import { Transaction } from "src/app/model/transaction-management/transaction";
 import { Observable } from "rxjs";
 import { map, startWith } from "rxjs/operators";
 import {

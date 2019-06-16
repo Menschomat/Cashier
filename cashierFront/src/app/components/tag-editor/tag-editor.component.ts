@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
-import { Tag } from "src/app/model/tag";
+import { Tag } from "src/app/model/hashtag-system/tag";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { TagService } from "src/app/services/tag.service";
 import { StatusServiceService } from 'src/app/services/status-service.service';

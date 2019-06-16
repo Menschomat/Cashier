@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { DbUser } from '../model/db-user';
-import { FrontendUser } from '../model/frontend-user';
+import { DbUser } from '../model/user-management/db-user';
+import { FrontendUser } from '../model/user-management/frontend-user';
 import { Subscribable } from 'rxjs';
 
 @Injectable({

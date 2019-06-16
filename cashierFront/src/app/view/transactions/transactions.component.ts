@@ -5,7 +5,7 @@ import { MatSort } from "@angular/material/sort";
 import { merge, Observable, of as observableOf } from "rxjs";
 import { catchError, map, startWith, switchMap } from "rxjs/operators";
 import { TransactionService } from "src/app/services/transaction.service";
-import { Transaction } from "src/app/model/transaction";
+import { Transaction } from "src/app/model/transaction-management/transaction";
 import { TagService } from "src/app/services/tag.service";
 import { NewTransactionDialogComponent } from "src/app/components/new-transaction-dialog/new-transaction-dialog.component";
 import { MatDialogConfig, MatDialog } from "@angular/material";
