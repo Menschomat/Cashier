@@ -17,10 +17,10 @@ import java.util.concurrent.ScheduledFuture;
 public class ScheduleTaskService {
     // Task Scheduler
 
-    ThreadPoolTaskScheduler scheduler;
+    private ThreadPoolTaskScheduler scheduler;
     
     // A map for keeping scheduled tasks
-    Map<String , ScheduledFuture<?>> jobsMap = new HashMap<>();
+    private Map<String , ScheduledFuture<?>> jobsMap = new HashMap<>();
     
     public ScheduleTaskService() {
         this.scheduler = new ThreadPoolTaskScheduler();
