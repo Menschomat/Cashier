@@ -32,7 +32,7 @@ Cashier moves the household book to the web.
 * Roles (Admin/User) :white_check_mark:
 * Transaction list with pagebased-loading and sorting :white_check_mark:
 * Incoming/Outgoing money :white_check_mark:
-* Fully editable Users :construction:
+* Fully editable Users :white_check_mark:
 * Fully editable Transactions :construction:
 * Fancy Charts :construction:
 * Hashtag system (nice and fancy) :white_check_mark:
