@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { map } from "rxjs/operators";
-import { StatusServiceService } from "./status-service.service";
+import { StatusServiceService } from "../../services/status-service.service";
 
 @Injectable({ providedIn: "root" })
 export class AuthenticationService {

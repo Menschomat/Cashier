@@ -5,12 +5,12 @@ import {
   MatDialog,
   MatTableDataSource
 } from "@angular/material";
-import { NewTransactionDialogComponent } from "../new-transaction-dialog/new-transaction-dialog.component";
+import { NewTransactionDialogComponent } from "../../../components/new-transaction-dialog/new-transaction-dialog.component";
 import { faPlus, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { TransactionService } from "src/app/services/transaction.service";
 import { TagService } from "src/app/services/tag.service";
 import { Tag } from "src/app/model/tag";
-import { TagEditorComponent } from "../tag-editor/tag-editor.component";
+import { TagEditorComponent } from "../../../components/tag-editor/tag-editor.component";
 import { SelectionModel } from "@angular/cdk/collections";
 import { Transaction } from "src/app/model/transaction";
 import { StatusServiceService } from 'src/app/services/status-service.service';

@@ -15,7 +15,6 @@ import {
 import { Subscription } from "rxjs";
 import { StatusServiceService } from "src/app/services/status-service.service";
 import { UserService } from "src/app/services/user.service";
-import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: "app-main-nav",

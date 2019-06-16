@@ -3,7 +3,7 @@ import { MatDialogRef } from "@angular/material";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { DbUser } from "src/app/model/db-user";
-import { RegistrationValidator } from "src/app/helpers/register.validator";
+import { RegistrationValidator } from "src/app/auth/helpers/register.validator";
 
 @Component({
   selector: "app-user-edit-dialog",
