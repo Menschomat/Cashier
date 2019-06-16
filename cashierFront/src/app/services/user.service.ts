@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { FrontendUser } from '../model/frontend-user';
+import { FrontendUser } from '../model/user-management/frontend-user';
 
 @Injectable({
   providedIn: "root"

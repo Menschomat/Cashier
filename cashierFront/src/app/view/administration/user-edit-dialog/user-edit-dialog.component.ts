@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { MatDialogRef } from "@angular/material";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { DbUser } from "src/app/model/db-user";
+import { DbUser } from "src/app/model/user-management/db-user";
 import { RegistrationValidator } from "src/app/auth/helpers/register.validator";
 
 @Component({

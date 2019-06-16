@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { OverviewData } from "src/app/model/overview-data";
+import { OverviewData } from "src/app/view/home/overview-card/model/overview-data";
 import {
   MatDialogConfig,
   MatDialog,
@@ -9,10 +9,10 @@ import { NewTransactionDialogComponent } from "../../../components/new-transacti
 import { faPlus, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { TransactionService } from "src/app/services/transaction.service";
 import { TagService } from "src/app/services/tag.service";
-import { Tag } from "src/app/model/tag";
+import { Tag } from "src/app/model/hashtag-system/tag";
 import { TagEditorComponent } from "../../../components/tag-editor/tag-editor.component";
 import { SelectionModel } from "@angular/cdk/collections";
-import { Transaction } from "src/app/model/transaction";
+import { Transaction } from "src/app/model/transaction-management/transaction";
 import { StatusServiceService } from 'src/app/services/status-service.service';
 
 @Component({

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Tag } from "../model/tag";
+import { Tag } from "../model/hashtag-system/tag";
 import { HttpClient } from "@angular/common/http";
 import { StatusServiceService } from "./status-service.service";
 import { UserService } from "./user.service";

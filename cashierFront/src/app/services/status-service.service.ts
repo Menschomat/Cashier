@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from "rxjs";
-import { Status } from '../model/status';
+import { Status } from '../model/status-handling/status';
 @Injectable({
   providedIn: 'root'
 })
