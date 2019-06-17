@@ -68,5 +68,17 @@ export class ScheduledTaskCardComponent implements OnInit {
       }
     });
   }
+  delete(tList: string[]) {
+    console.log(tList);
+    
+    this.statusService.sendMessage({saved:false});
+    tList.forEach(id => {
+      this.selection.deselect(id);
+    })
+    this.schedulerService.deleteTasks(tList).subscribe(res =>{
+      this.data = res;
+      this.statusService.sendMessage({saved:true});
+    })
+  }
 
 }

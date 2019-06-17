@@ -20,5 +20,8 @@ export class SchedulerService {
   public deleteTask(toDelete: string) {
     return this.httpClient.delete<ScheduledTask[]>(`${this.apiURL}?id=${toDelete}`);
   }
+  public deleteTasks(toDelete: string[]) {
+    return this.httpClient.delete<ScheduledTask[]>(`${this.apiURL}/multiple?ids=${toDelete}`);
+  }
 
 }

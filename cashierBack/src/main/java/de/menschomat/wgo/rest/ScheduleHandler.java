@@ -64,4 +64,14 @@ public class ScheduleHandler {
         scheduleRepository.deleteById(id);
         return getScheduleTask(authentication);
     }
+    @DeleteMapping(value = "/multiple", produces = APPLICATION_JSON_VALUE)
+    @CrossOrigin
+    public List<ScheduledTask> delScheduleTask(Authentication authentication, @RequestParam List<String> ids) {
+        ids.forEach(id -> {
+            scheduleTaskService.removeTaskFromScheduler(id);
+            scheduleRepository.deleteById(id);
+        });
+
+        return getScheduleTask(authentication);
+    }
 }

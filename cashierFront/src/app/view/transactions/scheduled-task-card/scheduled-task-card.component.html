@@ -58,7 +58,7 @@
     </div>
   </mat-card-content>
   <mat-card-actions style="display: flex; flex-direction:row; align-items: center">
-    <button mat-raised-button color="warn" style="margin-left: 0.5em;" [disabled]="selection.isEmpty()">
+    <button mat-raised-button color="warn" style="margin-left: 0.5em;" (click)="delete(selection.selected)" [disabled]="selection.isEmpty()">
       <fa-icon [icon]="faTrash"></fa-icon>
     </button>
     <div style="flex: 1;"></div>

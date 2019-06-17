@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ScheduleRepository extends MongoRepository<ScheduledTask, String> {
     public List<ScheduledTask> findAllByUserID(String userID);
+    public void deleteAllById(List<String> ids);
 }
