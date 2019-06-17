@@ -7,13 +7,13 @@
       <input matInput [(ngModel)]="user.email" placeholder="E-Mail">
     </mat-form-field>
     <!-- <mat-form-field class="example-full-width">
-      <input matInput [(ngModel)]="user.dateOfBirth" placeholder="Geburtstag">
+      <input matInput [(ngModel)]="user.dateOfBirth" placeholder="Birthday">
     </mat-form-field> -->
     <mat-form-field class="example-full-width">
-      <input matInput [(ngModel)]="user.name" placeholder="Vorname">
+      <input matInput [(ngModel)]="user.name" placeholder="Name">
     </mat-form-field>
     <mat-form-field class="example-full-width">
-      <input matInput [(ngModel)]="user.surname" placeholder="Nachname">
+      <input matInput [(ngModel)]="user.surname" placeholder="Surname">
     </mat-form-field>
     <button mat-raised-button color="primary" (click)="submitUserdata()" [disabled]="equalCheck(changeCheckUser,user)">
       Ändern
