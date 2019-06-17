@@ -8,7 +8,7 @@
 :white_check_mark: Done
 
 * Implementation of Scheduled-Transactions in backend :white_check_mark:
-* Implementation of Scheduled-Transactions in frontend :construction:
+* Implementation of Scheduled-Transactions in frontend :white_check_mark:
 * Implementation of rudimental summary for timespan :construction:
 * Docker-Image :construction:
 * (JUnit test for backend) :construction:
