@@ -66,6 +66,7 @@ import { TagDetailComponent } from './view/tag-detail/tag-detail.component';
 import { ChangePasswordComponent } from './view/user-settings/change-password/change-password.component';
 import { EditUserComponent } from './view/user-settings/edit-user/edit-user.component';
 import { GravatarModule } from  'ngx-gravatar';
+import { ScheduledTaskCardComponent } from './view/transactions/scheduled-task-card/scheduled-task-card.component';
  
 @NgModule({
   declarations: [
@@ -89,7 +90,8 @@ import { GravatarModule } from  'ngx-gravatar';
     MainWrapperComponent,
     TagDetailComponent,
     ChangePasswordComponent,
-    EditUserComponent
+    EditUserComponent,
+    ScheduledTaskCardComponent
   ],
   imports: [
     BrowserModule,

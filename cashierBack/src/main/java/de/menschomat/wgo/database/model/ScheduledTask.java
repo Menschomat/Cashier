@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class ScheduledTask {
     @Id
     public String id;
-    @Indexed(name = "userid_index", direction = IndexDirection.DESCENDING, unique = true)
+    @Indexed(name = "userid_index", direction = IndexDirection.DESCENDING)
     public String userID;
     public String cronTab;
 

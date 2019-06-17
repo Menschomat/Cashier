@@ -134,35 +134,4 @@
     </button>
   </mat-card-actions>
 </mat-card>
-<mat-card
-  class="overviewCard mat-elevation-z8"
-  style="margin: 1em; min-height: 100%"
->
-  <mat-card-header style="align-items: center">
-    <mat-card-title>
-      Regelmäßiges
-    </mat-card-title>
-  </mat-card-header>
-  <hr *ngIf="!loading" />
-  <mat-card-content>TODO </mat-card-content>
-  <mat-card-actions
-    style="display: flex; flex-direction:row; align-items: center"
-  >
-    <button
-      mat-raised-button
-      color="warn"
-      style="margin-left: 0.5em;"
-      [disabled]="selection.isEmpty()"
-    >
-      <fa-icon [icon]="faTrash"></fa-icon>
-    </button>
-    <div style="flex: 1;"></div>
-    <button
-      mat-raised-button
-      color="primary"
-      style="max-height: 3em;"
-    >
-      Hinzufügen <fa-icon [icon]="faPlus"></fa-icon>
-    </button>
-  </mat-card-actions>
-</mat-card>
+<app-scheduled-task-card></app-scheduled-task-card>

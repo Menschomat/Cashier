@@ -42,13 +42,14 @@ public class ScheduleHandler {
     @PostMapping(value = "", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public List<ScheduledTask> addScheduleTask(Authentication authentication, @RequestBody ScheduleInformation scheduleInformation) {
-        scheduleInformation.toSchedule.id = new ObjectId();
+
         scheduleInformation.toSchedule.linkedUserID = authentication.getName();
         ScheduledTask toAdd = new ScheduledTask(UUID.randomUUID().toString(), scheduleInformation.toSchedule, authentication.getName(), scheduleInformation.crontab);
         scheduleRepository.save(toAdd);
         scheduleTaskService.addTaskToScheduler(toAdd.id, new Runnable() {
             @Override
             public void run() {
+                scheduleInformation.toSchedule.id = new ObjectId();
                 scheduleInformation.toSchedule.date = new Date(System.currentTimeMillis());
                 transactionRepository.insert(scheduleInformation.toSchedule);
             }
