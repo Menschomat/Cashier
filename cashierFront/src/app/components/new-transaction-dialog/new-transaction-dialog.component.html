@@ -73,13 +73,12 @@
           #taginput
           [matChipInputFor]="chipList"
           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-          [matChipInputAddOnBlur]="addOnBlur"
-          (matChipInputTokenEnd)="add($event)"
           [matAutocomplete]="auto"
           [formControl]="tagCtrl"
+          (matChipInputTokenEnd)="add($event)"
         />
       </mat-chip-list>
-    </mat-form-field>
+   
     <mat-autocomplete
       #auto="matAutocomplete"
       (optionSelected)="selected($event)"
@@ -88,6 +87,7 @@
         #{{ tag }}
       </mat-option>
     </mat-autocomplete>
+  </mat-form-field>
     <button
       mat-raised-button
       color="primary"

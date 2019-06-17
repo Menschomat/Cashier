@@ -67,7 +67,6 @@ export class NewTransactionDialogComponent implements OnInit {
     });
   }
   add(event: MatChipInputEvent): void {
-    if (!this.matAutocomplete.isOpen) {
       const input = event.input;
       const value = event.value;
       this.addTag(value);
@@ -75,7 +74,7 @@ export class NewTransactionDialogComponent implements OnInit {
         input.value = "";
       }
       this.clearAutocomplete();
-    }
+    
   }
   private addTag(value: string) {
     let toAdd = value.replace("#", "");
@@ -123,6 +122,8 @@ export class NewTransactionDialogComponent implements OnInit {
     this.dialogRef.close(this.output);
   }
   selected(event: MatAutocompleteSelectedEvent): void {
+    console.log("Selected");
+    
     this.addTag(event.option.viewValue);
     this.clearAutocomplete();
   }

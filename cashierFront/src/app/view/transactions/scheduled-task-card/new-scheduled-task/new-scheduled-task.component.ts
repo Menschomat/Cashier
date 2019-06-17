@@ -73,7 +73,6 @@ export class NewScheduledTaskComponent implements OnInit {
     });
   }
   add(event: MatChipInputEvent): void {
-    if (!this.matAutocomplete.isOpen) {
       const input = event.input;
       const value = event.value;
       this.addTag(value);
@@ -81,7 +80,6 @@ export class NewScheduledTaskComponent implements OnInit {
         input.value = "";
       }
       this.clearAutocomplete();
-    }
   }
   private addTag(value: string) {
     let toAdd = value.replace("#", "");
