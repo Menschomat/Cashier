@@ -67,6 +67,7 @@ import { ChangePasswordComponent } from './view/user-settings/change-password/ch
 import { EditUserComponent } from './view/user-settings/edit-user/edit-user.component';
 import { GravatarModule } from  'ngx-gravatar';
 import { ScheduledTaskCardComponent } from './view/transactions/scheduled-task-card/scheduled-task-card.component';
+import { NewScheduledTaskComponent } from './view/transactions/scheduled-task-card/new-scheduled-task/new-scheduled-task.component';
  
 @NgModule({
   declarations: [
@@ -91,7 +92,8 @@ import { ScheduledTaskCardComponent } from './view/transactions/scheduled-task-c
     TagDetailComponent,
     ChangePasswordComponent,
     EditUserComponent,
-    ScheduledTaskCardComponent
+    ScheduledTaskCardComponent,
+    NewScheduledTaskComponent
   ],
   imports: [
     BrowserModule,
@@ -143,7 +145,7 @@ import { ScheduledTaskCardComponent } from './view/transactions/scheduled-task-c
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
-  entryComponents: [NewTransactionDialogComponent, TagEditorComponent, UserEditDialogComponent]
+  entryComponents: [NewTransactionDialogComponent, TagEditorComponent, UserEditDialogComponent, NewScheduledTaskComponent]
 })
 export class AppModule { 
  

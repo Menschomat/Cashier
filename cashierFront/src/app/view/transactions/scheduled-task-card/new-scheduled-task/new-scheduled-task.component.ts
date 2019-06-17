@@ -13,6 +13,7 @@ import { NewTransaction } from "src/app/model/transaction-management/new-transac
 import { Transaction } from "src/app/model/transaction-management/transaction";
 import { Observable } from "rxjs";
 import { map, startWith } from "rxjs/operators";
+import cronstrue from 'cronstrue';
 import {
   FormGroup,
   FormBuilder,
@@ -21,11 +22,12 @@ import {
 } from "@angular/forms";
 import { ThemeService } from 'src/app/services/theme.service';
 @Component({
-  selector: "app-new-transaction-dialog",
-  templateUrl: "./new-transaction-dialog.component.html",
-  styleUrls: ["./new-transaction-dialog.component.scss"]
+  selector: 'app-new-scheduled-task',
+  templateUrl: './new-scheduled-task.component.html',
+  styleUrls: ['./new-scheduled-task.component.scss']
 })
-export class NewTransactionDialogComponent implements OnInit {
+
+export class NewScheduledTaskComponent implements OnInit {
   public newTransactionForm: FormGroup;
   output = {} as NewTransaction;
   allTags: Tag[] = [];
@@ -34,10 +36,10 @@ export class NewTransactionDialogComponent implements OnInit {
   @ViewChild("taginput") tagInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
   constructor(
-    private dialogRef: MatDialogRef<NewTransactionDialogComponent>,
+    private dialogRef: MatDialogRef<NewScheduledTaskComponent>,
     private tagService: TagService,
     private fb: FormBuilder,
-    private themeService:ThemeService
+    private themeService: ThemeService
   ) {
     this.output.tags = [];
     this.output.transaction = {} as Transaction;
@@ -58,12 +60,12 @@ export class NewTransactionDialogComponent implements OnInit {
   removable = true;
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, SPACE, COMMA];
-  
+
   createForm() {
     this.newTransactionForm = this.fb.group({
       title: ["", Validators.required],
       amount: [0, Validators.pattern("^[-+]?[0-9]*.?[0-9]+$")],
-      date: ["", Validators.required]
+      cronTab: ["", Validators.required]
     });
   }
   add(event: MatChipInputEvent): void {
@@ -122,10 +124,12 @@ export class NewTransactionDialogComponent implements OnInit {
     this.output.transaction.date = this.newTransactionForm.value.date;
     this.dialogRef.close(this.output);
   }
+  
   selected(event: MatAutocompleteSelectedEvent): void {
     this.addTag(event.option.viewValue);
     this.clearAutocomplete();
   }
+
   private clearAutocomplete() {
     this.tagInput.nativeElement.value = "";
     this.tagCtrl.setValue(null);
@@ -142,5 +146,19 @@ export class NewTransactionDialogComponent implements OnInit {
     return this.allTags
       .map(t => t.title)
       .filter(t => t.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  isCronValid(freq) {
+    var cronregex = new RegExp(/^(\*|([0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9])|\*\/([0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9])) (\*|([0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9])|\*\/([0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9])) (\*|([0-9]|1[0-9]|2[0-3])|\*\/([0-9]|1[0-9]|2[0-3])) (\*|([1-9]|1[0-9]|2[0-9]|3[0-1])|\*\/([1-9]|1[0-9]|2[0-9]|3[0-1])) (\*|([1-9]|1[0-2])|\*\/([1-9]|1[0-2])) (\*|([0-6])|\*\/([0-6]))$/);
+    return cronregex.test(freq);
+  }
+
+  crontToText(cron: string) {
+    if (cron) {
+      if (this.isCronValid(cron)) {
+        return cronstrue.toString(cron, { use24HourTimeFormat: true });
+      }
+    }
+    return "Not a crontab (* * * * * *)";
   }
 }
