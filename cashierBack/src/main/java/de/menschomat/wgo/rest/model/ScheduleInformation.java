@@ -4,5 +4,5 @@ import de.menschomat.wgo.database.model.Transaction;
 
 public class ScheduleInformation {
     public Transaction toSchedule;
-    public  String crontab;
+    public  String cronTab;
 }

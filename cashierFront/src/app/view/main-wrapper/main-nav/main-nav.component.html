@@ -27,11 +27,11 @@
     <mat-menu #userMenu="matMenu">
       <button mat-menu-item style="text-align:right" (click)="switchDark()">
         <div *ngIf="theme === 'light'">
-          Theme: Dunkel
+          Theme: dark
           <fa-icon [icon]="faMoon"></fa-icon>
         </div>
         <div *ngIf="theme === 'dark'">
-          Theme: Hell
+          Theme: light
           <fa-icon [icon]="faSun"></fa-icon>
         </div>
       </button>
@@ -40,7 +40,7 @@
         style="text-align:right"
         [routerLink]="['/settings']"
       >
-        Einstellungen <fa-icon [icon]="faUserCog"></fa-icon>
+        User-settings <fa-icon [icon]="faUserCog"></fa-icon>
       </button>
       <button mat-menu-item style="text-align: right" (click)="logout()" [routerLink]="['/login']">
         Logout <fa-icon [icon]="faSignout"></fa-icon>

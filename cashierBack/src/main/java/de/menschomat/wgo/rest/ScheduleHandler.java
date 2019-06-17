@@ -44,7 +44,7 @@ public class ScheduleHandler {
     public List<ScheduledTask> addScheduleTask(Authentication authentication, @RequestBody ScheduleInformation scheduleInformation) {
 
         scheduleInformation.toSchedule.linkedUserID = authentication.getName();
-        ScheduledTask toAdd = new ScheduledTask(UUID.randomUUID().toString(), scheduleInformation.toSchedule, authentication.getName(), scheduleInformation.crontab);
+        ScheduledTask toAdd = new ScheduledTask(UUID.randomUUID().toString(), scheduleInformation.toSchedule, authentication.getName(), scheduleInformation.cronTab);
         scheduleRepository.save(toAdd);
         scheduleTaskService.addTaskToScheduler(toAdd.id, new Runnable() {
             @Override
@@ -53,7 +53,7 @@ public class ScheduleHandler {
                 scheduleInformation.toSchedule.date = new Date(System.currentTimeMillis());
                 transactionRepository.insert(scheduleInformation.toSchedule);
             }
-        }, scheduleInformation.crontab);
+        }, scheduleInformation.cronTab);
         return getScheduleTask(authentication);
     }
 

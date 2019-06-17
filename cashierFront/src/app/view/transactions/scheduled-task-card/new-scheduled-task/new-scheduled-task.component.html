@@ -24,12 +24,12 @@
           id="cronTab"
           required
         />
-        <mat-hint align="start"><strong>{{crontToText(newTransactionForm.value.cronTab)}}</strong> </mat-hint>
+        <mat-hint align="start"><strong>{{cronToText(newTransactionForm.value.cronTab)}}</strong> </mat-hint>
       </mat-form-field>
       <mat-form-field>
         <input
           matInput
-          placeholder="Titel"
+          placeholder="Title"
           formControlName="title"
           id="title"
           required
@@ -39,7 +39,7 @@
       <mat-form-field>
         <input
           matInput
-          placeholder="Betrag"
+          placeholder="Amount"
           formControlName="amount"
           id="amount"
           required
@@ -63,7 +63,7 @@
             <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
           </mat-chip>
           <input
-            placeholder="Themen"
+            placeholder="#hashtags"
             #taginput
             [matChipInputFor]="chipList"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
@@ -89,7 +89,7 @@
         type="submit"
         [disabled]="!newTransactionForm.valid || !isCronValid(newTransactionForm.value.cronTab)"
       >
-        Hinzufügen
+        Add
       </button>
     </form>
   </div>

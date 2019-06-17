@@ -4,5 +4,5 @@ export interface ScheduledTask {
     id:string;
     userID:string;
     cronTab:string;
-    transaction:Transaction;
+    toSchedule:Transaction;
 }

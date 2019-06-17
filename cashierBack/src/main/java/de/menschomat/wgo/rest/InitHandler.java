@@ -12,18 +12,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping("/api/init")
 public class InitHandler {
 
-    @Value("${standAlone.active}")
-    private Boolean standAlone;
-
-
     @Autowired
     private UserRepository userRepository;
-
-    @GetMapping(value = "/checkup/standalone", produces = APPLICATION_JSON_VALUE)
-    @CrossOrigin
-    public Boolean checkStandAlone() {
-        return false;
-    }
 
     @GetMapping(value = "/checkup/firstTime", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin

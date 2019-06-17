@@ -13,6 +13,9 @@ export class SchedulerService {
   public getAllTasks() {
     return this.httpClient.get<ScheduledTask[]>(`${this.apiURL}`);
   }
+  public addTask(toAdd:ScheduledTask) {
+    return this.httpClient.post<ScheduledTask[]>(`${this.apiURL}`,toAdd);
+  }
 
   public deleteTask(toDelete: string) {
     return this.httpClient.delete<ScheduledTask[]>(`${this.apiURL}?id=${toDelete}`);

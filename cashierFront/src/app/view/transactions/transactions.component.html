@@ -3,7 +3,7 @@
   style="margin: 1em; min-height: 100%"
 >
   <mat-card-header style="align-items: center">
-    <mat-card-title>Umsätze</mat-card-title>
+    <mat-card-title>Cashies</mat-card-title>
   </mat-card-header>
   <hr *ngIf="!loading" />
 
@@ -63,7 +63,7 @@
         <!-- Number Column -->
         <ng-container matColumnDef="date">
           <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
-            Datum
+            Date
           </th>
           <td mat-cell *matCellDef="let row">
             {{ row.date | date: "dd.MM.yyyy" }}
@@ -81,12 +81,12 @@
         <!-- State Column -->
         <ng-container matColumnDef="amount">
           <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
-            Betrag
+            Amount
           </th>
           <td mat-cell *matCellDef="let row">{{ row.amount }}€</td>
         </ng-container>
         <ng-container matColumnDef="tags">
-          <th mat-header-cell *matHeaderCellDef>Tags</th>
+          <th mat-header-cell *matHeaderCellDef>#hashtags</th>
           <td mat-cell *matCellDef="let transaction">
             <mat-chip-list [selectable]="false">
               <mat-chip
@@ -130,7 +130,7 @@
       (click)="openNewTransaction()"
       style="max-height: 3em;"
     >
-      Hinzufügen <fa-icon [icon]="faPlus"></fa-icon>
+      Add <fa-icon [icon]="faPlus"></fa-icon>
     </button>
   </mat-card-actions>
 </mat-card>

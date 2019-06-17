@@ -13,14 +13,8 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootApplication
 public class WgoApplication {
 
-    @Value("${standAlone.active}")
-    private Boolean standAlone;
-
-
-
     public static void main(String[] args) {
         SpringApplication.run(WgoApplication.class, args);
     }
-
 
 }

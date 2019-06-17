@@ -7,6 +7,7 @@ import { TagService } from 'src/app/services/tag.service';
 import cronstrue from 'cronstrue/i18n';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { NewScheduledTaskComponent } from './new-scheduled-task/new-scheduled-task.component';
+import { StatusServiceService } from 'src/app/services/status-service.service';
 
 @Component({
   selector: 'app-scheduled-task-card',
@@ -22,8 +23,9 @@ export class ScheduledTaskCardComponent implements OnInit {
   faTimes = faTimes;
   constructor(
     private schedulerService: SchedulerService,
+    private dialog: MatDialog,
     private tagService: TagService,
-    private dialog: MatDialog
+    private statusService: StatusServiceService,
   ) { }
 
   ngOnInit() {
@@ -34,9 +36,9 @@ export class ScheduledTaskCardComponent implements OnInit {
   getTagForTagID(tID: string) {
     return this.tagService.getTag(tID);
   }
-  crontToText(cron: string) {
+  cronToText(cron: string) {
     
-    return cronstrue.toString(cron, {  locale: "de",use24HourTimeFormat: true });
+    return cronstrue.toString(cron, {  locale: "en",use24HourTimeFormat: true });
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
@@ -51,6 +53,18 @@ export class ScheduledTaskCardComponent implements OnInit {
     );
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.statusService.sendMessage({ saved: false });
+        this.tagService.addTags(result.tags);
+        this.tagService.saveAndUpdateTagList();
+        console.log(result);
+        
+        this.schedulerService
+          .addTask(result.task)
+          .subscribe(res => {
+            this.data = res;
+            this.statusService.sendMessage({ saved: true });
+          });
+        
       }
     });
   }

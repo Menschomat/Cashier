@@ -54,7 +54,7 @@ export class ChangePasswordComponent implements OnInit {
           },
           (error: HttpErrorResponse) => {
             this.createForm();
-            this.openSnackBar("Aktuelles Passwort möglicherweise falsch!","Close","error-dialog");
+            this.openSnackBar("Current Passwort möglicherweise falsch!","Close","error-dialog");
           }
         );
     }

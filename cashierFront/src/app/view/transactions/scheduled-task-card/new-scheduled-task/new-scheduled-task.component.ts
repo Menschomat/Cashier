@@ -21,6 +21,8 @@ import {
   FormControl
 } from "@angular/forms";
 import { ThemeService } from 'src/app/services/theme.service';
+import { ScheduledTask } from 'src/app/model/transaction-management/scheduled-task';
+import { NewScheduledTask } from 'src/app/model/transaction-management/new-scheduled-task';
 @Component({
   selector: 'app-new-scheduled-task',
   templateUrl: './new-scheduled-task.component.html',
@@ -29,7 +31,7 @@ import { ThemeService } from 'src/app/services/theme.service';
 
 export class NewScheduledTaskComponent implements OnInit {
   public newTransactionForm: FormGroup;
-  output = {} as NewTransaction;
+  output = {} as NewScheduledTask;
   allTags: Tag[] = [];
   filteredTags: Observable<string[]>;
   tagCtrl = new FormControl();
@@ -41,12 +43,14 @@ export class NewScheduledTaskComponent implements OnInit {
     private fb: FormBuilder,
     private themeService: ThemeService
   ) {
+    this.output.task = {} as ScheduledTask;
     this.output.tags = [];
-    this.output.transaction = {} as Transaction;
-    this.output.transaction.tagIds = [];
-    this.output.transaction.amount = 0;
-    this.output.transaction.title = "";
-    this.output.transaction.date = "";
+    this.output.task.cronTab = "";
+    this.output.task.toSchedule = {} as Transaction;
+    this.output.task.toSchedule.tagIds = [];
+    this.output.task.toSchedule.amount = 0;
+    this.output.task.toSchedule.title = "";
+    this.output.task.toSchedule.date = "";
     this.allTags = this.tagService.allTags;
     this.filteredTags = this.tagCtrl.valueChanges.pipe(
       startWith(null),
@@ -117,11 +121,11 @@ export class NewScheduledTaskComponent implements OnInit {
   onSubmit() {
     this.output.tags.forEach(tag => {
       tag.title = tag.title.toLocaleLowerCase().trim();
-      this.output.transaction.tagIds.push(tag.title);
+      this.output.task.toSchedule.tagIds.push(tag.title);
     });
-    this.output.transaction.amount = this.newTransactionForm.value.amount;
-    this.output.transaction.title = this.newTransactionForm.value.title;
-    this.output.transaction.date = this.newTransactionForm.value.date;
+    this.output.task.toSchedule.amount = this.newTransactionForm.value.amount;
+    this.output.task.toSchedule.title = this.newTransactionForm.value.title;
+    this.output.task.cronTab = this.newTransactionForm.value.cronTab;
     this.dialogRef.close(this.output);
   }
   
@@ -153,7 +157,7 @@ export class NewScheduledTaskComponent implements OnInit {
     return cronregex.test(freq);
   }
 
-  crontToText(cron: string) {
+  cronToText(cron: string) {
     if (cron) {
       if (this.isCronValid(cron)) {
         return cronstrue.toString(cron, { use24HourTimeFormat: true });

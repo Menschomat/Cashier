@@ -1,6 +1,6 @@
 <mat-card class="overviewCard mat-elevation-z8">
   <mat-card-header style="align-items: center">
-    <mat-card-title>Aktuelle Umsätze</mat-card-title>
+    <mat-card-title>Recent Cashies</mat-card-title>
   </mat-card-header>
   <hr *ngIf="!loading" />
   <mat-progress-bar
@@ -34,7 +34,7 @@
       </ng-container>
       <!-- Position Column -->
       <ng-container matColumnDef="dateTime">
-        <th mat-header-cell *matHeaderCellDef>Datum</th>
+        <th mat-header-cell *matHeaderCellDef>Date</th>
         <td mat-cell *matCellDef="let transaction">
           {{ transaction.date | date: "dd.MM.yyyy" }}
         </td>
@@ -42,7 +42,7 @@
 
       <!-- Name Column -->
       <ng-container matColumnDef="amount">
-        <th mat-header-cell *matHeaderCellDef>Betrag</th>
+        <th mat-header-cell *matHeaderCellDef>Amount</th>
         <td mat-cell *matCellDef="let transaction">
           {{ transaction.amount }}€
         </td>
@@ -50,13 +50,13 @@
 
       <!-- Weight Column -->
       <ng-container matColumnDef="title">
-        <th mat-header-cell *matHeaderCellDef>Titel</th>
+        <th mat-header-cell *matHeaderCellDef>Title</th>
         <td mat-cell *matCellDef="let transaction">{{ transaction.title }}</td>
       </ng-container>
 
       <!-- Symbol Column -->
       <ng-container matColumnDef="tags">
-        <th mat-header-cell *matHeaderCellDef>Tags</th>
+        <th mat-header-cell *matHeaderCellDef>#hashtags</th>
         <td mat-cell *matCellDef="let transaction">
           <mat-chip-list [selectable]="false">
             <mat-chip
@@ -88,7 +88,7 @@
     </button>
     <div style="flex: 1;"></div>
     <button mat-raised-button color="primary" (click)="openNewTransaction()">
-      Hinzufügen <fa-icon [icon]="faPlus"></fa-icon>
+      Add <fa-icon [icon]="faPlus"></fa-icon>
     </button>
   </mat-card-actions>
 </mat-card>
