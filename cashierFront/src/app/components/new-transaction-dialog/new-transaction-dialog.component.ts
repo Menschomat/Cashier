@@ -19,7 +19,7 @@ import {
   Validators,
   FormControl
 } from "@angular/forms";
-import { ThemeService } from 'src/app/services/theme.service';
+import { ThemeService } from "src/app/services/theme.service";
 @Component({
   selector: "app-new-transaction-dialog",
   templateUrl: "./new-transaction-dialog.component.html",
@@ -32,12 +32,12 @@ export class NewTransactionDialogComponent implements OnInit {
   filteredTags: Observable<string[]>;
   tagCtrl = new FormControl();
   @ViewChild("taginput") tagInput: ElementRef<HTMLInputElement>;
-  @ViewChild('auto') matAutocomplete: MatAutocomplete;
+  @ViewChild("auto") matAutocomplete: MatAutocomplete;
   constructor(
     private dialogRef: MatDialogRef<NewTransactionDialogComponent>,
     private tagService: TagService,
     private fb: FormBuilder,
-    private themeService:ThemeService
+    private themeService: ThemeService
   ) {
     this.output.tags = [];
     this.output.transaction = {} as Transaction;
@@ -58,23 +58,23 @@ export class NewTransactionDialogComponent implements OnInit {
   removable = true;
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, SPACE, COMMA];
-  
+
   createForm() {
     this.newTransactionForm = this.fb.group({
       title: ["", Validators.required],
       amount: [0, Validators.pattern("^[-+]?[0-9]*.?[0-9]+$")],
+      type: ["", Validators.required],
       date: ["", Validators.required]
     });
   }
   add(event: MatChipInputEvent): void {
-      const input = event.input;
-      const value = event.value;
-      this.addTag(value);
-      if (input) {
-        input.value = "";
-      }
-      this.clearAutocomplete();
-    
+    const input = event.input;
+    const value = event.value;
+    this.addTag(value);
+    if (input) {
+      input.value = "";
+    }
+    this.clearAutocomplete();
   }
   private addTag(value: string) {
     let toAdd = value.replace("#", "");
@@ -116,14 +116,14 @@ export class NewTransactionDialogComponent implements OnInit {
       tag.title = tag.title.toLocaleLowerCase().trim();
       this.output.transaction.tagIds.push(tag.title);
     });
-    this.output.transaction.amount = this.newTransactionForm.value.amount;
+    this.output.transaction.amount = this.newTransactionForm.value.amount * this.newTransactionForm.value.type;
     this.output.transaction.title = this.newTransactionForm.value.title;
     this.output.transaction.date = this.newTransactionForm.value.date;
     this.dialogRef.close(this.output);
   }
   selected(event: MatAutocompleteSelectedEvent): void {
     console.log("Selected");
-    
+
     this.addTag(event.option.viewValue);
     this.clearAutocomplete();
   }

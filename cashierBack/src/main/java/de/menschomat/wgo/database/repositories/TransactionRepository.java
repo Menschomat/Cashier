@@ -18,6 +18,8 @@ public interface TransactionRepository extends MongoRepository<Transaction, Stri
 
     public List<Transaction> findAllByLinkedUserID(String linkedUserID);
 
+    public List<Transaction> findAllByIngestion(boolean ingestion);
+
     public Page<Transaction> findByLinkedUserID(String linkedUserID, Pageable pageable);
 
     public Page<Transaction> findByDateBetweenAndLinkedUserID(Date from, Date to, String linkedUserID, Pageable pageable);
