@@ -1,4 +1,11 @@
-import { Component, OnInit, Input } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Input,
+  SimpleChange,
+  Output,
+  EventEmitter
+} from "@angular/core";
 import { OverviewData } from "src/app/view/home/overview-card/model/overview-data";
 import {
   MatDialogConfig,
@@ -32,8 +39,14 @@ export class OverviewCardComponent implements OnInit {
   faMinusC = faMinusCircle;
   faTrash = faTrashAlt;
   loading = false;
+  fromDate: Date;
+  toDate: Date;
+
   @Input()
-  data = {} as OverviewData;
+  data: Transaction[] = [];
+
+  @Output() datePair = new EventEmitter();
+  @Output() reloadFromServer = new EventEmitter();
 
   displayedColumns: string[] = [
     "select",
@@ -52,22 +65,23 @@ export class OverviewCardComponent implements OnInit {
     private statusService: StatusServiceService
   ) {}
   ngOnInit() {
+    this.fromDate = new Date();
+    this.toDate = new Date();
+    this.fromDate.setMonth(this.toDate.getMonth() - 1);
+    this.dateChanged()
     this.loading = true;
-    this.transactionService.getLatesTransactions().subscribe(res => {
-      this.data.lastTransactions = res;
-      this.dataSource.data = res;
-      this.loading = false;
-    });
+    this.refreshData();
+  }
+  ngOnChanges(changes: SimpleChange) {
+    this.refreshData();
   }
 
-  /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
   }
 
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     this.isAllSelected()
       ? this.selection.clear()
@@ -90,32 +104,29 @@ export class OverviewCardComponent implements OnInit {
     );
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
-
         this.loading = true;
         this.statusService.sendMessage({ saved: false });
         this.tagService.addTags(result.tags);
         this.tagService.saveAndUpdateTagList();
         this.transactionService
           .addSingleTransaction(result.transaction)
-          .subscribe(res => {
-            this.data.lastTransactions = res;
-            this.dataSource.data = res;
-            this.loading = false;
-            this.statusService.sendMessage({ saved: true });
+          .subscribe(() => {
+            this.reloadFromServer.emit();
           });
       }
     });
+  }
+  refreshData() {
+    this.dataSource.data = this.data;
+    this.loading = false;
   }
   deleteTransactions(tList: Transaction[]) {
     this.statusService.sendMessage({ saved: false });
     tList.forEach(tag => {
       this.selection.deselect(tag);
     });
-    this.transactionService.deleteTransactions(tList).subscribe(res => {
-      this.data.lastTransactions = res;
-      this.dataSource.data = res;
-      this.statusService.sendMessage({ saved: true });
+    this.transactionService.deleteTransactions(tList).subscribe(() => {
+      this.reloadFromServer.emit();
     });
   }
   openEdit(tag: Tag) {
@@ -128,5 +139,9 @@ export class OverviewCardComponent implements OnInit {
 
     let dialogRef = this.dialog.open(TagEditorComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {});
+  }
+
+  dateChanged() {
+    this.datePair.emit({ from: this.fromDate, to: this.toDate });
   }
 }

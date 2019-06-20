@@ -10,8 +10,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -44,18 +47,7 @@ public class TransactionHandler {
                                       @RequestParam int page,
                                       @RequestParam(value = "sortBy", required = false) String sortBy,
                                       @RequestParam(value = "sortDir", required = false) String sortDir) {
-        PageRequest pageRequest;
-        if (sortBy != null) {
-            if (sortDir != null && sortDir.equals("asc")) {
-                pageRequest = PageRequest.of(page, size, Sort.by(sortBy));
-            } else {
-                pageRequest = PageRequest.of(page, size, Sort.by(sortBy).descending());
-            }
-        } else {
-            pageRequest = PageRequest.of(page, size);
-        }
-        Page<Transaction> resultPage = transactionRepository.findByLinkedUserID(authentication.getName(), pageRequest);
-
+        Page<Transaction> resultPage = transactionRepository.findByLinkedUserID(authentication.getName(), getPageRequest(page, size, sortBy, sortDir));
         return new TransactionResult(resultPage.getTotalPages(), resultPage.getTotalElements(), resultPage.getContent());
     }
 
@@ -68,9 +60,26 @@ public class TransactionHandler {
 
     @GetMapping(value = "/date", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
-    public TransactionResult getNumOfPages(Authentication authentication, @RequestParam Date from, @RequestParam Date to, @RequestParam int page, @RequestParam int size) {
-        Page<Transaction> resultPage = transactionRepository.findByDateBetweenAndLinkedUserID(from, to, authentication.getName(), PageRequest.of(page, size));
+    public TransactionResult getNumOfPages(Authentication authentication,
+                                           @RequestParam Date from, @RequestParam Date to,
+                                           @RequestParam int page, @RequestParam int size,
+                                           @RequestParam(value = "sortBy", required = false) String sortBy,
+                                           @RequestParam(value = "sortDir", required = false) String sortDir) {
+        Page<Transaction> resultPage = transactionRepository.findByDateBetweenAndLinkedUserID(
+                from,
+                to,
+                authentication.getName(),
+                getPageRequest(page, size, sortBy, sortDir)
+        );
         return new TransactionResult(resultPage.getTotalPages(), resultPage.getTotalElements(), resultPage.getContent());
+    }
+
+    @GetMapping(value = "/date/all", produces = APPLICATION_JSON_VALUE)
+    @CrossOrigin
+    public List<Transaction> getNumOfPages(Authentication authentication, @RequestParam String from, @RequestParam String to) throws ParseException {
+
+        SimpleDateFormat ISO8601DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.GERMANY);
+        return transactionRepository.findByDateBetweenAndLinkedUserID(ISO8601DATEFORMAT.parse(from), ISO8601DATEFORMAT.parse(to), authentication.getName());
     }
 
     @PostMapping(value = "", produces = APPLICATION_JSON_VALUE)
@@ -93,5 +102,19 @@ public class TransactionHandler {
     public List<Transaction> deleteTransactionsByID(Authentication authentication, @RequestBody List<String> toDelete) {
         transactionRepository.deleteAllById(toDelete);
         return getLatestTransactions(authentication);
+    }
+
+    private PageRequest getPageRequest(int page, int size, String sortBy, String sortDir) {
+        PageRequest pageRequest;
+        if (sortBy != null) {
+            if (sortDir != null && sortDir.equals("asc")) {
+                pageRequest = PageRequest.of(page, size, Sort.by(sortBy));
+            } else {
+                pageRequest = PageRequest.of(page, size, Sort.by(sortBy).descending());
+            }
+        } else {
+            pageRequest = PageRequest.of(page, size);
+        }
+        return pageRequest;
     }
 }

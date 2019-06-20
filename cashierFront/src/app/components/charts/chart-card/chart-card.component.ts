@@ -1,10 +1,8 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild, Input, SimpleChange } from "@angular/core";
 import { Chart } from "chart.js";
 import { TagService } from "src/app/services/tag.service";
-import { TransactionService } from "src/app/services/transaction.service";
-import { ThrowStmt } from "@angular/compiler";
 import { Subscription } from "rxjs";
-import { StatusServiceService } from "src/app/services/status-service.service";
+import { Transaction } from 'src/app/model/transaction-management/transaction';
 
 @Component({
   selector: "app-chart-card",
@@ -12,27 +10,21 @@ import { StatusServiceService } from "src/app/services/status-service.service";
   styleUrls: ["./chart-card.component.scss"]
 })
 export class ChartCardComponent implements OnInit {
+  @Input()
+  data:Transaction[] = [];
   @ViewChild("lineChart") private chartRef;
   chart: any;
   subscription: Subscription;
   constructor(
     private tagService: TagService,
-    private transService: TransactionService,
-    private statusService: StatusServiceService
   ) {
-    this.subscription = this.statusService.getMessage().subscribe(status => {
-      if (status.saved) {
-        this.renderChartData();
-      }
-    });
   }
   renderChartData() {
-    this.transService.getLatesTransactions().subscribe(transs => {
       this.chart.data.datasets[0].data = [];
       this.chart.data.datasets[0].backgroundColor = [];
       this.chart.data.labels = [];
       let tagCountBuffer: any = {};
-      transs.forEach(trans => {
+      this.data.forEach(trans => {
         trans.tagIds.forEach(tID => {
           if (tagCountBuffer[tID]) {
             tagCountBuffer[tID] += trans.amount;
@@ -49,7 +41,6 @@ export class ChartCardComponent implements OnInit {
         );
       });
       this.chart.update();
-    });
   }
   ngOnInit() {
     this.chart = new Chart(this.chartRef.nativeElement, {
@@ -86,6 +77,9 @@ export class ChartCardComponent implements OnInit {
         }
       }
     });
+    this.renderChartData();
+  }
+  ngOnChanges(changes: SimpleChange) {
     this.renderChartData();
   }
 }

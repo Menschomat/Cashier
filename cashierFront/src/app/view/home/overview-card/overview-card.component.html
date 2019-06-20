@@ -1,6 +1,40 @@
 <mat-card class="overviewCard mat-elevation-z8">
   <mat-card-header style="align-items: center">
     <mat-card-title>Recent Cashies</mat-card-title>
+    <div style="flex: 1;"></div>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="From"
+        [(ngModel)]="fromDate"
+        (dateChange)="dateChanged()"
+        [matDatepicker]="fromPicker"
+        id="date"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="fromPicker"
+        disabled="false"
+
+      ></mat-datepicker-toggle>
+      <mat-datepicker #fromPicker disabled="false"></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field style="padding-left: 1em;">
+      <input
+        matInput
+        placeholder="To"
+        [(ngModel)]="toDate"
+        [matDatepicker]="toPicker"
+        (dateChange)="dateChanged()"
+        id="date"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="toPicker"
+        disabled="false"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #toPicker disabled="false"></mat-datepicker>
+    </mat-form-field>
   </mat-card-header>
   <hr *ngIf="!loading" />
   <mat-progress-bar

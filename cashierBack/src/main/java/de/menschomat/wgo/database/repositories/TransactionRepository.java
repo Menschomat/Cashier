@@ -24,6 +24,8 @@ public interface TransactionRepository extends MongoRepository<Transaction, Stri
 
     public Page<Transaction> findByDateBetweenAndLinkedUserID(Date from, Date to, String linkedUserID, Pageable pageable);
 
+    public List<Transaction> findByDateBetweenAndLinkedUserID(Date from, Date to, String linkedUserID);
+
     public List<Transaction> findAllByLinkedUserIDOrderByDate(String linkedUserID, Pageable pageable);
 
     public  void  deleteAllById(List<String> ids);
