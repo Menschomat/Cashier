@@ -18,8 +18,13 @@ export class HomeComponent implements OnInit {
   
   }
   dateChanged(datePair:any) {
+    let now = new Date();
     this.fromDate = datePair.from;
     this.toDate = datePair.to;
+    this.fromDate.setHours(22);
+    this.fromDate.setMinutes(0);
+    this.toDate.setHours(22)
+    this.toDate.setMinutes(0);
     this.refreshData();
 
   }

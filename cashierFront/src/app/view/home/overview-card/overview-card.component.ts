@@ -138,7 +138,9 @@ export class OverviewCardComponent implements OnInit {
     dialogConfig.data = tag;
 
     let dialogRef = this.dialog.open(TagEditorComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe(result => {});
+    dialogRef.afterClosed().subscribe(result => {
+      this.reloadFromServer.emit();
+    });
   }
 
   dateChanged() {
