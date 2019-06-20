@@ -28,10 +28,10 @@
     <mat-form-field>
       <mat-label>Type</mat-label>
       <mat-select id="type" formControlName="type" required>
-        <mat-option [value]="-1">
+        <mat-option [value]="false">
           issue
         </mat-option>
-        <mat-option [value]="1">
+        <mat-option [value]="true">
           ingestion
         </mat-option>
       </mat-select>
@@ -46,6 +46,7 @@
         required
         currencyMask
         [options]="{
+          allowNegative: false,
           prefix: '',
           align: 'left',
           suffix: '€',

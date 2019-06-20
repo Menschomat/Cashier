@@ -6,14 +6,20 @@ import {
   MatTableDataSource
 } from "@angular/material";
 import { NewTransactionDialogComponent } from "../../../components/new-transaction-dialog/new-transaction-dialog.component";
-import { faPlus, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlus,
+  faTrashAlt,
+  faPlusCircle,
+  faTimes,
+  faMinusCircle
+} from "@fortawesome/free-solid-svg-icons";
 import { TransactionService } from "src/app/services/transaction.service";
 import { TagService } from "src/app/services/tag.service";
 import { Tag } from "src/app/model/hashtag-system/tag";
 import { TagEditorComponent } from "../../../components/tag-editor/tag-editor.component";
 import { SelectionModel } from "@angular/cdk/collections";
 import { Transaction } from "src/app/model/transaction-management/transaction";
-import { StatusServiceService } from 'src/app/services/status-service.service';
+import { StatusServiceService } from "src/app/services/status-service.service";
 
 @Component({
   selector: "app-overview-card",
@@ -22,6 +28,8 @@ import { StatusServiceService } from 'src/app/services/status-service.service';
 })
 export class OverviewCardComponent implements OnInit {
   faPlus = faPlus;
+  faPlusC = faPlusCircle;
+  faMinusC = faMinusCircle;
   faTrash = faTrashAlt;
   loading = false;
   @Input()
@@ -29,6 +37,7 @@ export class OverviewCardComponent implements OnInit {
 
   displayedColumns: string[] = [
     "select",
+    "type",
     "dateTime",
     "title",
     "amount",
@@ -40,7 +49,7 @@ export class OverviewCardComponent implements OnInit {
     private dialog: MatDialog,
     private transactionService: TransactionService,
     private tagService: TagService,
-    private statusService:StatusServiceService,
+    private statusService: StatusServiceService
   ) {}
   ngOnInit() {
     this.loading = true;
@@ -65,7 +74,7 @@ export class OverviewCardComponent implements OnInit {
       : this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
-  getTagForTagID(tID: string) {    
+  getTagForTagID(tID: string) {
     return this.tagService.getTag(tID);
   }
   openNewTransaction() {
@@ -74,15 +83,17 @@ export class OverviewCardComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.minWidth = "40%";
-  
+
     let dialogRef = this.dialog.open(
       NewTransactionDialogComponent,
       dialogConfig
     );
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        console.log(result);
+
         this.loading = true;
-        this.statusService.sendMessage({saved:false});
+        this.statusService.sendMessage({ saved: false });
         this.tagService.addTags(result.tags);
         this.tagService.saveAndUpdateTagList();
         this.transactionService
@@ -91,21 +102,21 @@ export class OverviewCardComponent implements OnInit {
             this.data.lastTransactions = res;
             this.dataSource.data = res;
             this.loading = false;
-            this.statusService.sendMessage({saved:true});
+            this.statusService.sendMessage({ saved: true });
           });
       }
     });
   }
   deleteTransactions(tList: Transaction[]) {
-    this.statusService.sendMessage({saved:false});
+    this.statusService.sendMessage({ saved: false });
     tList.forEach(tag => {
       this.selection.deselect(tag);
-    })
-    this.transactionService.deleteTransactions(tList).subscribe(res =>{
+    });
+    this.transactionService.deleteTransactions(tList).subscribe(res => {
       this.data.lastTransactions = res;
       this.dataSource.data = res;
-      this.statusService.sendMessage({saved:true});
-    })
+      this.statusService.sendMessage({ saved: true });
+    });
   }
   openEdit(tag: Tag) {
     const dialogConfig = new MatDialogConfig();

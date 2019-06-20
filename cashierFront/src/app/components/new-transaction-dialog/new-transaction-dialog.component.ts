@@ -62,7 +62,7 @@ export class NewTransactionDialogComponent implements OnInit {
   createForm() {
     this.newTransactionForm = this.fb.group({
       title: ["", Validators.required],
-      amount: [0, Validators.pattern("^[-+]?[0-9]*.?[0-9]+$")],
+      amount: [0, Validators.pattern("^[+]?[0-9]*.?[0-9]+$")],
       type: ["", Validators.required],
       date: ["", Validators.required]
     });
@@ -116,7 +116,11 @@ export class NewTransactionDialogComponent implements OnInit {
       tag.title = tag.title.toLocaleLowerCase().trim();
       this.output.transaction.tagIds.push(tag.title);
     });
-    this.output.transaction.amount = this.newTransactionForm.value.amount * this.newTransactionForm.value.type;
+    console.log(this.newTransactionForm.value.type);
+    
+    this.output.transaction.ingestion =
+      this.newTransactionForm.value.type;
+    this.output.transaction.amount = this.newTransactionForm.value.amount;
     this.output.transaction.title = this.newTransactionForm.value.title;
     this.output.transaction.date = this.newTransactionForm.value.date;
     this.dialogRef.close(this.output);

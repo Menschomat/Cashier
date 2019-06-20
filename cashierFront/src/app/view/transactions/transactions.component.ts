@@ -10,8 +10,15 @@ import { TagService } from "src/app/services/tag.service";
 import { NewTransactionDialogComponent } from "src/app/components/new-transaction-dialog/new-transaction-dialog.component";
 import { MatDialogConfig, MatDialog } from "@angular/material";
 import { StatusServiceService } from "src/app/services/status-service.service";
-import { faPlus, faTrash, faTrashAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { SelectionModel } from '@angular/cdk/collections';
+import {
+  faPlus,
+  faTrash,
+  faTrashAlt,
+  faTimes,
+  faPlusCircle,
+  faMinusCircle
+} from "@fortawesome/free-solid-svg-icons";
+import { SelectionModel } from "@angular/cdk/collections";
 
 /**
  * @title Table retrieving data through HTTP
@@ -22,9 +29,18 @@ import { SelectionModel } from '@angular/cdk/collections';
   templateUrl: "transactions.component.html"
 })
 export class TransactionsComponent implements AfterViewInit {
-  displayedColumns: string[] = ["select","date", "title", "amount", "tags"];
+  displayedColumns: string[] = [
+    "select",
+    "type",
+    "date",
+    "title",
+    "amount",
+    "tags"
+  ];
   data: Transaction[] = [];
   selection = new SelectionModel<String>(true, []);
+  faPlusC = faPlusCircle;
+  faMinusC = faMinusCircle;
   faPlus = faPlus;
   faTrash = faTrashAlt;
   faTimes = faTimes;
@@ -74,14 +90,14 @@ export class TransactionsComponent implements AfterViewInit {
     return this.tagService.getTag(tID);
   }
   deleteTransactions(tList: string[]) {
-    this.statusService.sendMessage({saved:false});
+    this.statusService.sendMessage({ saved: false });
     tList.forEach(id => {
       this.selection.deselect(id);
-    })
-    this.transactionService.deleteTransactionsById(tList).subscribe(res =>{
+    });
+    this.transactionService.deleteTransactionsById(tList).subscribe(res => {
       this.ngAfterViewInit();
-      this.statusService.sendMessage({saved:true});
-    })
+      this.statusService.sendMessage({ saved: true });
+    });
   }
   openNewTransaction() {
     const dialogConfig = new MatDialogConfig();
