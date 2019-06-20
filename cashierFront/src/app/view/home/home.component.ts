@@ -31,6 +31,11 @@ export class HomeComponent implements OnInit {
         .getFromTo(this.fromDate, this.toDate)
         .subscribe(res => {
           this.transactions = res;
+          this.transactions.sort(function(a,b){    
+            var c = Date.parse(a.date.split("+")[0].substring(0, a.date.split("+")[0].length - 4));
+            var d = Date.parse(b.date.split("+")[0].substring(0, b.date.split("+")[0].length - 4));
+            return c-d;
+            });
         });
   }
 }

@@ -18,7 +18,7 @@ import { Transaction } from "src/app/model/transaction-management/transaction";
 export class ChartCardComponent implements OnInit {
   @Input()
   data: Transaction[] = [];
-  @ViewChild("lineChart") private chartRef;
+  @ViewChild("doughChart") private chartRef;
   chart: any;
   subscription: Subscription;
   constructor(private tagService: TagService) {}
@@ -29,13 +29,14 @@ export class ChartCardComponent implements OnInit {
     let tagCountBuffer: any = {};
     if (this.data.length > 0) {
       this.data.forEach(trans => {
-        trans.tagIds.forEach(tID => {
-          if (tagCountBuffer[tID]) {
-            tagCountBuffer[tID] += trans.amount;
-          } else {
-            tagCountBuffer[tID] = trans.amount;
-          }
-        });
+        if (!trans.ingestion)
+          trans.tagIds.forEach(tID => {
+            if (tagCountBuffer[tID]) {
+              tagCountBuffer[tID] += trans.amount;
+            } else {
+              tagCountBuffer[tID] = trans.amount;
+            }
+          });
       });
       Object.keys(tagCountBuffer).forEach(tag => {
         this.chart.data.datasets[0].data.push(tagCountBuffer[tag]);

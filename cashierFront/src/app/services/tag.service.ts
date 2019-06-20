@@ -58,11 +58,10 @@ export class TagService {
 
   constructor(
     private httpClient: HttpClient,
-    private statusService: StatusServiceService,
-    private userService: UserService
+    private statusService: StatusServiceService
   ) {
     this.subscription = this.statusService.getMessage().subscribe(status => {
-      if (status.loggedIn == false) { // Clear tag Cache after Logout!
+      if (status.loggedIn == false) {
         this.allTags = [];
       }
       if (status.loggedIn == true) {
