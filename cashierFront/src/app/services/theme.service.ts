@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class ThemeService {
   private theme: string = "light";
@@ -15,10 +15,8 @@ export class ThemeService {
   public getTheme(): string {
     return this.theme;
   }
-  public setTheme(newTheme: string):string {
+  public setTheme(newTheme: string): string {
     if (newTheme === "light" || newTheme === "dark") {
-      console.log("ThemeChange", newTheme);
-      
       this.theme = newTheme;
       localStorage.setItem("theme", newTheme);
     }

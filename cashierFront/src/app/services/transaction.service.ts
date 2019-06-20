@@ -11,8 +11,7 @@ import { TransactionResponse } from "../model/transaction-management/Transaction
 export class TransactionService {
   apiURL: string = "/api/transaction";
 
-  constructor(private httpClient: HttpClient, private uService: UserService) {
-  }
+  constructor(private httpClient: HttpClient, private uService: UserService) {}
   public getLatesTransactions() {
     return this.httpClient.get<Transaction[]>(`${this.apiURL}/latest`);
   }
@@ -67,10 +66,10 @@ export class TransactionService {
     );
   }
   public getFromTo(from: Date, to: Date): Observable<Transaction[]> {
-    console.log(from, to);
-    
     return this.httpClient.get<Transaction[]>(
-      `${this.apiURL}/date/all?from=${from.toISOString()}&to=${to.toISOString()}`
+      `${
+        this.apiURL
+      }/date/all?from=${from.toISOString()}&to=${to.toISOString()}`
     );
   }
 }

@@ -1,8 +1,14 @@
-import { Component, OnInit, ViewChild, Input, SimpleChange } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  Input,
+  SimpleChange
+} from "@angular/core";
 import { Chart } from "chart.js";
 import { TagService } from "src/app/services/tag.service";
 import { Subscription } from "rxjs";
-import { Transaction } from 'src/app/model/transaction-management/transaction';
+import { Transaction } from "src/app/model/transaction-management/transaction";
 
 @Component({
   selector: "app-chart-card",
@@ -11,19 +17,17 @@ import { Transaction } from 'src/app/model/transaction-management/transaction';
 })
 export class ChartCardComponent implements OnInit {
   @Input()
-  data:Transaction[] = [];
+  data: Transaction[] = [];
   @ViewChild("lineChart") private chartRef;
   chart: any;
   subscription: Subscription;
-  constructor(
-    private tagService: TagService,
-  ) {
-  }
+  constructor(private tagService: TagService) {}
   renderChartData() {
-      this.chart.data.datasets[0].data = [];
-      this.chart.data.datasets[0].backgroundColor = [];
-      this.chart.data.labels = [];
-      let tagCountBuffer: any = {};
+    this.chart.data.datasets[0].data = [];
+    this.chart.data.datasets[0].backgroundColor = [];
+    this.chart.data.labels = [];
+    let tagCountBuffer: any = {};
+    if (this.data.length > 0) {
       this.data.forEach(trans => {
         trans.tagIds.forEach(tID => {
           if (tagCountBuffer[tID]) {
@@ -40,7 +44,8 @@ export class ChartCardComponent implements OnInit {
           this.tagService.getTag(tag).color
         );
       });
-      this.chart.update();
+    }
+    this.chart.update();
   }
   ngOnInit() {
     this.chart = new Chart(this.chartRef.nativeElement, {
@@ -77,9 +82,10 @@ export class ChartCardComponent implements OnInit {
         }
       }
     });
-    this.renderChartData();
   }
   ngOnChanges(changes: SimpleChange) {
-    this.renderChartData();
+    if (this.data && this.chart) {
+      this.renderChartData();
+    }
   }
 }

@@ -116,18 +116,13 @@ export class NewTransactionDialogComponent implements OnInit {
       tag.title = tag.title.toLocaleLowerCase().trim();
       this.output.transaction.tagIds.push(tag.title);
     });
-    console.log(this.newTransactionForm.value.type);
-    
-    this.output.transaction.ingestion =
-      this.newTransactionForm.value.type;
+    this.output.transaction.ingestion = this.newTransactionForm.value.type;
     this.output.transaction.amount = this.newTransactionForm.value.amount;
     this.output.transaction.title = this.newTransactionForm.value.title;
     this.output.transaction.date = this.newTransactionForm.value.date;
     this.dialogRef.close(this.output);
   }
   selected(event: MatAutocompleteSelectedEvent): void {
-    console.log("Selected");
-
     this.addTag(event.option.viewValue);
     this.clearAutocomplete();
   }

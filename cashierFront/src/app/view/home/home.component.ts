@@ -14,25 +14,23 @@ export class HomeComponent implements OnInit {
 
   transactions: Transaction[] = [];
 
-  ngOnInit() {
-  
-  }
-  dateChanged(datePair:any) {
+  ngOnInit() {}
+  dateChanged(datePair: any) {
     let now = new Date();
     this.fromDate = datePair.from;
     this.toDate = datePair.to;
     this.fromDate.setHours(22);
     this.fromDate.setMinutes(0);
-    this.toDate.setHours(22)
+    this.toDate.setHours(22);
     this.toDate.setMinutes(0);
     this.refreshData();
-
   }
   refreshData() {
-    this.transactionService
-      .getFromTo(this.fromDate, this.toDate)
-      .subscribe(res => {
-        this.transactions = res;
-      });
+    if (this.fromDate && this.toDate)
+      this.transactionService
+        .getFromTo(this.fromDate, this.toDate)
+        .subscribe(res => {
+          this.transactions = res;
+        });
   }
 }
