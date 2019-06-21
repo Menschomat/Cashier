@@ -1,0 +1,94 @@
+<div style="display: flex; flex-direction:column;">
+  <div style="display: flex; flex-direction:row;">
+    <h1>New User...</h1>
+    <div style="flex: 1;"></div>
+    <button
+      style="margin-top: 1.2em;"
+      mat-icon-button
+      color="warn"
+      (click)="close()"
+    >
+      <fa-icon style="font-size: 1.7em;" [icon]="faClose"></fa-icon>
+    </button>
+  </div>
+  <form
+    style="display: flex; flex-direction:column"
+    [formGroup]="newUserForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Username"
+        formControlName="uname"
+        id="uname"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Passwort"
+        formControlName="password"
+        id="password"
+        type="password"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field>
+        <input
+          matInput
+          placeholder="Passwor wiederholen"
+          formControlName="repeatPassword"
+          id="repeatPassword"
+          type="password"
+          required
+        />
+      </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Name" formControlName="name" id="name" />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Surname"
+        formControlName="surname"
+        id="surname"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Birthday"
+        [matDatepicker]="picker"
+        formControlName="date"
+        id="date"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="picker"
+        disabled="false"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker startView="multi-year" disabled="false"></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select
+        placeholder="Role"
+        formControlName="role"
+        id="role"
+        required
+      >
+        <mat-option value="USER">User</mat-option>
+        <mat-option value="ADMIN">Admin</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!newUserForm.valid"
+    >
+      Add
+    </button>
+  </form>
+</div>

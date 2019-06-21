@@ -1,0 +1,118 @@
+<div style="display: flex; flex-direction:column;">
+  <div style="display: flex; flex-direction:row;">
+    <h1>New Cashie...</h1>
+    <div style="flex: 1;"></div>
+    <button
+      style="margin-top: 1.2em;"
+      mat-icon-button
+      color="warn"
+      (click)="close()"
+    >
+      <fa-icon style="font-size: 1.7em;" [icon]="faClose"></fa-icon>
+    </button>
+  </div>
+  <form
+    style="display: flex; flex-direction:column"
+    [formGroup]="newTransactionForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Title"
+        formControlName="title"
+        id="title"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Type</mat-label>
+      <mat-select id="type" formControlName="type" required>
+        <mat-option [value]="false">
+          issue
+        </mat-option>
+        <mat-option [value]="true">
+          ingestion
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Amount"
+        formControlName="amount"
+        id="amount"
+        required
+        currencyMask
+        [options]="{
+          allowNegative: false,
+          prefix: '',
+          align: 'left',
+          suffix: '€',
+          thousands: '.',
+          decimal: ','
+        }"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Date"
+        [matDatepicker]="picker"
+        formControlName="date"
+        id="date"
+        required
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="picker"
+        disabled="false"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker disabled="false"></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="example-chip-list">
+      <mat-chip-list #chipList>
+        <mat-chip
+          *ngFor="let tag of output.tags"
+          class="mat-elevation-z2"
+          style="color: rgba(255,255,255,0.9)"
+          [selectable]="selectable"
+          [removable]="removable"
+          (removed)="remove(tag)"
+          [ngStyle]="{ 'background-color': tag.color }"
+        >
+          #{{ tag.title }}
+          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+        </mat-chip>
+        <input
+          placeholder="#hashtags"
+          #taginput
+          [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          (matChipInputTokenEnd)="add($event)"
+          [matAutocomplete]="auto"
+          [formControl]="tagCtrl"
+        />
+      </mat-chip-list>
+   
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      (optionSelected)="selected($event)"
+    >
+      <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+        #{{ tag }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+      <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!newTransactionForm.valid"
+    >
+      Add
+    </button>
+  </form>
+</div>

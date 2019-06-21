@@ -1,0 +1,10 @@
+<div style="display: flex; justify-content: center; margin: 1em;"></div>
+<app-overview-card
+  [data]="transactions"
+  (datePair)="dateChanged($event)"
+  (reloadFromServer)="refreshData()"
+></app-overview-card>
+<div style="flex-direction: row; display: flex;">
+  <app-chart-card [data]="transactions"></app-chart-card>
+  <app-stack-bar-chart-card [data]="transactions"></app-stack-bar-chart-card>
+</div>
