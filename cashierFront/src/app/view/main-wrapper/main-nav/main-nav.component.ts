@@ -15,11 +15,24 @@ import {
 import { Subscription } from "rxjs";
 import { StatusServiceService } from "src/app/services/status-service.service";
 import { UserService } from "src/app/services/user.service";
-import { ThemeService } from 'src/app/services/theme.service';
-import { FrontendUser } from 'src/app/model/user-management/frontend-user';
+import { ThemeService } from "src/app/services/theme.service";
+import { FrontendUser } from "src/app/model/user-management/frontend-user";
+import { trigger, transition, style, animate } from "@angular/animations";
 
 @Component({
   selector: "app-main-nav",
+  animations: [
+    trigger("enterAnimation", [
+      transition(":enter", [
+        style({ opacity: 0 }),
+        animate("200ms", style({ opacity: 1 }))
+      ]),
+      transition(":leave", [
+        style({ opacity: 1 }),
+        animate("200ms", style({ opacity: 0 }))
+      ])
+    ])
+  ],
   templateUrl: "./main-nav.component.html",
   styleUrls: ["./main-nav.component.scss"]
 })
@@ -42,7 +55,7 @@ export class MainNavComponent implements OnInit {
   subscription: Subscription;
   userstring: String;
   user: FrontendUser = {} as FrontendUser;
-  theme:string;
+  theme: string;
   constructor(
     private statusService: StatusServiceService,
     private userService: UserService,
@@ -61,7 +74,7 @@ export class MainNavComponent implements OnInit {
   switchDark() {
     if (this.theme === "light") {
       this.theme = this.themeService.setTheme("dark");
-    } else if(this.theme === "dark"){
+    } else if (this.theme === "dark") {
       this.theme = this.themeService.setTheme("light");
     }
   }

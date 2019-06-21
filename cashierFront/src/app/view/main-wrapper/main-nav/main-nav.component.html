@@ -16,27 +16,31 @@
       <fa-icon [icon]="faBars"></fa-icon>
     </button> -->
 
-    <button mat-button
+    <button
+      mat-button
       [routerLink]="['/']"
       (mouseenter)="dashboardButton = true"
       (mouseleave)="dashboardButton = false"
       style="align-items: center"
     >
-     
-        <fa-icon [icon]="faHome"></fa-icon>
-      
-      <span class="buttonInfo" *ngIf="dashboardButton">Dashboard</span>
+      <fa-icon [icon]="faHome"></fa-icon>
+
+      <span class="buttonInfo" [@enterAnimation] *ngIf="dashboardButton"
+        >Dashboard</span
+      >
     </button>
-    <button mat-button
+    <button
+      mat-button
       [routerLink]="['/transactions']"
       (mouseenter)="cashiesButton = true"
       (mouseleave)="cashiesButton = false"
       style="align-items: center"
     >
-      
-        <fa-icon [icon]="faTable"></fa-icon>
-      
-      <span class="buttonInfo" *ngIf="cashiesButton">Cashies</span>
+      <fa-icon [icon]="faTable"></fa-icon>
+
+      <span class="buttonInfo" [@enterAnimation] *ngIf="cashiesButton"
+        >Cashies</span
+      >
     </button>
     <button
       mat-button
@@ -46,9 +50,11 @@
       style="align-items: center"
       *ngIf="userIsAdmin(user)"
     >
-        <fa-icon [icon]="faCog"></fa-icon>
+      <fa-icon [icon]="faCog"></fa-icon>
 
-      <span class="buttonInfo" *ngIf="adminButton">Admin-Panel</span>
+      <span class="buttonInfo" [@enterAnimation] *ngIf="adminButton"
+        >Admin-Panel</span
+      >
     </button>
 
     <span class="example-spacer"></span>
