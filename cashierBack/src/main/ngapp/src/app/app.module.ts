@@ -42,7 +42,6 @@ import { OverviewCardComponent } from './view/home/overview-card/overview-card.c
 import { NewTransactionDialogComponent } from './components/new-transaction-dialog/new-transaction-dialog.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'; 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TransactionCardComponent } from './view/transactions/transaction-card/transaction-card.component';
 import {MatBadgeModule} from '@angular/material/badge';
 import { MccColorPickerModule } from 'material-community-components';
 import { TagEditorComponent } from './components/tag-editor/tag-editor.component';
@@ -57,17 +56,15 @@ import { AdministrationComponent } from './view/administration/administration.co
 import { UserSettingsComponent } from './view/user-settings/user-settings.component';
 import { UserListComponent } from './view/administration/user-list/user-list.component';
 import { UserEditDialogComponent } from './view/administration/user-edit-dialog/user-edit-dialog.component';
-import { TransactionsComponent } from './view/transactions/transactions.component';
 import { SidebarContentComponent } from './view/main-wrapper/sidebar-content/sidebar-content.component';
 import { MainWrapperComponent } from './view/main-wrapper/main-wrapper.component';
-import { OverlayContainer } from '@angular/cdk/overlay';
-import { ThemeService } from './services/theme.service';
 import { TagDetailComponent } from './view/tag-detail/tag-detail.component';
 import { ChangePasswordComponent } from './view/user-settings/change-password/change-password.component';
 import { EditUserComponent } from './view/user-settings/edit-user/edit-user.component';
 import { GravatarModule } from  'ngx-gravatar';
-import { ScheduledTaskCardComponent } from './view/transactions/scheduled-task-card/scheduled-task-card.component';
-import { NewScheduledTaskComponent } from './view/transactions/scheduled-task-card/new-scheduled-task/new-scheduled-task.component';
+import { ScheduledTaskCardComponent } from './view/user-settings/scheduled-task-card/scheduled-task-card.component';
+import { NewScheduledTaskComponent } from './view/user-settings/scheduled-task-card/new-scheduled-task/new-scheduled-task.component';
+import { BarChartCardComponent } from './components/charts/bar-chart-card/bar-chart-card.component';
  
 @NgModule({
   declarations: [
@@ -76,7 +73,6 @@ import { NewScheduledTaskComponent } from './view/transactions/scheduled-task-ca
     BookingCardComponent,
     OverviewCardComponent,
     NewTransactionDialogComponent,
-    TransactionCardComponent,
     TagEditorComponent,
     ChartCardComponent,
     HomeComponent,
@@ -86,14 +82,14 @@ import { NewScheduledTaskComponent } from './view/transactions/scheduled-task-ca
     UserSettingsComponent,
     UserListComponent,
     UserEditDialogComponent,
-    TransactionsComponent,
     SidebarContentComponent,
     MainWrapperComponent,
     TagDetailComponent,
     ChangePasswordComponent,
     EditUserComponent,
     ScheduledTaskCardComponent,
-    NewScheduledTaskComponent
+    NewScheduledTaskComponent,
+    BarChartCardComponent
   ],
   imports: [
     BrowserModule,

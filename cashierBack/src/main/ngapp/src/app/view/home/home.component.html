@@ -4,7 +4,8 @@
   (datePair)="dateChanged($event)"
   (reloadFromServer)="refreshData()"
 ></app-overview-card>
-<div style="flex-direction: row; display: flex;">
+<div style="flex-direction: row; display: flex; flex-wrap: wrap">
   <app-chart-card [data]="transactions"></app-chart-card>
   <app-stack-bar-chart-card [data]="transactions"></app-stack-bar-chart-card>
+  <app-bar-chart-card [data]="transactions"></app-bar-chart-card>
 </div>

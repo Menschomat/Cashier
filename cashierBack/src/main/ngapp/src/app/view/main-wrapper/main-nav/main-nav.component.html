@@ -31,19 +31,6 @@
     </button>
     <button
       mat-button
-      [routerLink]="['/transactions']"
-      (mouseenter)="cashiesButton = true"
-      (mouseleave)="cashiesButton = false"
-      style="align-items: center"
-    >
-      <fa-icon [icon]="faTable"></fa-icon>
-
-      <span class="buttonInfo" [@enterAnimation] *ngIf="cashiesButton"
-        >Cashies</span
-      >
-    </button>
-    <button
-      mat-button
       [routerLink]="['/admin']"
       (mouseenter)="adminButton = true"
       (mouseleave)="adminButton = false"
