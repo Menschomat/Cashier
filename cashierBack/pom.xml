@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>de.menschomat</groupId>
-    <artifactId>wgo</artifactId>
+    <artifactId>cashier</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>wgo</name>
+    <name>cashier</name>
     <description>WG Tool</description>
 
     <properties>
@@ -132,12 +132,6 @@
                     </execution>
                     <execution>
                         <id>npm install</id>
-                        <goals>
-                            <goal>npm</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>npm rebuild node-sass</id>
                         <goals>
                             <goal>npm</goal>
                         </goals>

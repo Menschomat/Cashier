@@ -27,14 +27,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
-                // No need authentication.swagger-resource
-                .antMatchers("/swagger-ui.html").permitAll()
-                .antMatchers("/webjars/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/users/login").permitAll()
-                // Need authentication.
-                .anyRequest().authenticated()
-                //
-
+                .antMatchers("/api/**").authenticated()
+                .anyRequest().permitAll()
                 .and()
                 .sessionManagement().disable()
                 //
