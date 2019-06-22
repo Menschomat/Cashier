@@ -9,8 +9,8 @@
 
 * Implementation of Scheduled-Transactions in backend :white_check_mark:
 * Implementation of Scheduled-Transactions in frontend :white_check_mark:
-* Implementation of rudimental summary for timespan :construction:
-* Docker-Image :construction:
+* Implementation of rudimental summary for timespan :white_check_mark:
+* Docker-Image :white_check_mark:
 * (JUnit test for backend) :construction:
 
 ## What is Cashier?
@@ -26,7 +26,7 @@ Cashier moves the household book to the web.
 
 :white_check_mark: Done
 
-* Scheduled-Transactions in backend :construction:
+* Scheduled-Transactions :white_check_mark:
 * Multiuser-Support :white_check_mark:
 * Darkmode :white_check_mark:
 * Roles (Admin/User) :white_check_mark:
@@ -36,7 +36,7 @@ Cashier moves the household book to the web.
 * Fully editable Transactions :construction:
 * Fancy Charts :construction:
 * Hashtag system (nice and fancy) :white_check_mark:
-* Docker support :construction:
+* Docker support :white_check_mark:
 * Standalone mode (Json as storage) :construction:
 * Secure login via OAuth :white_check_mark: 
 * Fast :white_check_mark:
