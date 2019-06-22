@@ -5,7 +5,7 @@ import { ScheduledTask } from "src/app/model/transaction-management/scheduled-ta
 import { SchedulerService } from "src/app/services/scheduler.service";
 import { TagService } from "src/app/services/tag.service";
 import cronstrue from "cronstrue/i18n";
-import { MatDialog, MatDialogConfig } from "@angular/material";
+import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { NewScheduledTaskComponent } from "./new-scheduled-task/new-scheduled-task.component";
 import { StatusServiceService } from "src/app/services/status-service.service";
 

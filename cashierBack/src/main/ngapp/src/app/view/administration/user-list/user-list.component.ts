@@ -2,12 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import { UserService } from "src/app/services/user.service";
 import { UserAdminService } from "src/app/services/user-admin.service";
 import { FrontendUser } from "src/app/model/user-management/frontend-user";
-import {
-  MatTableDataSource,
-  MatDialogConfig,
-  MatDialog,
-  MatSnackBar
-} from "@angular/material";
+import { MatDialogConfig, MatDialog } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatTableDataSource } from "@angular/material/table";
 import { SelectionModel } from "@angular/cdk/collections";
 import { faTrash, faPlus, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { UserEditDialogComponent } from "../user-edit-dialog/user-edit-dialog.component";

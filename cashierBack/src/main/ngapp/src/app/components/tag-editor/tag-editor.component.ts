@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { Tag } from "src/app/model/hashtag-system/tag";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { TagService } from "src/app/services/tag.service";

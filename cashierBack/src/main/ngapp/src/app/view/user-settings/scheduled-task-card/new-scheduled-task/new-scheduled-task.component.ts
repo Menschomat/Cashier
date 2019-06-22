@@ -1,12 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
-import {
-  MatDialogRef,
-  MatAutocomplete,
-  MatAutocompleteSelectedEvent
-} from "@angular/material";
+import { MatAutocomplete, MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
+import { MatDialogRef } from "@angular/material/dialog";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { COMMA, ENTER, SPACE } from "@angular/cdk/keycodes";
-import { MatChipInputEvent } from "@angular/material";
+import { MatChipInputEvent } from "@angular/material/chips";
 import { Tag } from "src/app/model/hashtag-system/tag";
 import { TagService } from "src/app/services/tag.service";
 import { NewTransaction } from "src/app/model/transaction-management/new-transaction";

@@ -7,7 +7,7 @@ import {
 import { RegistrationValidator } from "src/app/auth/helpers/register.validator";
 import { UserService } from "src/app/services/user.service";
 import { HttpErrorResponse } from "@angular/common/http";
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-change-password',

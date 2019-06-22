@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { MatDialogRef } from "@angular/material";
+import { MatDialogRef } from "@angular/material/dialog";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { DbUser } from "src/app/model/user-management/db-user";
