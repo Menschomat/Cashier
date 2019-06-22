@@ -13,7 +13,7 @@ export class BarChartCardComponent implements OnInit {
 
   @Input()
   data: Transaction[] = [];
-  @ViewChild("doughChart") private chartRef;
+  @ViewChild("doughChart", { static: true }) private chartRef;
   chart: any;
   subscription: Subscription;
   constructor(private tagService: TagService) {}

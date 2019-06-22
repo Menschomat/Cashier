@@ -17,7 +17,7 @@ export class StackBarChartCardComponent implements OnInit {
   @Input()
   data: Transaction[] = [];
 
-  @ViewChild("lineChart") private chartRef;
+  @ViewChild("lineChart", { static: true }) private chartRef;
   chart: any;
   subscription: Subscription;
   constructor(private tagService: TagService) {}

@@ -31,8 +31,8 @@ export class NewTransactionDialogComponent implements OnInit {
   allTags: Tag[] = [];
   filteredTags: Observable<string[]>;
   tagCtrl = new FormControl();
-  @ViewChild("taginput") tagInput: ElementRef<HTMLInputElement>;
-  @ViewChild("auto") matAutocomplete: MatAutocomplete;
+  @ViewChild("taginput", { static: true }) tagInput: ElementRef<HTMLInputElement>;
+  @ViewChild("auto", { static: true }) matAutocomplete: MatAutocomplete;
   constructor(
     private dialogRef: MatDialogRef<NewTransactionDialogComponent>,
     private tagService: TagService,

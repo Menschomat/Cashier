@@ -18,7 +18,7 @@ import { Transaction } from "src/app/model/transaction-management/transaction";
 export class ChartCardComponent implements OnInit {
   @Input()
   data: Transaction[] = [];
-  @ViewChild("doughChart") private chartRef;
+  @ViewChild("doughChart", { static: true }) private chartRef;
   chart: any;
   subscription: Subscription;
   constructor(private tagService: TagService) {}
