@@ -6,6 +6,8 @@ import { AuthGuard } from "./auth/guards/auth.guard";
 import { AdminGuard } from "./auth/guards/admin.guard";
 import { AdministrationComponent } from "./view/administration/administration.component";
 import { UserSettingsComponent } from "./view/user-settings/user-settings.component";
+import { InitComponent } from './view/init/init.component';
+import { InitGuard } from './auth/guards/init.guard';
 
 const appRoutes: Routes = [
   { path: "", component: HomeComponent, canActivate: [AuthGuard] },
@@ -19,6 +21,11 @@ const appRoutes: Routes = [
     path: "settings",
     component: UserSettingsComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: "init",
+    component: InitComponent,
+    canActivate: [InitGuard]
   },
 
   // otherwise redirect to home

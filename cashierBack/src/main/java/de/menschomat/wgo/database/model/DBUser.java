@@ -32,6 +32,7 @@ public class DBUser {
         this.email = rUser.email;
         this.name = rUser.name;
         this.surname = rUser.surname;
+        this.initialized = rUser.initialized;
     }
 
     public DBUser(String email, String name, String surname, String username, Date dateOfBirth, String password, Boolean initialized, String role) {

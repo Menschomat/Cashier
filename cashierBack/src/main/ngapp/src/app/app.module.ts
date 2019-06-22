@@ -42,7 +42,7 @@ import { BookingCardComponent } from './components/booking-card/booking-card.com
 import { OverviewCardComponent } from './view/home/overview-card/overview-card.component';
 import { NewTransactionDialogComponent } from './components/new-transaction-dialog/new-transaction-dialog.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'; 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import {MatBadgeModule} from '@angular/material/badge';
 import { MccColorPickerModule } from 'material-community-components';
 import { TagEditorComponent } from './components/tag-editor/tag-editor.component';
@@ -66,6 +66,7 @@ import { GravatarModule } from  'ngx-gravatar';
 import { ScheduledTaskCardComponent } from './view/user-settings/scheduled-task-card/scheduled-task-card.component';
 import { NewScheduledTaskComponent } from './view/user-settings/scheduled-task-card/new-scheduled-task/new-scheduled-task.component';
 import { BarChartCardComponent } from './components/charts/bar-chart-card/bar-chart-card.component';
+import { InitComponent } from './view/init/init.component';
  
 @NgModule({
   declarations: [
@@ -90,7 +91,8 @@ import { BarChartCardComponent } from './components/charts/bar-chart-card/bar-ch
     EditUserComponent,
     ScheduledTaskCardComponent,
     NewScheduledTaskComponent,
-    BarChartCardComponent
+    BarChartCardComponent,
+    InitComponent
   ],
   imports: [
     BrowserModule,
@@ -135,7 +137,8 @@ import { BarChartCardComponent } from './components/charts/bar-chart-card/bar-ch
     MatBadgeModule,
     MccColorPickerModule,
     NgxCurrencyModule,
-    GravatarModule
+    GravatarModule,
+    FormsModule
   ],
   providers: [MatDatepickerModule,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
