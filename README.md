@@ -1,17 +1,15 @@
 # Cashier
 
-> ## First relase of Cashier is still in development!
+> ## **Warning:** Current releases are not under test-coverage! Keep that in mind, while using!
 
-## Things to do for release:
+## Things to do for more stability:
 :construction: TODO/InProgress
 
 :white_check_mark: Done
 
-* Implementation of Scheduled-Transactions in backend :white_check_mark:
-* Implementation of Scheduled-Transactions in frontend :white_check_mark:
-* Implementation of rudimental summary for timespan :white_check_mark:
-* Docker-Image :white_check_mark:
-* (JUnit test for backend) :construction:
+* JUnit test for backend :construction:
+* Karma-Test for frontend :construction:
+* Automated test-pipeline (Jenkins?) :construction:
 
 ## What is Cashier?
 
@@ -27,6 +25,7 @@ Cashier moves the household book to the web.
 :white_check_mark: Done
 
 * Scheduled-Transactions :white_check_mark:
+* rudimental summary for timespan :white_check_mark:
 * Multiuser-Support :white_check_mark:
 * Darkmode :white_check_mark:
 * Roles (Admin/User) :white_check_mark:
@@ -65,7 +64,7 @@ Cashier moves the household book to the web.
 >User `admin` is created at first startup with password `admin123` !
 
 ### 1) Requirements:
-* JDK 8+
+* JDK 8+ (Works with Java 12 as well)
 * NodeJs + NPM
 * MongoDB-Server
 * Docker for MongoDB-Server (recommended)
