@@ -1,66 +1,93 @@
-<mat-card style="margin: 1em; max-width: 50vw; width: 50vw" class="mat-elevation-z8">
-  <mat-card-title>
-  Welcome, before first use we need some information
-  <hr>
-  </mat-card-title>
-  <mat-vertical-stepper [linear]="isLinear" #stepper>
-    <mat-step [stepControl]="firstFormGroup">
-      <form
-        [formGroup]="firstFormGroup"
-        style="display: flex; flex-direction: column;"
-      >
-        <ng-template matStepLabel>Fill out your name</ng-template>
-        <mat-form-field>
-          <input matInput placeholder="Name" formControlName="name" required />
-        </mat-form-field>
-        <mat-form-field>
-          <input
-            matInput
-            placeholder="Surname"
-            formControlName="surname"
-            required
-          />
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperNext>Next</button>
-        </div>
-      </form>
-    </mat-step>
-    <mat-step [stepControl]="secondFormGroup">
-      <form [formGroup]="secondFormGroup">
-        <ng-template matStepLabel>Fill out your email</ng-template>
-        <mat-form-field>
-          <input
-            matInput
-            placeholder="E-Mail"
-            formControlName="email"
-            required
-          />
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button matStepperNext>Next</button>
-        </div>
-      </form>
-    </mat-step>
-    <mat-step>
-      <ng-template matStepLabel>Done</ng-template>
-      <div *ngIf="secondFormGroup.valid && firstFormGroup.valid">
-        You are now done.
-      </div>
-      <div *ngIf="!secondFormGroup.valid || !firstFormGroup.valid">
-        Go back and fill out the missing fields.
-      </div>
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button
-          mat-button
-          (click)="initUser()"
-          [disabled]="!secondFormGroup.valid || !firstFormGroup.valid"
+<div
+  style="flex-direction: row; display: flex; flex: 1;align-items: center;
+justify-content: center; background-image: url('/assets/back.jpg'); height: 100%;background-size:cover"
+>
+  <mat-card
+    style="margin: 1em; max-width: 50vw; width: 50vw; background-color: rgba(255, 255, 255, 0.92)"
+    class="mat-elevation-z8"
+  >
+    <mat-card-title>
+      Welcome, before first use we need some information
+      <hr />
+    </mat-card-title>
+    <mat-vertical-stepper
+      [linear]="isLinear"
+      #stepper
+      style="background-color: rgba(255, 255, 255, 0)!important;"
+    >
+      <mat-step [stepControl]="firstFormGroup">
+        <form
+          [formGroup]="firstFormGroup"
+          style="display: flex; flex-direction: column;"
         >
-          Enter
-        </button>
-      </div>
-    </mat-step>
-  </mat-vertical-stepper>
-</mat-card>
+          <ng-template matStepLabel>Fill out your name</ng-template>
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Name"
+              formControlName="name"
+              required
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Surname"
+              formControlName="surname"
+              required
+            />
+          </mat-form-field>
+          <div>
+            <button mat-raised-button color="primary" matStepperNext>
+              Next
+            </button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="secondFormGroup">
+        <form [formGroup]="secondFormGroup" style="display: flex; flex-direction: column;">
+          <ng-template matStepLabel>Fill out your email</ng-template>
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="E-Mail"
+              formControlName="email"
+              required
+            />
+          </mat-form-field>
+          <div>
+            <button mat-raised-button color="accent" matStepperPrevious>
+              Back
+            </button>
+            <button  style="margin-left: 1em;" mat-raised-button color="primary" matStepperNext>
+              Next
+            </button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step  style="display: flex; flex-direction: column;">
+        <ng-template matStepLabel>Done</ng-template>
+        <div *ngIf="secondFormGroup.valid && firstFormGroup.valid">
+          You are now done.
+        </div>
+        <div *ngIf="!secondFormGroup.valid || !firstFormGroup.valid">
+          Go back and fill out the missing fields.
+        </div>
+        <div>
+          <button mat-raised-button color="accent" matStepperPrevious>
+            Back
+          </button>
+          <button
+            mat-raised-button
+            style="margin-left: 1em;"
+            color="primary"
+            (click)="initUser()"
+            [disabled]="!secondFormGroup.valid || !firstFormGroup.valid"
+          >
+            Enter
+          </button>
+        </div>
+      </mat-step>
+    </mat-vertical-stepper>
+  </mat-card>
+</div>

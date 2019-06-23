@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { UserService } from "src/app/services/user.service";
 import { FrontendUser } from "src/app/model/user-management/frontend-user";
 import { Router } from "@angular/router";
+import { StatusServiceService } from "src/app/services/status-service.service";
 
 @Component({
   selector: "app-init",
@@ -17,6 +18,7 @@ export class InitComponent implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     private userService: UserService,
+    private statusService: StatusServiceService,
     private router: Router
   ) {}
 
@@ -46,6 +48,7 @@ export class InitComponent implements OnInit {
       this.user.email = this.secondFormGroup.value.email;
       this.user.initialized = true;
       this.userService.updateUser(this.user).subscribe(user => {
+        this.statusService.sendMessage({ loggedIn: true });
         this.router.navigate(["/"]);
       });
     }

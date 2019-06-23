@@ -52,9 +52,9 @@ export class MainNavComponent implements OnInit {
   faMoon = faMoon;
   faSun = faSun;
   faBars = faBars;
-  dashboardButton:boolean;
+  dashboardButton: boolean;
   cashiesButton: boolean;
-  adminButton:boolean;
+  adminButton: boolean;
   subscription: Subscription;
   userstring: String;
   user: FrontendUser = {} as FrontendUser;
