@@ -16,7 +16,6 @@ export class AuthGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     let out = this.userService.getUser().pipe(
       map((user: any) => {
-        console.log("fsddsfd");
         if (localStorage.getItem("cashierUserToken") && user.initialized) {
           return true;
         } else if (
@@ -40,7 +39,6 @@ export class AuthGuard implements CanActivate {
         return of(false);
       })
     );
-    console.log(out);
 
     if (out) return out;
     this.router.navigate(["/login"]);
