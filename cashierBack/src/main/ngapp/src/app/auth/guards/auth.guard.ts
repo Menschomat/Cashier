@@ -5,16 +5,18 @@ import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot
 } from "@angular/router";
-import { UserService } from 'src/app/services/user.service';
-import { map } from "rxjs/operators";
+import { UserService } from "src/app/services/user.service";
+import { map, catchError } from "rxjs/operators";
+import { throwError, empty, of } from "rxjs";
 
 @Injectable({ providedIn: "root" })
 export class AuthGuard implements CanActivate {
   constructor(private router: Router, private userService: UserService) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return this.userService.getUser().pipe(
+    let out = this.userService.getUser().pipe(
       map((user: any) => {
+        console.log("fsddsfd");
         if (localStorage.getItem("cashierUserToken") && user.initialized) {
           return true;
         } else if (
@@ -29,7 +31,19 @@ export class AuthGuard implements CanActivate {
           queryParams: { returnUrl: state.url }
         });
         return false;
+      }),
+
+      catchError(err => {
+        this.router.navigate(["/login"], {
+          queryParams: { returnUrl: state.url }
+        });
+        return of(false);
       })
     );
+    console.log(out);
+
+    if (out) return out;
+    this.router.navigate(["/login"]);
+    return false;
   }
 }

@@ -13,11 +13,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import de.menschomat.wgo.database.model.DBUser;
 import de.menschomat.wgo.database.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -66,7 +69,6 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
             }
         }
 
-        System.out.println("Bliiii");
         List<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_" + user.role));
         return getAuthenticationManager()
                 .authenticate(new UsernamePasswordAuthenticationToken(user.id, password, authorities));
@@ -84,5 +86,7 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 
         System.out.println("Authorization String=" + authorizationString);
     }
+
+
 
 }

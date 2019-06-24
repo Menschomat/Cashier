@@ -41,17 +41,14 @@ public class UserHandler {
     @GetMapping(value = "/current", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public RestUser getCurrentUser(Authentication authentication) {
-
         return new RestUser(userRepository.findById(authentication.getName()).get());
     }
+
     @PostMapping(value = "/current", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
-    public RestUser updateCurrentUser(Authentication authentication,@RequestBody RestUser toAdd) {
+    public RestUser updateCurrentUser(Authentication authentication, @RequestBody RestUser toAdd) {
         DBUser user = userRepository.findById(authentication.getName()).get();
-        System.out.println(user.username);
-        System.out.println(toAdd.name);
         user.updateFromRestUser(toAdd);
-        System.out.println(user.username);
         userRepository.save(user);
         return new RestUser(user);
     }

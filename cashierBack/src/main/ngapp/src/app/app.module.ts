@@ -67,6 +67,7 @@ import { ScheduledTaskCardComponent } from './view/user-settings/scheduled-task-
 import { NewScheduledTaskComponent } from './view/user-settings/scheduled-task-card/new-scheduled-task/new-scheduled-task.component';
 import { BarChartCardComponent } from './components/charts/bar-chart-card/bar-chart-card.component';
 import { InitComponent } from './view/init/init.component';
+import { MainFooterComponent } from './view/main-wrapper/main-footer/main-footer.component';
  
 @NgModule({
   declarations: [
@@ -92,7 +93,8 @@ import { InitComponent } from './view/init/init.component';
     ScheduledTaskCardComponent,
     NewScheduledTaskComponent,
     BarChartCardComponent,
-    InitComponent
+    InitComponent,
+    MainFooterComponent
   ],
   imports: [
     BrowserModule,
