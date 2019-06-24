@@ -131,6 +131,18 @@
                         <goals>
                             <goal>npm</goal>
                         </goals>
+                        <configuration>
+                            <arguments>install --production</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>angular-cli install</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>install --no-optional -g angular-cli</arguments>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>npm run build</id>
@@ -138,19 +150,10 @@
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>run build --prod</arguments>
+                            <arguments>run-script mavenbuild</arguments>
                         </configuration>
                     </execution>
-                    <execution>
-                        <id>prod</id>
-                        <goals>
-                            <goal>npm</goal>
-                        </goals>
-                        <configuration>
-                            <arguments>run-script build --prod</arguments>
-                        </configuration>
-                        <phase>generate-resources</phase>
-                    </execution>
+
                 </executions>
             </plugin>
             <plugin>
@@ -172,8 +175,7 @@
                 <configuration>
                     <basedir>src/main/resources/static</basedir>
                     <includes>
-                        <include>main-es5.js</include>
-                        <include>main-es2015.js</include>
+                        <include>main-**.**.js</include>
                     </includes>
                     <replacements>
                         <replacement>

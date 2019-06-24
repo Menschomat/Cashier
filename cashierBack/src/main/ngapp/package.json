@@ -2,6 +2,7 @@
   "name": "w-go-front",
   "version": "0.0.0",
   "scripts": {
+    "mavenbuild": "ng build --prod",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
