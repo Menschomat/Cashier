@@ -4,13 +4,12 @@
   style="justify-content: center;"
 >
   <mat-toolbar-row>
-    <button
-      style="font-size: 1em; position: absolute;left: 45vw;"
-      mat-button
-      [routerLink]="['/']"
-    >
-      <fa-icon [icon]="faMoney"></fa-icon> Cashier
-    </button>
+    <img
+      style="font-size: 1em; position: absolute;left: 45.5vw;"
+      src="assets/cashier.svg"
+      height="50%"
+      onerror="this.onerror=null; this.src='image.png'"
+    />
 
     <!-- <button mat-icon-button (click)="toggleSideBar()" *ngIf="isLoggedin()">
       <fa-icon [icon]="faBars"></fa-icon>
@@ -25,9 +24,7 @@
     >
       <fa-icon [icon]="faHome"></fa-icon>
 
-      <span class="buttonInfo" *ngIf="dashboardButton"
-        >Dashboard</span
-      >
+      <span class="buttonInfo" *ngIf="dashboardButton">Dashboard</span>
     </button>
     <button
       mat-button
@@ -39,9 +36,7 @@
     >
       <fa-icon [icon]="faCog"></fa-icon>
 
-      <span class="buttonInfo" *ngIf="adminButton"
-        >Admin-Panel</span
-      >
+      <span class="buttonInfo" *ngIf="adminButton">Admin-Panel</span>
     </button>
 
     <span class="example-spacer"></span>
