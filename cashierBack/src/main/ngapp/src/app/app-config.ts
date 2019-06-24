@@ -1,3 +1,3 @@
 export class AppConfig {
-    static VERSION:string = "${project.version}";
+  static VERSION: string = "%PROJECT_VERSION%";
 }
