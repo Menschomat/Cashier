@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-public interface UserRepository extends MongoRepository<DBUser, String> {
+public interface MongoUserRepository extends MongoRepository<DBUser, String> {
 
     public DBUser findByEmail(String id);
 

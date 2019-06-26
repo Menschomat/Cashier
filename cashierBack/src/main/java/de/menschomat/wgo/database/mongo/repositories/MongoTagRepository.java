@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-public interface TagRepository extends MongoRepository<Tag, String> {
+public interface MongoTagRepository extends MongoRepository<Tag, String> {
 
     public Tag findByTitle(String name);
 

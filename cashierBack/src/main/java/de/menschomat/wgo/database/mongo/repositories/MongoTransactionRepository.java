@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.Date;
 import java.util.List;
 
-public interface TransactionRepository extends MongoRepository<Transaction, String> {
+public interface MongoTransactionRepository extends MongoRepository<Transaction, String> {
 
     public Transaction findByTitle(String title);
 
