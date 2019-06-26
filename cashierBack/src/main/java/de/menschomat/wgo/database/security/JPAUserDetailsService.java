@@ -1,7 +1,8 @@
 package de.menschomat.wgo.database.security;
 
-import de.menschomat.wgo.database.mongo.model.DBUser;
-import de.menschomat.wgo.database.mongo.repositories.UserRepository;
+
+import de.menschomat.wgo.database.jpa.model.DBUser;
+import de.menschomat.wgo.database.jpa.repositories.UserRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,10 +14,10 @@ import java.util.Arrays;
 import java.util.List;
 
 @Component
-public class MongoUserDetailsService implements UserDetailsService {
+public class JPAUserDetailsService implements UserDetailsService {
     private final UserRepository repository;
 
-    public MongoUserDetailsService(UserRepository repository) {
+    public JPAUserDetailsService(UserRepository repository) {
         this.repository = repository;
     }
 
@@ -28,11 +29,11 @@ public class MongoUserDetailsService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("DBUser not found");
         }
-        if (user.role == null) {
-            user.role = "USER";
+        if (user.getRole() == null) {
+            user.setRole("USER");
         }
 
-        List<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_" + user.role));
-        return new User(user.id, user.password, authorities);
+        List<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
+        return new User(user.getId(), user.getPassword(), authorities);
     }
 }

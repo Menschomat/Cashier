@@ -1,47 +1,64 @@
 package de.menschomat.wgo.database.jpa.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import de.menschomat.wgo.database.mongo.model.Transaction;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
-@Document
+
+@Entity
+@Table(name = "scheduled_task")
 public class ScheduledTask {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @Column(name = "user_id", updatable = false, nullable = false)
+    @Column(updatable = false, nullable = false)
     private String id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
+    @Size(min = 3, max = 100)
+    private String title;
+
+    private Float amount;
+
+    private boolean ingestion;
+
+    @ManyToMany(fetch = FetchType.EAGER,
+            cascade = {
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH
+            })
+    @JoinColumn(name = "tags")
+    private List<Tag> tags;
+
+    @ManyToOne(fetch = FetchType.EAGER,
+            cascade = {
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH
+            })
+    @JoinColumn(name = "user_id")
     private DBUser user;
+
 
     @NotBlank
     @Size(min = 3, max = 20)
     private String cronTab;
 
-    private Transaction transaction;
 
-
-    public ScheduledTask(Transaction transaction, DBUser user, String cronTab) {
-        this.transaction = transaction;
+    public ScheduledTask(DBUser user, String cronTab, Float amount, Boolean ingestion, List<Tag> tags, String title) {
         this.user = user;
         this.cronTab = cronTab;
+        this.amount = amount;
+        this.ingestion = ingestion;
+        this.tags = tags;
+        this.title = title;
     }
 
-    public ScheduledTask(String id, Transaction transaction, DBUser user, String cronTab) {
+    public ScheduledTask(String id, DBUser user, String cronTab) {
         this.id = id;
-        this.transaction = transaction;
         this.user = user;
         this.cronTab = cronTab;
     }
@@ -70,12 +87,36 @@ public class ScheduledTask {
         this.cronTab = cronTab;
     }
 
-    public Transaction getTransaction() {
-        return transaction;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTransaction(Transaction transaction) {
-        this.transaction = transaction;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Float getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Float amount) {
+        this.amount = amount;
+    }
+
+    public boolean isIngestion() {
+        return ingestion;
+    }
+
+    public void setIngestion(boolean ingestion) {
+        this.ingestion = ingestion;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
     }
 
     @Override
@@ -83,14 +124,17 @@ public class ScheduledTask {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ScheduledTask that = (ScheduledTask) o;
-        return Objects.equals(id, that.id) &&
+        return ingestion == that.ingestion &&
+                Objects.equals(id, that.id) &&
+                Objects.equals(title, that.title) &&
+                Objects.equals(amount, that.amount) &&
+                Objects.equals(tags, that.tags) &&
                 Objects.equals(user, that.user) &&
-                Objects.equals(cronTab, that.cronTab) &&
-                Objects.equals(transaction, that.transaction);
+                Objects.equals(cronTab, that.cronTab);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user, cronTab, transaction);
+        return Objects.hash(id, title, amount, ingestion, tags, user, cronTab);
     }
 }

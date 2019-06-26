@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
-import de.menschomat.wgo.database.mongo.model.DBUser;
-import de.menschomat.wgo.database.mongo.repositories.UserRepository;
+import de.menschomat.wgo.database.jpa.model.DBUser;
+import de.menschomat.wgo.database.jpa.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -58,14 +58,14 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
             System.out.println("Blaaa");
             throw new BadCredentialsException("Invalid EmailId/password");
         } else {
-            if (user.role == null) {
-                user.role = "USER";
+            if (user.getRole() == null) {
+                user.setRole("USER");
             }
         }
 
-        List<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_" + user.role));
+        List<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
         return getAuthenticationManager()
-                .authenticate(new UsernamePasswordAuthenticationToken(user.id, password, authorities));
+                .authenticate(new UsernamePasswordAuthenticationToken(user.getId(), password, authorities));
     }
 
     @Override

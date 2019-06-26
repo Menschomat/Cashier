@@ -1,6 +1,7 @@
 package de.menschomat.wgo.security;
 
 
+import de.menschomat.wgo.database.security.JPAUserDetailsService;
 import de.menschomat.wgo.database.security.MongoUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,9 +19,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final
-    MongoUserDetailsService userDetailsService;
+    JPAUserDetailsService userDetailsService;
 
-    public WebSecurityConfig(MongoUserDetailsService userDetailsService) {
+    public WebSecurityConfig(JPAUserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 

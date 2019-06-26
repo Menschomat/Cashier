@@ -1,4 +1,4 @@
-package de.menschomat.wgo.rest.model;
+package de.menschomat.wgo.database.mongo.model;
 
 import de.menschomat.wgo.database.mongo.model.DBUser;
 

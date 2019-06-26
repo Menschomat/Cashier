@@ -1,6 +1,5 @@
-package de.menschomat.wgo.database.mongo.model;
+package de.menschomat.wgo.database.jpa.model;
 
-import de.menschomat.wgo.database.mongo.model.DBUser;
 
 import java.util.Date;
 
@@ -17,15 +16,15 @@ public class RestUser {
     public RestUser() {
 
     }
-    public  RestUser(DBUser input){
-        this.id = input.id;
-        this.email = input.email;
-        this.name = input.name;
-        this.username = input.username;
-        this.surname = input.surname;
-        this.dateOfBirth = input.dateOfBirth;
-        this.initialized = input.initialized;
-        this.role = input.role;
+    public RestUser(DBUser input){
+        this.id = input.getId();
+        this.email = input.getEmail();
+        this.name = input.getName();
+        this.username = input.getUsername();
+        this.surname = input.getSurname();
+        this.dateOfBirth = input.getDateOfBirth();
+        this.initialized = input.getInitialized();
+        this.role = input.getRole();
     }
 
     public RestUser(String id, String email, String name, String surname, String username, Date dateOfBirth, Boolean initialized, String role) {

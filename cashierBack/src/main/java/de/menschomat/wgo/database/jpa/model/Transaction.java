@@ -1,13 +1,9 @@
 package de.menschomat.wgo.database.jpa.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.menschomat.wgo.database.jpa.helpers.AuditModel;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
@@ -20,33 +16,32 @@ public class Transaction extends AuditModel {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @Column(name = "transaction_id", updatable = false, nullable = false)
+    @Column(updatable = false, nullable = false)
     private String id;
 
-    @NotBlank
     @Size(min = 3, max = 100)
     private String title;
 
-    @NotBlank
     private Float amount;
 
-    @NotBlank
     private boolean ingestion;
 
-    @NotBlank
     private Date date;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tag_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER,
+            cascade = {
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH
+            })
+    @JoinColumn(name = "tags")
     private List<Tag> tags;
 
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER,
+            cascade = {
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH
+            })
+    @JoinColumn(name = "user_id")
     private DBUser user;
 
     public String getId() {
@@ -122,5 +117,12 @@ public class Transaction extends AuditModel {
     @Override
     public int hashCode() {
         return Objects.hash(id, title, amount, ingestion, date, tags, user);
+    }
+
+    public void  updateFromScheduledTask(ScheduledTask scheduledTask){
+        this.title = scheduledTask.getTitle();
+        this.amount = scheduledTask.getAmount();
+        this.tags = scheduledTask.getTags();
+        this.user = scheduledTask.getUser();
     }
 }

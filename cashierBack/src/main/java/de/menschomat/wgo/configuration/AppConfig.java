@@ -1,7 +1,11 @@
 package de.menschomat.wgo.configuration;
 
-import de.menschomat.wgo.database.mongo.repositories.ScheduleRepository;
-import de.menschomat.wgo.database.mongo.repositories.TransactionRepository;
+
+import de.menschomat.wgo.database.jpa.model.Transaction;
+import de.menschomat.wgo.database.jpa.repositories.ScheduleRepository;
+import de.menschomat.wgo.database.jpa.repositories.TransactionRepository;
+import de.menschomat.wgo.database.mongo.repositories.MongoScheduleRepository;
+import de.menschomat.wgo.database.mongo.repositories.MongoTransactionRepository;
 import de.menschomat.wgo.scheduleing.ScheduleTaskService;
 import org.bson.types.ObjectId;
 import org.springframework.context.annotation.Configuration;
@@ -27,14 +31,15 @@ public class AppConfig {
     @PostConstruct
     public void init() {
         scheduleRepository.findAll().forEach(scheduledTask -> {
-            scheduleTaskService.addTaskToScheduler(scheduledTask.id, new Runnable() {
+            scheduleTaskService.addTaskToScheduler(scheduledTask.getId(), new Runnable() {
                 @Override
                 public void run() {
-                    scheduledTask.transaction.date = new Date(System.currentTimeMillis());
-                    scheduledTask.transaction.id = new ObjectId();
-                    transactionRepository.insert(scheduledTask.transaction);
+
+                    Transaction toAdd = new Transaction();
+                    toAdd.updateFromScheduledTask(scheduledTask);
+                    transactionRepository.save(toAdd);
                 }
-            }, scheduledTask.cronTab);
+            }, scheduledTask.getCronTab());
         });
     }
 }

@@ -1,10 +1,7 @@
 package de.menschomat.wgo.database.jpa.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.menschomat.wgo.database.jpa.helpers.AuditModel;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -18,7 +15,7 @@ public class Tag extends AuditModel {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @Column(name = "tag_id", updatable = false, nullable = false)
+    @Column(updatable = false, nullable = false)
     private String id;
 
     @NotBlank
@@ -29,15 +26,29 @@ public class Tag extends AuditModel {
     @Size(min = 3, max = 100)
     private String color = "gray";
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER,
+            cascade = {
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH
+            })
+    @JoinColumn(name = "user_id")
     private DBUser user;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToMany(fetch = FetchType.EAGER,
+            cascade = {
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH
+            })
+    @JoinColumn(name = "transactions")
     private List<Transaction> transactions;
+
+    @ManyToMany(fetch = FetchType.EAGER,
+            cascade = {
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH
+            })
+    @JoinColumn(name = "scheduled_tasks")
+    private List<ScheduledTask> scheduledTasks;
 
     public String getId() {
         return id;
@@ -85,5 +96,13 @@ public class Tag extends AuditModel {
     @Override
     public int hashCode() {
         return Objects.hash(id, title, color, user);
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
     }
 }

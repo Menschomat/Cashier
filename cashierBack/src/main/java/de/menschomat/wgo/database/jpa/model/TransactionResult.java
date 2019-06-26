@@ -1,6 +1,4 @@
-package de.menschomat.wgo.database.mongo.model;
-
-import de.menschomat.wgo.database.mongo.model.Transaction;
+package de.menschomat.wgo.database.jpa.model;
 
 import java.util.List;
 

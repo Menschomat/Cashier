@@ -1,7 +1,7 @@
 package de.menschomat.wgo.database.security;
 
 import de.menschomat.wgo.database.mongo.model.DBUser;
-import de.menschomat.wgo.database.mongo.repositories.UserRepository;
+import de.menschomat.wgo.database.mongo.repositories.MongoUserRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,9 +14,9 @@ import java.util.List;
 
 @Component
 public class MongoUserDetailsService implements UserDetailsService {
-    private final UserRepository repository;
+    private final MongoUserRepository repository;
 
-    public MongoUserDetailsService(UserRepository repository) {
+    public MongoUserDetailsService(MongoUserRepository repository) {
         this.repository = repository;
     }
 

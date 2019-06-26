@@ -2,8 +2,6 @@ package de.menschomat.wgo.database.jpa.model;
 
 import de.menschomat.wgo.database.jpa.helpers.AuditModel;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -13,13 +11,13 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "user", indexes = {@Index(name = "username_idx", columnList = "username")})
+@Table(name = "cashier_user", indexes = {@Index(name = "username_idx", columnList = "username", unique = true)})
 public class DBUser extends AuditModel {
 
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @Column(name = "user_id", updatable = false, nullable = false)
+    @Column(updatable = false, nullable = false)
     private String id;
 
     @NotBlank
@@ -44,19 +42,21 @@ public class DBUser extends AuditModel {
 
     private String role;
 
-    @OneToMany(
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToMany(mappedBy = "user",
+
+            orphanRemoval = true)
     private List<Tag> tags;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+
+    @OneToMany(mappedBy = "user",
+
+            orphanRemoval = true,
+            fetch = FetchType.EAGER)
     private List<Transaction> transactions;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToMany(mappedBy = "user",
+
+            orphanRemoval = true)
     private List<ScheduledTask> scheduledTasks;
 
     public String getId() {
@@ -174,5 +174,13 @@ public class DBUser extends AuditModel {
 
     public void setScheduledTasks(List<ScheduledTask> scheduledTasks) {
         this.scheduledTasks = scheduledTasks;
+    }
+    public void updateFromRestUser(RestUser rUser) {
+        this.username = rUser.username;
+        this.dateOfBirth = rUser.dateOfBirth;
+        this.email = rUser.email;
+        this.name = rUser.name;
+        this.surname = rUser.surname;
+        this.initialized = rUser.initialized;
     }
 }

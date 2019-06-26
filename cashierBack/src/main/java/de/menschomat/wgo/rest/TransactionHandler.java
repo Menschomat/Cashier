@@ -1,9 +1,9 @@
 package de.menschomat.wgo.rest;
 
-import de.menschomat.wgo.database.mongo.model.Transaction;
-import de.menschomat.wgo.database.mongo.repositories.TransactionRepository;
-import de.menschomat.wgo.rest.model.PageInfo;
-import de.menschomat.wgo.rest.model.TransactionResult;
+import de.menschomat.wgo.database.jpa.model.Transaction;
+import de.menschomat.wgo.database.jpa.model.TransactionResult;
+import de.menschomat.wgo.database.jpa.repositories.TransactionRepository;
+import de.menschomat.wgo.database.jpa.repositories.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -23,23 +23,26 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class TransactionHandler {
 
     private final TransactionRepository transactionRepository;
+    private final UserRepository userRepository;
 
-    public TransactionHandler(TransactionRepository transactionRepository) {
+
+    public TransactionHandler(TransactionRepository transactionRepository, UserRepository userRepository) {
         this.transactionRepository = transactionRepository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping(value = "/all", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public List<Transaction> getAllTransactions(Authentication authentication) {
-        return transactionRepository.findAllByLinkedUserID(authentication.getName());
+        return userRepository.findById(authentication.getName()).get().getTransactions();
     }
 
     @GetMapping(value = "/latest", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public List<Transaction> getLatestTransactions(Authentication authentication) {
-        return transactionRepository.findByLinkedUserID(authentication.getName(), PageRequest.of(0, 5, Sort.by("date").descending())).getContent();
+        return transactionRepository.findByUser(userRepository.findById(authentication.getName()).get(), PageRequest.of(0, 5, Sort.by("date").descending())).getContent();
     }
-
+/*
     @GetMapping(value = "/paged", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public TransactionResult getPaged(Authentication authentication,
@@ -56,7 +59,7 @@ public class TransactionHandler {
     public PageInfo getNumOfPages(Authentication authentication, @RequestParam int size) {
         return new PageInfo(transactionRepository.findByLinkedUserID(authentication.getName(), PageRequest.of(0, size)).getTotalPages());
 
-    }
+    } */
 
     @GetMapping(value = "/date", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
@@ -65,10 +68,10 @@ public class TransactionHandler {
                                            @RequestParam int page, @RequestParam int size,
                                            @RequestParam(value = "sortBy", required = false) String sortBy,
                                            @RequestParam(value = "sortDir", required = false) String sortDir) {
-        Page<Transaction> resultPage = transactionRepository.findByDateBetweenAndLinkedUserID(
+        Page<Transaction> resultPage = transactionRepository.findByDateBetweenAndUser(
                 from,
                 to,
-                authentication.getName(),
+                userRepository.findById(authentication.getName()).get(),
                 getPageRequest(page, size, sortBy, sortDir)
         );
         return new TransactionResult(resultPage.getTotalPages(), resultPage.getTotalElements(), resultPage.getContent());
@@ -79,13 +82,13 @@ public class TransactionHandler {
     public List<Transaction> getNumOfPages(Authentication authentication, @RequestParam String from, @RequestParam String to) throws ParseException {
 
         SimpleDateFormat ISO8601DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.GERMANY);
-        return transactionRepository.findByDateBetweenAndLinkedUserID(ISO8601DATEFORMAT.parse(from), ISO8601DATEFORMAT.parse(to), authentication.getName());
+        return transactionRepository.findByDateBetweenAndUser(ISO8601DATEFORMAT.parse(from), ISO8601DATEFORMAT.parse(to), userRepository.findById(authentication.getName()).get());
     }
 
     @PostMapping(value = "", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public List<Transaction> addTransaction(Authentication authentication, @RequestBody Transaction toAdd) {
-        toAdd.linkedUserID = authentication.getName();
+        toAdd.setUser(userRepository.findById(authentication.getName()).get());
         transactionRepository.save(toAdd);
         return getLatestTransactions(authentication);
     }
