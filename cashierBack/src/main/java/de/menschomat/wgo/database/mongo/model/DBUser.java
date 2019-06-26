@@ -1,4 +1,4 @@
-package de.menschomat.wgo.database.model;
+package de.menschomat.wgo.database.mongo.model;
 
 import de.menschomat.wgo.rest.model.RestUser;
 import org.springframework.data.annotation.Id;

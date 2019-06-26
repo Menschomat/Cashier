@@ -1,7 +1,7 @@
 package de.menschomat.wgo.rest;
 
-import de.menschomat.wgo.database.model.Transaction;
-import de.menschomat.wgo.database.repositories.TransactionRepository;
+import de.menschomat.wgo.database.mongo.model.Transaction;
+import de.menschomat.wgo.database.mongo.repositories.TransactionRepository;
 import de.menschomat.wgo.rest.model.PageInfo;
 import de.menschomat.wgo.rest.model.TransactionResult;
 import org.springframework.data.domain.Page;

@@ -1,12 +1,12 @@
-package de.menschomat.wgo.database.repositories;
+package de.menschomat.wgo.database.jpa.repositories;
 
-import de.menschomat.wgo.database.model.Tag;
+import de.menschomat.wgo.database.mongo.model.Tag;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface TagRepository extends MongoRepository<Tag, String> {
+public interface TagRepository extends JpaRepository<Tag, Long> {
 
     public Tag findByTitle(String name);
 

@@ -1,7 +1,7 @@
 package de.menschomat.wgo.configuration;
 
-import de.menschomat.wgo.database.repositories.ScheduleRepository;
-import de.menschomat.wgo.database.repositories.TransactionRepository;
+import de.menschomat.wgo.database.mongo.repositories.ScheduleRepository;
+import de.menschomat.wgo.database.mongo.repositories.TransactionRepository;
 import de.menschomat.wgo.scheduleing.ScheduleTaskService;
 import org.bson.types.ObjectId;
 import org.springframework.context.annotation.Configuration;

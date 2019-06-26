@@ -1,6 +1,6 @@
-package de.menschomat.wgo.database.repositories;
+package de.menschomat.wgo.database.mongo.repositories;
 
-import de.menschomat.wgo.database.model.DBUser;
+import de.menschomat.wgo.database.mongo.model.DBUser;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;

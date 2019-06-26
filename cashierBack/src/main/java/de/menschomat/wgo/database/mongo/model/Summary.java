@@ -1,5 +1,5 @@
 
-package de.menschomat.wgo.database.model;
+package de.menschomat.wgo.database.mongo.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

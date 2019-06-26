@@ -1,8 +1,8 @@
 package de.menschomat.wgo.rest;
 
-import de.menschomat.wgo.database.model.ScheduledTask;
-import de.menschomat.wgo.database.repositories.ScheduleRepository;
-import de.menschomat.wgo.database.repositories.TransactionRepository;
+import de.menschomat.wgo.database.mongo.model.ScheduledTask;
+import de.menschomat.wgo.database.mongo.repositories.ScheduleRepository;
+import de.menschomat.wgo.database.mongo.repositories.TransactionRepository;
 import de.menschomat.wgo.rest.model.ScheduleInformation;
 import de.menschomat.wgo.scheduleing.ScheduleTaskService;
 import org.bson.types.ObjectId;

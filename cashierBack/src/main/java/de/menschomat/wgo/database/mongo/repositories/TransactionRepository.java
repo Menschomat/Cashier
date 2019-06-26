@@ -1,6 +1,6 @@
-package de.menschomat.wgo.database.repositories;
+package de.menschomat.wgo.database.mongo.repositories;
 
-import de.menschomat.wgo.database.model.Transaction;
+import de.menschomat.wgo.database.mongo.model.Transaction;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;

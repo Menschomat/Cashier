@@ -1,6 +1,6 @@
 package de.menschomat.wgo.rest.model;
 
-import de.menschomat.wgo.database.model.DBUser;
+import de.menschomat.wgo.database.mongo.model.DBUser;
 
 import java.util.Date;
 

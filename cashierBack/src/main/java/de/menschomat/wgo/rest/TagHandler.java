@@ -1,8 +1,8 @@
 
 package de.menschomat.wgo.rest;
 
-import de.menschomat.wgo.database.model.Tag;
-import de.menschomat.wgo.database.repositories.TagRepository;
+import de.menschomat.wgo.database.mongo.model.Tag;
+import de.menschomat.wgo.database.mongo.repositories.TagRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 

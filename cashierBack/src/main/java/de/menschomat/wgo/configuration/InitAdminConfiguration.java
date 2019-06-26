@@ -1,7 +1,7 @@
 package de.menschomat.wgo.configuration;
 
-import de.menschomat.wgo.database.model.DBUser;
-import de.menschomat.wgo.database.repositories.UserRepository;
+import de.menschomat.wgo.database.mongo.model.DBUser;
+import de.menschomat.wgo.database.mongo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

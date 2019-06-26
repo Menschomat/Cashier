@@ -1,6 +1,6 @@
-package de.menschomat.wgo.database.repositories;
+package de.menschomat.wgo.database.mongo.repositories;
 
-import de.menschomat.wgo.database.model.ScheduledTask;
+import de.menschomat.wgo.database.mongo.model.ScheduledTask;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;

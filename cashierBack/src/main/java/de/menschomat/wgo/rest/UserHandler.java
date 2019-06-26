@@ -1,13 +1,11 @@
 package de.menschomat.wgo.rest;
 
-import com.mongodb.BulkWriteException;
-import de.menschomat.wgo.database.model.DBUser;
-import de.menschomat.wgo.database.repositories.TagRepository;
-import de.menschomat.wgo.database.repositories.TransactionRepository;
-import de.menschomat.wgo.database.repositories.UserRepository;
+import de.menschomat.wgo.database.mongo.model.DBUser;
+import de.menschomat.wgo.database.mongo.repositories.TagRepository;
+import de.menschomat.wgo.database.mongo.repositories.TransactionRepository;
+import de.menschomat.wgo.database.mongo.repositories.UserRepository;
 import de.menschomat.wgo.rest.model.ChangePWModel;
 import de.menschomat.wgo.rest.model.RestUser;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

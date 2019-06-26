@@ -1,4 +1,4 @@
-package de.menschomat.wgo.database.model;
+package de.menschomat.wgo.database.mongo.model;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
