@@ -45,8 +45,5 @@ public class InitAdminConfiguration {
         toAdd.setTitle("dsafdsaf");
         toAdd.setUser(admin);
         transactionRepository.save(toAdd);
-
-        List<Transaction> test = userRepository.findByUsername("admin").getTransactions();
-        System.out.println(test);
     }
 }

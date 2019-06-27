@@ -27,6 +27,7 @@ public class TagHandler {
     @GetMapping(value = "/all", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public List<Tag> getAllTags(Authentication authentication) {
+        tagRepository.flush();
         return userRepository.findById(authentication.getName()).get().getTags();
     }
 

@@ -120,7 +120,7 @@ export class OverviewCardComponent implements OnInit {
           .addSingleTransaction(result.transaction)
           .subscribe(() => {
             this.reloadFromServer.emit();
-            this.tagService.getAllTags();
+            this.tagService.refreshAllTags();
           });
       }
     });

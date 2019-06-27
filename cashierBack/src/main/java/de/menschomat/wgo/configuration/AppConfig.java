@@ -37,9 +37,8 @@ public class AppConfig {
                 public void run() {
                     Transaction toAdd = new Transaction();
                     toAdd.updateFromScheduledTask(scheduledTask);
-                    List<Tag> tags = tagRepository.findAllByScheduledTasks(scheduledTask);
-                    toAdd.setTags(tags);
-                    System.out.println(transactionRepository.save(toAdd).getId());
+                    toAdd.setTags(tagRepository.findAllByScheduledTasks(scheduledTask));
+                    transactionRepository.save(toAdd);
                 }
             }, scheduledTask.getCronTab());
         });

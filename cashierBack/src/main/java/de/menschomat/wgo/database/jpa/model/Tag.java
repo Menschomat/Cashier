@@ -34,13 +34,13 @@ public class Tag implements Serializable {
     @JsonIgnore
     private DBUser user;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH}, mappedBy = "tags")
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH}, mappedBy = "tags")
     @JsonIgnore
     private List<ScheduledTask> scheduledTasks;
 
 
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH}, mappedBy = "tags")
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH}, mappedBy = "tags")
     @Fetch(value = FetchMode.SUBSELECT)
     @JsonIgnore
     private List<Transaction> transaction;

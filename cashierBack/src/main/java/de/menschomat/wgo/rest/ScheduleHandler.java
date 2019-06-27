@@ -58,20 +58,15 @@ public class ScheduleHandler {
                 tag.setUser(user_o.get());
                 return tag;
             }).collect(Collectors.toList()));
-            // scheduledTask.getTags().forEach(tagRepository::saveAndFlush);
-          tagRepository.saveAll(scheduledTask.getTags());
-
-        //    tagRepository.flush();d
+            tagRepository.saveAll(scheduledTask.getTags());
             final ScheduledTask toAdd = scheduleRepository.saveAndFlush(scheduledTask);
             scheduleTaskService.addTaskToScheduler(toAdd.getId(), new Runnable() {
                 @Override
                 public void run() {
                     Transaction newTrans = new Transaction();
                     newTrans.updateFromScheduledTask(toAdd);
-                    List<Tag> tags =  scheduledTask.getTags().stream().map(tag -> tagRepository.findById(tag.getId()).get()).collect(Collectors.toList());
-                    tags = tagRepository.findAllByScheduledTasks(scheduledTask);
-                    newTrans.setTags(tags);
-                    System.out.println(transactionRepository.save(newTrans).getId());
+                    newTrans.setTags(tagRepository.findAllByScheduledTasks(scheduledTask));
+                    transactionRepository.save(newTrans);
                 }
             }, scheduledTask.getCronTab());
             return getScheduleTask(authentication);

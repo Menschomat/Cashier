@@ -29,7 +29,7 @@ public class Transaction implements Serializable {
 
     private Date date;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "tags")
     private List<Tag> tags;
 

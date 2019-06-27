@@ -48,7 +48,7 @@ public class DBUser implements Serializable {
     @OneToMany(mappedBy = "user",
 
             orphanRemoval = true,
-            fetch = FetchType.EAGER)
+            fetch = FetchType.LAZY)
     @Fetch(value = FetchMode.SUBSELECT)
     @JsonIgnore
     private List<Tag> tags;
@@ -57,7 +57,7 @@ public class DBUser implements Serializable {
     @OneToMany(mappedBy = "user",
 
             orphanRemoval = true,
-            fetch = FetchType.EAGER)
+            fetch = FetchType.LAZY)
     @Fetch(value = FetchMode.SUBSELECT)
     @JsonIgnore
     private List<Transaction> transactions;
@@ -65,7 +65,7 @@ public class DBUser implements Serializable {
     @OneToMany(mappedBy = "user",
 
             orphanRemoval = true,
-            fetch = FetchType.EAGER)
+            fetch = FetchType.LAZY)
     @Fetch(value = FetchMode.SUBSELECT)
     @JsonIgnore
     private List<ScheduledTask> scheduledTasks;

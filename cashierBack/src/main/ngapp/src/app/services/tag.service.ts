@@ -89,6 +89,12 @@ export class TagService {
     }
   }
 
+  public refreshAllTags(){
+    this.httpClient.get<Tag[]>(`${this.apiURL}/all`).subscribe(tags => {
+      this.allTags = tags;
+    });
+  }
+
   public getTag(tagid: string): Tag {
     return this.allTags.find(
       t =>
