@@ -1,30 +1,49 @@
 package de.menschomat.wgo.configuration;
 
-import de.menschomat.wgo.database.model.DBUser;
-import de.menschomat.wgo.database.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import de.menschomat.wgo.database.jpa.model.DBUser;
+import de.menschomat.wgo.database.jpa.model.Transaction;
+import de.menschomat.wgo.database.jpa.repositories.TransactionRepository;
+import de.menschomat.wgo.database.jpa.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.Date;
+import java.util.List;
 
 @Service
 @Configurable
 public class InitAdminConfiguration {
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UserRepository userRepository;
+    private final TransactionRepository transactionRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public InitAdminConfiguration(UserRepository userRepository, TransactionRepository transactionRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.userRepository = userRepository;
+        this.transactionRepository = transactionRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
 
     @PostConstruct
     public void init() {
+        DBUser admin = new DBUser();
+        admin.setUsername("admin");
+        admin.setPassword(bCryptPasswordEncoder.encode("admin123"));
+        admin.setRole("ADMIN");
         if (userRepository.findAll().isEmpty()) {
-            DBUser admin = new DBUser();
-            admin.username = "admin";
-            admin.password = bCryptPasswordEncoder.encode("admin123");
-            admin.role = "ADMIN";
-            userRepository.save(admin);
+            System.out.println("ADD_NEW");
+            admin = userRepository.save(admin);
+        }else{
+            System.out.println("FOUND");
+            admin = userRepository.findByUsername("admin");
         }
+        Transaction toAdd = new Transaction();
+        toAdd.setDate(new Date());
+        toAdd.setAmount((float) 200);
+        toAdd.setTitle("dsafdsaf");
+        toAdd.setUser(admin);
+        transactionRepository.save(toAdd);
     }
 }

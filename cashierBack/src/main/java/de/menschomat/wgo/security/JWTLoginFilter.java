@@ -7,28 +7,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import javax.security.auth.login.CredentialNotFoundException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
-import de.menschomat.wgo.database.model.DBUser;
-import de.menschomat.wgo.database.repositories.UserRepository;
+import de.menschomat.wgo.database.jpa.model.DBUser;
+import de.menschomat.wgo.database.jpa.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -61,30 +55,22 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
         }
         DBUser user = userRepository.findByUsername(username);
         if (user == null) {
-            System.out.println("Blaaa");
             throw new BadCredentialsException("Invalid EmailId/password");
         } else {
-            if (user.role == null) {
-                user.role = "USER";
+            if (user.getRole() == null) {
+                user.setRole("USER");
             }
         }
 
-        List<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_" + user.role));
+        List<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
         return getAuthenticationManager()
-                .authenticate(new UsernamePasswordAuthenticationToken(user.id, password, authorities));
+                .authenticate(new UsernamePasswordAuthenticationToken(user.getId(), password, authorities));
     }
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
-
-
-        // Write Authorization to Headers of Response.
         TokenAuthenticationService.addAuthentication(response, authResult);
-
-        String authorizationString = response.getHeader("Authorization");
-
-        System.out.println("Authorization String=" + authorizationString);
     }
 
 

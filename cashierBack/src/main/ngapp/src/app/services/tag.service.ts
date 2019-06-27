@@ -89,6 +89,12 @@ export class TagService {
     }
   }
 
+  public refreshAllTags(){
+    this.httpClient.get<Tag[]>(`${this.apiURL}/all`).subscribe(tags => {
+      this.allTags = tags;
+    });
+  }
+
   public getTag(tagid: string): Tag {
     return this.allTags.find(
       t =>
@@ -102,7 +108,8 @@ export class TagService {
       : {
           title: tagid,
           color: this.getColor(),
-          linkedUserID: undefined,
+          user: undefined,
+          transactions:[],
           id: undefined
         };
   }
@@ -116,9 +123,12 @@ export class TagService {
     this.statusService.sendMessage({ saved: false });
   }
   public saveAndUpdateTagList() {
+    console.log(this.allTags);
     return this.httpClient
       .post<Tag[]>(`${this.apiURL}/all`, this.allTags)
       .subscribe(data => {
+        
+        
         this.statusService.sendMessage({ saved: true });
         this.allTags = data;
       });

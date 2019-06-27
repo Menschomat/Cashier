@@ -1,13 +1,13 @@
 package de.menschomat.wgo.rest;
 
-import com.mongodb.BulkWriteException;
-import de.menschomat.wgo.database.model.DBUser;
-import de.menschomat.wgo.database.repositories.TagRepository;
-import de.menschomat.wgo.database.repositories.TransactionRepository;
-import de.menschomat.wgo.database.repositories.UserRepository;
+
+import de.menschomat.wgo.database.jpa.model.DBUser;
+import de.menschomat.wgo.database.jpa.model.RestUser;
+import de.menschomat.wgo.database.jpa.repositories.TagRepository;
+import de.menschomat.wgo.database.jpa.repositories.TransactionRepository;
+import de.menschomat.wgo.database.jpa.repositories.UserRepository;
+
 import de.menschomat.wgo.rest.model.ChangePWModel;
-import de.menschomat.wgo.rest.model.RestUser;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -57,7 +57,7 @@ public class UserHandler {
     @PostMapping(value = "", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public List<RestUser> saveAndUpdateUsers(@RequestBody List<DBUser> toAdd, HttpServletResponse response) {
-        toAdd.forEach(user -> user.password = passwordEncoder.encode(user.password));
+        toAdd.forEach(user -> user.setPassword(passwordEncoder.encode(user.getPassword())));
         try {
             userRepository.saveAll(toAdd);
         } catch (Exception e) {
@@ -71,9 +71,9 @@ public class UserHandler {
     @CrossOrigin
     public ResponseEntity<String> updatePassword(Authentication authentication, @RequestBody ChangePWModel changePWModel) {
         DBUser toModify = userRepository.findById(authentication.getName()).get();
-        if (passwordEncoder.matches(changePWModel.getOldPW(), toModify.password)) {
+        if (passwordEncoder.matches(changePWModel.getOldPW(), toModify.getPassword())) {
             System.out.println(changePWModel.getNewPW());
-            toModify.password = passwordEncoder.encode(changePWModel.getNewPW());
+            toModify.setPassword(passwordEncoder.encode(changePWModel.getNewPW()));
             userRepository.save(toModify);
             return new ResponseEntity<>("result successful result",
                     HttpStatus.OK);
@@ -98,7 +98,7 @@ public class UserHandler {
     @PostMapping(value = "/single", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public List<RestUser> addUser(@RequestBody DBUser toAdd) {
-        toAdd.password = passwordEncoder.encode(toAdd.password);
+        toAdd.setPassword(passwordEncoder.encode(toAdd.getPassword()));
         userRepository.save(toAdd);
         return getAllUsers();
     }
@@ -108,8 +108,9 @@ public class UserHandler {
     @CrossOrigin
     public List<RestUser> deleteUsers(@RequestBody List<DBUser> toDelete) {
         toDelete.forEach(user -> {
-            tagRepository.deleteAll(tagRepository.findAllByLinkedUserID(user.id));
-            transactionRepository.deleteAll(transactionRepository.findAllByLinkedUserID(user.id));
+            DBUser dbuser = userRepository.findById(user.getId()).get();
+            tagRepository.deleteAll(dbuser.getTags());
+            transactionRepository.deleteAll(dbuser.getTransactions());
         });
         userRepository.deleteAll(toDelete);
         return getAllUsers();

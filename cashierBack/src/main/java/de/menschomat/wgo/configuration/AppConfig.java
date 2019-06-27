@@ -1,15 +1,20 @@
 package de.menschomat.wgo.configuration;
 
-import de.menschomat.wgo.database.repositories.ScheduleRepository;
-import de.menschomat.wgo.database.repositories.TransactionRepository;
+
+import de.menschomat.wgo.database.jpa.model.Tag;
+import de.menschomat.wgo.database.jpa.model.Transaction;
+import de.menschomat.wgo.database.jpa.repositories.ScheduleRepository;
+import de.menschomat.wgo.database.jpa.repositories.TagRepository;
+import de.menschomat.wgo.database.jpa.repositories.TransactionRepository;
 import de.menschomat.wgo.scheduleing.ScheduleTaskService;
-import org.bson.types.ObjectId;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
-import java.util.Date;
+import java.util.List;
 
 @Configuration
+@Transactional
 public class AppConfig {
     private final
     ScheduleRepository scheduleRepository;
@@ -17,24 +22,28 @@ public class AppConfig {
     ScheduleTaskService scheduleTaskService;
     private final
     TransactionRepository transactionRepository;
+    private final TagRepository tagRepository;
 
-    public AppConfig(ScheduleRepository scheduleRepository, ScheduleTaskService scheduleTaskService, TransactionRepository transactionRepository) {
+    public AppConfig(ScheduleRepository scheduleRepository, ScheduleTaskService scheduleTaskService, TransactionRepository transactionRepository, TagRepository tagRepository) {
         this.scheduleRepository = scheduleRepository;
         this.scheduleTaskService = scheduleTaskService;
         this.transactionRepository = transactionRepository;
+        this.tagRepository = tagRepository;
     }
 
     @PostConstruct
     public void init() {
         scheduleRepository.findAll().forEach(scheduledTask -> {
-            scheduleTaskService.addTaskToScheduler(scheduledTask.id, new Runnable() {
+
+            scheduleTaskService.addTaskToScheduler(scheduledTask.getId(), new Runnable() {
                 @Override
                 public void run() {
-                    scheduledTask.transaction.date = new Date(System.currentTimeMillis());
-                    scheduledTask.transaction.id = new ObjectId();
-                    transactionRepository.insert(scheduledTask.transaction);
+                    Transaction toAdd = new Transaction();
+                    toAdd.updateFromScheduledTask(scheduledTask);
+                    toAdd.setTags(tagRepository.findAllByScheduledTasks(scheduledTask));
+                    transactionRepository.save(toAdd);
                 }
-            }, scheduledTask.cronTab);
+            }, scheduledTask.getCronTab());
         });
     }
 }

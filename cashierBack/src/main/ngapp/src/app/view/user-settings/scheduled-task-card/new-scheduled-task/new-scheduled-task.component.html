@@ -47,6 +47,17 @@
           [options]="{ prefix: '', align: 'left', suffix: '€', thousands: '.', decimal: ',' }"
         />
       </mat-form-field>
+      <mat-form-field>
+        <mat-label>Type</mat-label>
+        <mat-select id="type" formControlName="type" required>
+          <mat-option [value]="false">
+            issue
+          </mat-option>
+          <mat-option [value]="true">
+            ingestion
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
   
       <mat-form-field class="example-chip-list">
         <mat-chip-list #chipList>

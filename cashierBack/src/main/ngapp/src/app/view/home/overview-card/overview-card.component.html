@@ -109,10 +109,10 @@
               [selected]="false"
               class="mat-elevation-z2"
               style="color: rgba(255,255,255,0.9)"
-              [ngStyle]="{ backgroundColor: getTagForTagID(tag).color }"
-              *ngFor="let tag of transaction.tagIds"
-              (click)="openEdit(getTagForTagID(tag))"
-              >#{{ getTagForTagID(tag).title }}
+              [ngStyle]="{ backgroundColor: getTagForTagID(tag.title).color }"
+              *ngFor="let tag of transaction.tags"
+              (click)="openEdit(getTagForTagID(tag.title))"
+              >#{{ getTagForTagID(tag.title).title }}
             </mat-chip>
           </mat-chip-list>
         </td>

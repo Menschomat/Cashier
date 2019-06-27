@@ -1,6 +1,4 @@
-package de.menschomat.wgo.rest.model;
-
-import de.menschomat.wgo.database.model.Transaction;
+package de.menschomat.wgo.database.jpa.model;
 
 public class ScheduleInformation {
     public Transaction toSchedule;

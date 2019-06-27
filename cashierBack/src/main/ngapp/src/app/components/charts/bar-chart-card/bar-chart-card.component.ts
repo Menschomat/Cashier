@@ -25,11 +25,11 @@ export class BarChartCardComponent implements OnInit {
     if (this.data.length > 0) {
       this.data.forEach(trans => {
         if (!trans.ingestion)
-          trans.tagIds.forEach(tID => {
-            if (issueBuffer[tID]) {
-              issueBuffer[tID] += trans.amount;
+          trans.tags.forEach(tID => {
+            if (issueBuffer[tID.title]) {
+              issueBuffer[tID.title] += trans.amount;
             } else {
-              issueBuffer[tID] = trans.amount;
+              issueBuffer[tID.title] = trans.amount;
             }
           });
       });

@@ -114,11 +114,10 @@ export class OverviewCardComponent implements OnInit {
       if (result) {
         this.loading = true;
         this.statusService.sendMessage({ saved: false });
-        this.tagService.addTags(result.tags);
-        this.tagService.saveAndUpdateTagList();
         this.transactionService
           .addSingleTransaction(result.transaction)
           .subscribe(() => {
+            this.tagService.refreshAllTags();
             this.reloadFromServer.emit();
           });
       }
@@ -142,7 +141,7 @@ export class OverviewCardComponent implements OnInit {
     tList.forEach(tag => {
       this.selection.deselect(tag);
     });
-    this.transactionService.deleteTransactions(tList).subscribe(() => {
+    this.transactionService.deleteTransactionsById(tList.map(t=> t.id)).subscribe(() => {
       this.reloadFromServer.emit();
     });
   }

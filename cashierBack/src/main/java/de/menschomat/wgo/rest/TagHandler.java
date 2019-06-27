@@ -1,8 +1,9 @@
 
 package de.menschomat.wgo.rest;
 
-import de.menschomat.wgo.database.model.Tag;
-import de.menschomat.wgo.database.repositories.TagRepository;
+import de.menschomat.wgo.database.jpa.model.Tag;
+import de.menschomat.wgo.database.jpa.repositories.TagRepository;
+import de.menschomat.wgo.database.jpa.repositories.UserRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,29 +17,25 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class TagHandler {
 
     private final TagRepository tagRepository;
+    private final UserRepository userRepository;
 
-    public TagHandler(TagRepository tagRepository) {
+    public TagHandler(TagRepository tagRepository, UserRepository userRepository) {
         this.tagRepository = tagRepository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping(value = "/all", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public List<Tag> getAllTags(Authentication authentication) {
-        return tagRepository.findAllByLinkedUserID(authentication.getName());
+        tagRepository.flush();
+        return userRepository.findById(authentication.getName()).get().getTags();
     }
-
-    @GetMapping(value = "/title", produces = APPLICATION_JSON_VALUE)
-    @CrossOrigin
-    public List<Tag> getTagsByTitles(@RequestBody List<String> list) {
-        return tagRepository.findAllByTitleIn(list);
-    }
-
 
     @PostMapping(value = "/all", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public List<Tag> addAllTags(Authentication authentication, @RequestBody List<Tag> tags) {
         tags.forEach(tag -> {
-            tag.linkedUserID = authentication.getName();
+            tag.setUser(userRepository.findById(authentication.getName()).get());
         });
         System.out.println(tags);
         tagRepository.saveAll(tags);
