@@ -1,6 +1,6 @@
 # Cashier
 
-> ## **Warning:** README IS OUTDATED SINCE I CHANGED FROM MONGODB TO HIBERNATE/JPA
+> ## README IS OUTDATED SINCE I CHANGED FROM MONGODB TO HIBERNATE/JPA
 
 > ## **Warning:** Current releases are not under test-coverage! Keep that in mind, while using!
 
