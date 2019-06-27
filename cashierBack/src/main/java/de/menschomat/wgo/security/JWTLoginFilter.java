@@ -55,7 +55,6 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
         }
         DBUser user = userRepository.findByUsername(username);
         if (user == null) {
-            System.out.println("Blaaa");
             throw new BadCredentialsException("Invalid EmailId/password");
         } else {
             if (user.getRole() == null) {
@@ -71,14 +70,7 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
-
-
-        // Write Authorization to Headers of Response.
         TokenAuthenticationService.addAuthentication(response, authResult);
-
-        String authorizationString = response.getHeader("Authorization");
-
-        System.out.println("Authorization String=" + authorizationString);
     }
 
 

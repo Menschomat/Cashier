@@ -1,18 +1,21 @@
 package de.menschomat.wgo.database.jpa.model;
 
-import de.menschomat.wgo.database.jpa.helpers.AuditModel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "cashier_user", indexes = {@Index(name = "username_idx", columnList = "username", unique = true)})
-public class DBUser extends AuditModel {
+public class DBUser implements Serializable {
 
     @Id
     @GeneratedValue(generator = "system-uuid")
@@ -25,13 +28,13 @@ public class DBUser extends AuditModel {
 
     private String username;
 
-    @Size(min = 3, max = 100)
+    @Size(max = 100)
     private String email;
 
-    @Size(min = 3, max = 100)
+    @Size(max = 100)
     private String name;
 
-    @Size(min = 3, max = 100)
+    @Size(max = 100)
     private String surname;
 
     private Date dateOfBirth;
@@ -44,7 +47,10 @@ public class DBUser extends AuditModel {
 
     @OneToMany(mappedBy = "user",
 
-            orphanRemoval = true)
+            orphanRemoval = true,
+            fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
+    @JsonIgnore
     private List<Tag> tags;
 
 
@@ -52,11 +58,16 @@ public class DBUser extends AuditModel {
 
             orphanRemoval = true,
             fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
+    @JsonIgnore
     private List<Transaction> transactions;
 
     @OneToMany(mappedBy = "user",
 
-            orphanRemoval = true)
+            orphanRemoval = true,
+            fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
+    @JsonIgnore
     private List<ScheduledTask> scheduledTasks;
 
     public String getId() {

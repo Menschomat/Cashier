@@ -102,7 +102,8 @@ export class TagService {
       : {
           title: tagid,
           color: this.getColor(),
-          linkedUserID: undefined,
+          user: undefined,
+          transactions:[],
           id: undefined
         };
   }
@@ -116,9 +117,12 @@ export class TagService {
     this.statusService.sendMessage({ saved: false });
   }
   public saveAndUpdateTagList() {
+    console.log(this.allTags);
     return this.httpClient
       .post<Tag[]>(`${this.apiURL}/all`, this.allTags)
       .subscribe(data => {
+        
+        
         this.statusService.sendMessage({ saved: true });
         this.allTags = data;
       });

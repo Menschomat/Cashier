@@ -38,7 +38,7 @@ export class NewTransactionDialogComponent implements OnInit {
   ) {
     this.output.tags = [];
     this.output.transaction = {} as Transaction;
-    this.output.transaction.tagIds = [];
+    this.output.transaction.tags = [];
     this.output.transaction.amount = 0;
     this.output.transaction.title = "";
     this.output.transaction.date = "";
@@ -110,9 +110,11 @@ export class NewTransactionDialogComponent implements OnInit {
   }
   onSubmit() {
     this.output.tags.forEach(tag => {
+
       tag.title = tag.title.toLocaleLowerCase().trim();
-      this.output.transaction.tagIds.push(tag.title);
+      
     });
+    this.output.transaction.tags = this.output.tags;
     this.output.transaction.ingestion = this.newTransactionForm.value.type;
     this.output.transaction.amount = this.newTransactionForm.value.amount;
     this.output.transaction.title = this.newTransactionForm.value.title;

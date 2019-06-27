@@ -26,19 +26,11 @@ public class ScheduledTask {
 
     private boolean ingestion;
 
-    @ManyToMany(fetch = FetchType.EAGER,
-            cascade = {
-                    CascadeType.MERGE,
-                    CascadeType.REFRESH
-            })
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "tags")
     private List<Tag> tags;
 
-    @ManyToOne(fetch = FetchType.EAGER,
-            cascade = {
-                    CascadeType.MERGE,
-                    CascadeType.REFRESH
-            })
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "user_id")
     private DBUser user;
 
@@ -47,6 +39,9 @@ public class ScheduledTask {
     @Size(min = 3, max = 20)
     private String cronTab;
 
+    public ScheduledTask() {
+
+    }
 
     public ScheduledTask(DBUser user, String cronTab, Float amount, Boolean ingestion, List<Tag> tags, String title) {
         this.user = user;

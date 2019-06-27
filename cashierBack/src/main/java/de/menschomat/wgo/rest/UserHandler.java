@@ -6,8 +6,6 @@ import de.menschomat.wgo.database.jpa.model.RestUser;
 import de.menschomat.wgo.database.jpa.repositories.TagRepository;
 import de.menschomat.wgo.database.jpa.repositories.TransactionRepository;
 import de.menschomat.wgo.database.jpa.repositories.UserRepository;
-import de.menschomat.wgo.database.mongo.repositories.MongoTagRepository;
-import de.menschomat.wgo.database.mongo.repositories.MongoTransactionRepository;
 
 import de.menschomat.wgo.rest.model.ChangePWModel;
 import org.springframework.http.HttpStatus;

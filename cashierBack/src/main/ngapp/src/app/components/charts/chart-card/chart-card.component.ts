@@ -30,11 +30,11 @@ export class ChartCardComponent implements OnInit {
     if (this.data.length > 0) {
       this.data.forEach(trans => {
         if (!trans.ingestion)
-          trans.tagIds.forEach(tID => {
-            if (tagCountBuffer[tID]) {
-              tagCountBuffer[tID] += trans.amount;
+          trans.tags.forEach(tID => {
+            if (tagCountBuffer[tID.title]) {
+              tagCountBuffer[tID.title] += trans.amount;
             } else {
-              tagCountBuffer[tID] = trans.amount;
+              tagCountBuffer[tID.title] = trans.amount;
             }
           });
       });

@@ -1,17 +1,18 @@
 package de.menschomat.wgo.database.jpa.model;
 
-import de.menschomat.wgo.database.jpa.helpers.AuditModel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "transaction")
-public class Transaction extends AuditModel {
+public class Transaction implements Serializable {
 
     @Id
     @GeneratedValue(generator = "system-uuid")
@@ -28,20 +29,13 @@ public class Transaction extends AuditModel {
 
     private Date date;
 
-    @ManyToMany(fetch = FetchType.EAGER,
-            cascade = {
-                    CascadeType.MERGE,
-                    CascadeType.REFRESH
-            })
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "tags")
     private List<Tag> tags;
 
-    @ManyToOne(fetch = FetchType.EAGER,
-            cascade = {
-                    CascadeType.MERGE,
-                    CascadeType.REFRESH
-            })
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private DBUser user;
 
     public String getId() {
@@ -119,7 +113,9 @@ public class Transaction extends AuditModel {
         return Objects.hash(id, title, amount, ingestion, date, tags, user);
     }
 
-    public void  updateFromScheduledTask(ScheduledTask scheduledTask){
+    public void updateFromScheduledTask(ScheduledTask scheduledTask) {
+        Date timestamp = new Date();
+        this.date = timestamp;
         this.title = scheduledTask.getTitle();
         this.amount = scheduledTask.getAmount();
         this.tags = scheduledTask.getTags();

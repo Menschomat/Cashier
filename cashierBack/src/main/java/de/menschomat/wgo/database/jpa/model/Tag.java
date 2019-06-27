@@ -1,17 +1,18 @@
 package de.menschomat.wgo.database.jpa.model;
 
-import de.menschomat.wgo.database.jpa.helpers.AuditModel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "tag")
-public class Tag extends AuditModel {
+public class Tag implements Serializable {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
@@ -26,29 +27,22 @@ public class Tag extends AuditModel {
     @Size(min = 3, max = 100)
     private String color = "gray";
 
-    @ManyToOne(fetch = FetchType.EAGER,
-            cascade = {
-                    CascadeType.MERGE,
-                    CascadeType.REFRESH
-            })
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private DBUser user;
 
-    @ManyToMany(fetch = FetchType.EAGER,
-            cascade = {
-                    CascadeType.MERGE,
-                    CascadeType.REFRESH
-            })
-    @JoinColumn(name = "transactions")
-    private List<Transaction> transactions;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH}, mappedBy = "tags")
+    @JsonIgnore
+    private List<Transaction> transaction;
 
-    @ManyToMany(fetch = FetchType.EAGER,
-            cascade = {
-                    CascadeType.MERGE,
-                    CascadeType.REFRESH
-            })
-    @JoinColumn(name = "scheduled_tasks")
-    private List<ScheduledTask> scheduledTasks;
+    public List<Transaction> getTransaction() {
+        return transaction;
+    }
+
+    public void setTransaction(List<Transaction> transaction) {
+        this.transaction = transaction;
+    }
 
     public String getId() {
         return id;
@@ -96,13 +90,5 @@ public class Tag extends AuditModel {
     @Override
     public int hashCode() {
         return Objects.hash(id, title, color, user);
-    }
-
-    public List<Transaction> getTransactions() {
-        return transactions;
-    }
-
-    public void setTransactions(List<Transaction> transactions) {
-        this.transactions = transactions;
     }
 }

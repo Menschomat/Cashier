@@ -1,8 +1,12 @@
 import { Transaction } from './transaction';
+import { Tag } from '../hashtag-system/tag';
 
 export interface ScheduledTask {
     id:string;
     userID:string;
     cronTab:string;
-    toSchedule:Transaction;
+    amount:Number;
+    tags:Tag[];
+    title:string;
+    ingestion:boolean;
 }

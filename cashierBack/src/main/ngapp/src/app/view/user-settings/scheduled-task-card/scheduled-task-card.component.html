@@ -44,13 +44,13 @@
           <th mat-header-cell *matHeaderCellDef>
             Title
           </th>
-          <td mat-cell *matCellDef="let row">{{ row.transaction.title }}</td>
+          <td mat-cell *matCellDef="let row">{{ row.title }}</td>
         </ng-container>
         <ng-container matColumnDef="transactionAmount">
           <th mat-header-cell *matHeaderCellDef>
             Amount
           </th>
-          <td mat-cell *matCellDef="let row">{{ row.transaction.amount }}€</td>
+          <td mat-cell *matCellDef="let row">{{ row.amount }}€</td>
         </ng-container>
         <ng-container matColumnDef="transactionTags">
           <th mat-header-cell *matHeaderCellDef>#hashtags</th>
@@ -61,9 +61,9 @@
                 [selected]="false"
                 class="mat-elevation-z2"
                 style="color: rgba(255,255,255,0.9)"
-                [ngStyle]="{ backgroundColor: getTagForTagID(tag).color }"
-                *ngFor="let tag of row.transaction.tagIds"
-                >#{{ getTagForTagID(tag).title }}
+                [ngStyle]="{ backgroundColor: getTagForTagID(tag.title).color }"
+                *ngFor="let tag of row.tags"
+                >#{{ getTagForTagID(tag.title).title }}
               </mat-chip>
             </mat-chip-list>
           </td>

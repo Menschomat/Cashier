@@ -1,13 +1,17 @@
 package de.menschomat.wgo.rest;
 
+import de.menschomat.wgo.database.jpa.model.DBUser;
 import de.menschomat.wgo.database.jpa.model.Transaction;
 import de.menschomat.wgo.database.jpa.model.TransactionResult;
+import de.menschomat.wgo.database.jpa.repositories.TagRepository;
 import de.menschomat.wgo.database.jpa.repositories.TransactionRepository;
 import de.menschomat.wgo.database.jpa.repositories.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
@@ -15,20 +19,25 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping("/api/transaction")
+@Transactional
 public class TransactionHandler {
 
     private final TransactionRepository transactionRepository;
     private final UserRepository userRepository;
+    private final TagRepository tagRepository;
 
 
-    public TransactionHandler(TransactionRepository transactionRepository, UserRepository userRepository) {
+    public TransactionHandler(TransactionRepository transactionRepository, UserRepository userRepository, TagRepository tagRepository) {
         this.transactionRepository = transactionRepository;
         this.userRepository = userRepository;
+        this.tagRepository = tagRepository;
     }
 
     @GetMapping(value = "/all", produces = APPLICATION_JSON_VALUE)
@@ -82,29 +91,38 @@ public class TransactionHandler {
     public List<Transaction> getNumOfPages(Authentication authentication, @RequestParam String from, @RequestParam String to) throws ParseException {
 
         SimpleDateFormat ISO8601DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.GERMANY);
-        return transactionRepository.findByDateBetweenAndUser(ISO8601DATEFORMAT.parse(from), ISO8601DATEFORMAT.parse(to), userRepository.findById(authentication.getName()).get());
+        List<Transaction> out = transactionRepository.findByDateBetweenAndUser(ISO8601DATEFORMAT.parse(from), ISO8601DATEFORMAT.parse(to), userRepository.findById(authentication.getName()).get());
+        return out;
     }
 
     @PostMapping(value = "", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public List<Transaction> addTransaction(Authentication authentication, @RequestBody Transaction toAdd) {
-        toAdd.setUser(userRepository.findById(authentication.getName()).get());
-        transactionRepository.save(toAdd);
-        return getLatestTransactions(authentication);
-    }
-
-    @DeleteMapping(value = "", produces = APPLICATION_JSON_VALUE)
-    @CrossOrigin
-    public List<Transaction> deleteTransactions(Authentication authentication, @RequestBody List<Transaction> toDelete) {
-        transactionRepository.deleteAll(toDelete);
-        return getLatestTransactions(authentication);
+        final Optional<DBUser> user_o = userRepository.findById(authentication.getName());
+        if (user_o.isPresent()) {
+            toAdd.setUser(user_o.get());
+            toAdd.setTags(toAdd.getTags().stream().map(tag -> {
+                tag.setUser(user_o.get());
+                return tag;
+            }).collect(Collectors.toList()));
+            tagRepository.saveAll(toAdd.getTags());
+            transactionRepository.saveAndFlush(toAdd);
+            return getLatestTransactions(authentication);
+        } else {
+            throw new UsernameNotFoundException("USER NOT FOUND");
+        }
     }
 
     @DeleteMapping(value = "/id", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public List<Transaction> deleteTransactionsByID(Authentication authentication, @RequestBody List<String> toDelete) {
-        transactionRepository.deleteAllById(toDelete);
-        return getLatestTransactions(authentication);
+        final Optional<DBUser> user_o = userRepository.findById(authentication.getName());
+        if (user_o.isPresent()) {
+            toDelete.forEach(t_id -> transactionRepository.deleteByIdAndUser(t_id, user_o.get()));
+            return getLatestTransactions(authentication);
+        } else {
+            throw new UsernameNotFoundException("USER NOT FOUND");
+        }
     }
 
     private PageRequest getPageRequest(int page, int size, String sortBy, String sortDir) {

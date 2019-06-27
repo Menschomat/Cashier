@@ -37,6 +37,8 @@ export class ScheduledTaskCardComponent implements OnInit {
   ngOnInit() {
     this.schedulerService.getAllTasks().subscribe(tasks => {
       this.data = tasks;
+      console.log(this.data);
+      
     });
   }
   getTagForTagID(tID: string) {

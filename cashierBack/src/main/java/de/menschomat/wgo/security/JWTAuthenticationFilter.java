@@ -18,7 +18,7 @@ public class JWTAuthenticationFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
-            throws IOException {
+            throws IOException, ServletException {
         try {
             Authentication authentication = TokenAuthenticationService
                     .getAuthentication((HttpServletRequest) servletRequest);
@@ -26,9 +26,11 @@ public class JWTAuthenticationFilter extends GenericFilterBean {
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             filterChain.doFilter(servletRequest, servletResponse);
-        } catch (Exception e) {
-            ((HttpServletResponse) servletResponse).sendError(HttpServletResponse.SC_BAD_REQUEST, "The token is not present.");
+
+        } catch (BadCredentialsException e) {
+            ((HttpServletResponse) servletResponse).sendError(HttpServletResponse.SC_BAD_REQUEST, "BAD_CREDENTIALS");
         }
+
     }
 
 }

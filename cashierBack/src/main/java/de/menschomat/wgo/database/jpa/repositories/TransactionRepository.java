@@ -32,4 +32,6 @@ public interface TransactionRepository extends JpaRepository<Transaction, String
 
     public  void  deleteAllById(List<String> ids);
 
+    public void deleteByIdAndUser(String id,DBUser user);
+
 }
