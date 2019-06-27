@@ -1,6 +1,7 @@
 package de.menschomat.wgo.database.jpa.repositories;
 
 import de.menschomat.wgo.database.jpa.model.DBUser;
+import de.menschomat.wgo.database.jpa.model.ScheduledTask;
 import de.menschomat.wgo.database.jpa.model.Tag;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -15,6 +16,8 @@ public interface TagRepository extends JpaRepository<Tag, String> {
     public List<Tag> findAllByUser(DBUser user);
 
     public List<Tag> findAllByTitleIn(List<String> list);
+
+    public List<Tag> findAllByScheduledTasks(ScheduledTask task);
 
     public Tag findByTitleAndUser(String title, DBUser user);
 

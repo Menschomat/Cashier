@@ -17,7 +17,7 @@ public class Transaction implements Serializable {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @Column(updatable = false, nullable = false)
+    @Column(updatable = false, nullable = false, unique = true)
     private String id;
 
     @Size(min = 3, max = 100)

@@ -51,24 +51,6 @@ public class TransactionHandler {
     public List<Transaction> getLatestTransactions(Authentication authentication) {
         return transactionRepository.findByUser(userRepository.findById(authentication.getName()).get(), PageRequest.of(0, 5, Sort.by("date").descending())).getContent();
     }
-/*
-    @GetMapping(value = "/paged", produces = APPLICATION_JSON_VALUE)
-    @CrossOrigin
-    public TransactionResult getPaged(Authentication authentication,
-                                      @RequestParam int size,
-                                      @RequestParam int page,
-                                      @RequestParam(value = "sortBy", required = false) String sortBy,
-                                      @RequestParam(value = "sortDir", required = false) String sortDir) {
-        Page<Transaction> resultPage = transactionRepository.findByLinkedUserID(authentication.getName(), getPageRequest(page, size, sortBy, sortDir));
-        return new TransactionResult(resultPage.getTotalPages(), resultPage.getTotalElements(), resultPage.getContent());
-    }
-
-    @GetMapping(value = "/paged/len", produces = APPLICATION_JSON_VALUE)
-    @CrossOrigin
-    public PageInfo getNumOfPages(Authentication authentication, @RequestParam int size) {
-        return new PageInfo(transactionRepository.findByLinkedUserID(authentication.getName(), PageRequest.of(0, size)).getTotalPages());
-
-    } */
 
     @GetMapping(value = "/date", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin

@@ -8,15 +8,19 @@ import de.menschomat.wgo.database.jpa.repositories.TransactionRepository;
 import de.menschomat.wgo.database.jpa.repositories.UserRepository;
 import de.menschomat.wgo.scheduleing.ScheduleTaskService;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping("/api/schedule")
+@Transactional
 public class ScheduleHandler {
     private final
     TransactionRepository transactionRepository;
@@ -47,24 +51,33 @@ public class ScheduleHandler {
     @PostMapping(value = "", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public List<ScheduledTask> addScheduleTask(Authentication authentication, @RequestBody ScheduledTask scheduledTask) {
-        DBUser user = userRepository.findById(authentication.getName()).get();
-        scheduledTask.setUser(user);
-        final ScheduledTask toAdd = scheduleRepository.save(scheduledTask);
-        scheduleTaskService.addTaskToScheduler(toAdd.getId(), new Runnable() {
-            @Override
-            public void run() {
-                Transaction newTrans = new Transaction();
-                newTrans.updateFromScheduledTask(toAdd);
-                newTrans.setTags(newTrans.getTags().stream().map(tag -> {
-                    tag.setUser(user);
-                    return tag;
-                }).collect(Collectors.toList()));
-                tagRepository.saveAll(newTrans.getTags());
-                tagRepository.flush();
-                System.out.println(transactionRepository.saveAndFlush(newTrans).getId());
-            }
-        }, scheduledTask.getCronTab());
-        return getScheduleTask(authentication);
+        final Optional<DBUser> user_o = userRepository.findById(authentication.getName());
+        if (user_o.isPresent()) {
+            scheduledTask.setUser(user_o.get());
+            scheduledTask.setTags(scheduledTask.getTags().stream().map(tag -> {
+                tag.setUser(user_o.get());
+                return tag;
+            }).collect(Collectors.toList()));
+            // scheduledTask.getTags().forEach(tagRepository::saveAndFlush);
+          tagRepository.saveAll(scheduledTask.getTags());
+
+        //    tagRepository.flush();d
+            final ScheduledTask toAdd = scheduleRepository.saveAndFlush(scheduledTask);
+            scheduleTaskService.addTaskToScheduler(toAdd.getId(), new Runnable() {
+                @Override
+                public void run() {
+                    Transaction newTrans = new Transaction();
+                    newTrans.updateFromScheduledTask(toAdd);
+                    List<Tag> tags =  scheduledTask.getTags().stream().map(tag -> tagRepository.findById(tag.getId()).get()).collect(Collectors.toList());
+                    tags = tagRepository.findAllByScheduledTasks(scheduledTask);
+                    newTrans.setTags(tags);
+                    System.out.println(transactionRepository.save(newTrans).getId());
+                }
+            }, scheduledTask.getCronTab());
+            return getScheduleTask(authentication);
+        } else {
+            throw new UsernameNotFoundException("USER NOT FOUND");
+        }
     }
 
     @DeleteMapping(value = "", produces = APPLICATION_JSON_VALUE)

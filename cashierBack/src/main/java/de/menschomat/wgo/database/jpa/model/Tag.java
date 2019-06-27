@@ -1,6 +1,8 @@
 package de.menschomat.wgo.database.jpa.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -16,7 +18,7 @@ public class Tag implements Serializable {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @Column(updatable = false, nullable = false)
+    @Column(updatable = false, nullable = false, unique = true)
     private String id;
 
     @NotBlank
@@ -33,6 +35,13 @@ public class Tag implements Serializable {
     private DBUser user;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH}, mappedBy = "tags")
+    @JsonIgnore
+    private List<ScheduledTask> scheduledTasks;
+
+
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH}, mappedBy = "tags")
+    @Fetch(value = FetchMode.SUBSELECT)
     @JsonIgnore
     private List<Transaction> transaction;
 
@@ -84,11 +93,21 @@ public class Tag implements Serializable {
         return Objects.equals(id, tag.id) &&
                 Objects.equals(title, tag.title) &&
                 Objects.equals(color, tag.color) &&
-                Objects.equals(user, tag.user);
+                Objects.equals(user, tag.user) &&
+                Objects.equals(scheduledTasks, tag.scheduledTasks) &&
+                Objects.equals(transaction, tag.transaction);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, color, user);
+        return Objects.hash(id, title, color, user, scheduledTasks, transaction);
+    }
+
+    public List<ScheduledTask> getScheduledTasks() {
+        return scheduledTasks;
+    }
+
+    public void setScheduledTasks(List<ScheduledTask> scheduledTasks) {
+        this.scheduledTasks = scheduledTasks;
     }
 }

@@ -16,7 +16,7 @@ public class ScheduledTask {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @Column(updatable = false, nullable = false)
+    @Column(updatable = false, nullable = false, unique = true)
     private String id;
 
     @Size(min = 3, max = 100)
@@ -50,12 +50,6 @@ public class ScheduledTask {
         this.ingestion = ingestion;
         this.tags = tags;
         this.title = title;
-    }
-
-    public ScheduledTask(String id, DBUser user, String cronTab) {
-        this.id = id;
-        this.user = user;
-        this.cronTab = cronTab;
     }
 
     public String getId() {

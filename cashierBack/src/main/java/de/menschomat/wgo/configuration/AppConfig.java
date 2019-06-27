@@ -1,17 +1,16 @@
 package de.menschomat.wgo.configuration;
 
 
-import de.menschomat.wgo.database.jpa.model.DBUser;
-import de.menschomat.wgo.database.jpa.model.ScheduledTask;
 import de.menschomat.wgo.database.jpa.model.Tag;
 import de.menschomat.wgo.database.jpa.model.Transaction;
 import de.menschomat.wgo.database.jpa.repositories.ScheduleRepository;
+import de.menschomat.wgo.database.jpa.repositories.TagRepository;
 import de.menschomat.wgo.database.jpa.repositories.TransactionRepository;
 import de.menschomat.wgo.scheduleing.ScheduleTaskService;
-import org.hibernate.Hibernate;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 
 @Configuration
 public class AppConfig {
@@ -21,11 +20,13 @@ public class AppConfig {
     ScheduleTaskService scheduleTaskService;
     private final
     TransactionRepository transactionRepository;
+    private final TagRepository tagRepository;
 
-    public AppConfig(ScheduleRepository scheduleRepository, ScheduleTaskService scheduleTaskService, TransactionRepository transactionRepository) {
+    public AppConfig(ScheduleRepository scheduleRepository, ScheduleTaskService scheduleTaskService, TransactionRepository transactionRepository, TagRepository tagRepository) {
         this.scheduleRepository = scheduleRepository;
         this.scheduleTaskService = scheduleTaskService;
         this.transactionRepository = transactionRepository;
+        this.tagRepository = tagRepository;
     }
 
     @PostConstruct
@@ -36,6 +37,8 @@ public class AppConfig {
                 public void run() {
                     Transaction toAdd = new Transaction();
                     toAdd.updateFromScheduledTask(scheduledTask);
+                    List<Tag> tags = tagRepository.findAllByScheduledTasks(scheduledTask);
+                    toAdd.setTags(tags);
                     System.out.println(transactionRepository.save(toAdd).getId());
                 }
             }, scheduledTask.getCronTab());

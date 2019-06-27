@@ -27,7 +27,8 @@ public class JWTAuthenticationFilter extends GenericFilterBean {
 
             filterChain.doFilter(servletRequest, servletResponse);
 
-        } catch (BadCredentialsException e) {
+        } catch (Exception e) {
+
             ((HttpServletResponse) servletResponse).sendError(HttpServletResponse.SC_BAD_REQUEST, "BAD_CREDENTIALS");
         }
 

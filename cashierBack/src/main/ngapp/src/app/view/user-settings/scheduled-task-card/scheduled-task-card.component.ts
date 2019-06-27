@@ -38,7 +38,6 @@ export class ScheduledTaskCardComponent implements OnInit {
     this.schedulerService.getAllTasks().subscribe(tasks => {
       this.data = tasks;
       console.log(this.data);
-      
     });
   }
   getTagForTagID(tID: string) {
@@ -61,11 +60,12 @@ export class ScheduledTaskCardComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.statusService.sendMessage({ saved: false });
-        this.tagService.addTags(result.tags);
-        this.tagService.saveAndUpdateTagList();
+        //this.tagService.addTags(result.tags);
+        //this.tagService.saveAndUpdateTagList();
         this.schedulerService.addTask(result.task).subscribe(res => {
           this.data = res;
           this.statusService.sendMessage({ saved: true });
+          this.tagService.getAllTags();
         });
       }
     });
