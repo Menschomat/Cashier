@@ -62,8 +62,8 @@ export class ScheduledTaskCardComponent implements OnInit {
         this.statusService.sendMessage({ saved: false });
         this.schedulerService.addTask(result.task).subscribe(res => {
           this.data = res;
-          this.statusService.sendMessage({ saved: true });
           this.tagService.refreshAllTags();
+          this.statusService.sendMessage({ saved: true });
         });
       }
     });

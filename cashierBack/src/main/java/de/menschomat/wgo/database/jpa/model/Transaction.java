@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "transaction")
+@Table(name = "transactions")
 public class Transaction implements Serializable {
 
     @Id
@@ -25,7 +25,7 @@ public class Transaction implements Serializable {
 
     private Float amount;
 
-    private boolean ingestion;
+    private boolean ingestion = false;
 
     private Date date;
 

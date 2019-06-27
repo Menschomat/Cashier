@@ -114,13 +114,11 @@ export class OverviewCardComponent implements OnInit {
       if (result) {
         this.loading = true;
         this.statusService.sendMessage({ saved: false });
-      //  this.tagService.addTags(result.tags);
-       
         this.transactionService
           .addSingleTransaction(result.transaction)
           .subscribe(() => {
-            this.reloadFromServer.emit();
             this.tagService.refreshAllTags();
+            this.reloadFromServer.emit();
           });
       }
     });

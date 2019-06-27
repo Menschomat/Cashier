@@ -8,11 +8,13 @@ import de.menschomat.wgo.database.jpa.repositories.TagRepository;
 import de.menschomat.wgo.database.jpa.repositories.TransactionRepository;
 import de.menschomat.wgo.scheduleing.ScheduleTaskService;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Configuration
+@Transactional
 public class AppConfig {
     private final
     ScheduleRepository scheduleRepository;
@@ -32,6 +34,7 @@ public class AppConfig {
     @PostConstruct
     public void init() {
         scheduleRepository.findAll().forEach(scheduledTask -> {
+
             scheduleTaskService.addTaskToScheduler(scheduledTask.getId(), new Runnable() {
                 @Override
                 public void run() {
