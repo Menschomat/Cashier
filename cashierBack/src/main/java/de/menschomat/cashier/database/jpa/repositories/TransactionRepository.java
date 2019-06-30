@@ -1,7 +1,6 @@
 package de.menschomat.cashier.database.jpa.repositories;
 
 import de.menschomat.cashier.database.jpa.model.DBUser;
-import de.menschomat.cashier.database.jpa.model.Tag;
 import de.menschomat.cashier.database.jpa.model.Transaction;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,26 +11,12 @@ import java.util.List;
 
 public interface TransactionRepository extends JpaRepository<Transaction, String> {
 
-    public Transaction findByTitle(String title);
+    Page<Transaction> findByUser(DBUser user, Pageable pageable);
 
-    public List<Transaction> findAllByTags(List<Tag> tags);
+    Page<Transaction> findByDateBetweenAndUser(Date from, Date to, DBUser user, Pageable pageable);
 
-    public List<Transaction> findAllByDateBetween(Date from, Date to);
+    List<Transaction> findByDateBetweenAndUser(Date from, Date to, DBUser user);
 
-    public List<Transaction> findAllByUser(DBUser user);
-
-    public List<Transaction> findAllByIngestion(boolean ingestion);
-
-    public Page<Transaction> findByUser(DBUser user, Pageable pageable);
-
-    public Page<Transaction> findByDateBetweenAndUser(Date from, Date to, DBUser user, Pageable pageable);
-
-    public List<Transaction> findByDateBetweenAndUser(Date from, Date to, DBUser user);
-
-    public List<Transaction> findAllByUserOrderByDate(DBUser user, Pageable pageable);
-
-    public  void  deleteAllById(List<String> ids);
-
-    public void deleteByIdAndUser(String id,DBUser user);
+    void deleteByIdAndUser(String id, DBUser user);
 
 }

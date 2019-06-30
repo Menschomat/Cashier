@@ -20,7 +20,7 @@ public class TransactionResult {
         this.transactions = transactions;
     }
 
-    public int totalPages;
+    private int totalPages;
 
     public long getTotalEntries() {
         return totalEntries;

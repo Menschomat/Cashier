@@ -12,11 +12,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -41,16 +45,26 @@ public class UserHandler {
     @GetMapping(value = "/current", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public RestUser getCurrentUser(Authentication authentication) {
-        return new RestUser(userRepository.findById(authentication.getName()).get());
+        Optional<DBUser> dbUserOptional = userRepository.findById(authentication.getName());
+        if (dbUserOptional.isPresent()) {
+            return new RestUser(dbUserOptional.get());
+        } else
+            throw new UsernameNotFoundException("USER NOT FOUND");
+
     }
 
     @PostMapping(value = "/current", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public RestUser updateCurrentUser(Authentication authentication, @RequestBody RestUser toAdd) {
-        DBUser user = userRepository.findById(authentication.getName()).get();
-        user.updateFromRestUser(toAdd);
-        userRepository.save(user);
-        return new RestUser(user);
+        Optional<DBUser> dbUserOptional = userRepository.findById(authentication.getName());
+        if (dbUserOptional.isPresent()) {
+            DBUser user = dbUserOptional.get();
+            user.updateFromRestUser(toAdd);
+            userRepository.save(user);
+            return new RestUser(user);
+        } else
+            throw new UsernameNotFoundException("USER NOT FOUND");
+
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -70,16 +84,19 @@ public class UserHandler {
     @PostMapping(value = "/password", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public ResponseEntity<String> updatePassword(Authentication authentication, @RequestBody ChangePWModel changePWModel) {
-        DBUser toModify = userRepository.findById(authentication.getName()).get();
-        if (passwordEncoder.matches(changePWModel.getOldPW(), toModify.getPassword())) {
-            System.out.println(changePWModel.getNewPW());
-            toModify.setPassword(passwordEncoder.encode(changePWModel.getNewPW()));
-            userRepository.save(toModify);
-            return new ResponseEntity<>("result successful result",
-                    HttpStatus.OK);
-        }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body("CURRENT_WRONG");
+        Optional<DBUser> dbUserOptional = userRepository.findById(authentication.getName());
+        if (dbUserOptional.isPresent()) {
+            DBUser toModify = dbUserOptional.get();
+            if (passwordEncoder.matches(changePWModel.getOldPW(), toModify.getPassword())) {
+                System.out.println(changePWModel.getNewPW());
+                toModify.setPassword(passwordEncoder.encode(changePWModel.getNewPW()));
+                userRepository.save(toModify);
+                return new ResponseEntity<>("result successful result", HttpStatus.OK);
+            }
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("CURRENT_WRONG");
+        } else
+            throw new UsernameNotFoundException("USER NOT FOUND");
+
     }
 
     // ADMIN Role required
@@ -108,9 +125,12 @@ public class UserHandler {
     @CrossOrigin
     public List<RestUser> deleteUsers(@RequestBody List<DBUser> toDelete) {
         toDelete.forEach(user -> {
-            DBUser dbuser = userRepository.findById(user.getId()).get();
-            tagRepository.deleteAll(dbuser.getTags());
-            transactionRepository.deleteAll(dbuser.getTransactions());
+            Optional<DBUser> userOptional = userRepository.findById(user.getId());
+            if (userOptional.isPresent()) {
+                DBUser dbuser = userOptional.get();
+                tagRepository.deleteAll(dbuser.getTags());
+                transactionRepository.deleteAll(dbuser.getTransactions());
+            }
         });
         userRepository.deleteAll(toDelete);
         return getAllUsers();

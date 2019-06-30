@@ -13,17 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.menschomat.cashier.standalone;
-
-import java.awt.Color;
-
-import javax.swing.JComponent;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
-import javax.swing.plaf.MenuItemUI;
-import javax.swing.plaf.PopupMenuUI;
-import javax.swing.plaf.SeparatorUI;
+package de.menschomat.cashier.configuration.standalone;
 
 import dorkbox.systemTray.Entry;
 import dorkbox.systemTray.Menu;
@@ -32,6 +22,12 @@ import dorkbox.systemTray.util.HeavyCheckMark;
 import dorkbox.util.swing.DefaultMenuItemUI;
 import dorkbox.util.swing.DefaultPopupMenuUI;
 import dorkbox.util.swing.DefaultSeparatorUI;
+
+import javax.swing.*;
+import javax.swing.plaf.MenuItemUI;
+import javax.swing.plaf.PopupMenuUI;
+import javax.swing.plaf.SeparatorUI;
+import java.awt.*;
 
 /**
  * Factory to allow for Look & Feel of the Swing UI components in the SystemTray.

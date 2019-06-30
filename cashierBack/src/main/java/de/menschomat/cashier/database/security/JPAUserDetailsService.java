@@ -10,8 +10,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class JPAUserDetailsService implements UserDetailsService {
@@ -23,17 +24,15 @@ public class JPAUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // DBUser user = repository.findByUsername(username);
-        DBUser user = repository.findById(username).get();
-
-        if (user == null) {
+        Optional<DBUser> dbUserOptional = repository.findById(username);
+        if (dbUserOptional.isPresent()) {
+            DBUser user = dbUserOptional.get();
+            if (user.getRole() == null) {
+                user.setRole("USER");
+            }
+            List<SimpleGrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
+            return new User(user.getId(), user.getPassword(), authorities);
+        } else
             throw new UsernameNotFoundException("DBUser not found");
-        }
-        if (user.getRole() == null) {
-            user.setRole("USER");
-        }
-
-        List<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
-        return new User(user.getId(), user.getPassword(), authorities);
     }
 }

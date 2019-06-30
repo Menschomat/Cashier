@@ -10,12 +10,9 @@ public class RestUser {
     public String name;
     public String surname;
     public Date dateOfBirth;
-    public Boolean initialized = false;
+    public Boolean initialized;
     public String role;
 
-    public RestUser() {
-
-    }
     public RestUser(DBUser input){
         this.id = input.getId();
         this.email = input.getEmail();
@@ -25,17 +22,6 @@ public class RestUser {
         this.dateOfBirth = input.getDateOfBirth();
         this.initialized = input.getInitialized();
         this.role = input.getRole();
-    }
-
-    public RestUser(String id, String email, String name, String surname, String username, Date dateOfBirth, Boolean initialized, String role) {
-        this.id = id;
-        this.email = email;
-        this.name = name;
-        this.username = username;
-        this.surname = surname;
-        this.dateOfBirth = dateOfBirth;
-        this.initialized = initialized;
-        this.role = role;
     }
 
 }

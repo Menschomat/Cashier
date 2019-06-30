@@ -1,16 +1,11 @@
 package de.menschomat.cashier.database.jpa.helpers;
 
 
-import java.sql.Types;
-
 import org.hibernate.dialect.Dialect;
-import org.hibernate.dialect.function.AbstractAnsiTrimEmulationFunction;
-import org.hibernate.dialect.function.NoArgSQLFunction;
-import org.hibernate.dialect.function.SQLFunction;
-import org.hibernate.dialect.function.SQLFunctionTemplate;
-import org.hibernate.dialect.function.StandardSQLFunction;
-import org.hibernate.dialect.function.VarArgsSQLFunction;
+import org.hibernate.dialect.function.*;
 import org.hibernate.type.StandardBasicTypes;
+
+import java.sql.Types;
 
 public class SQLiteDialect extends Dialect {
     public SQLiteDialect() {
@@ -38,13 +33,13 @@ public class SQLiteDialect extends Dialect {
         registerColumnType(Types.CLOB, "clob");
         registerColumnType(Types.BOOLEAN, "boolean");
 
-        registerFunction( "concat", new VarArgsSQLFunction(StandardBasicTypes.STRING, "", "||", "") );
-        registerFunction( "mod", new SQLFunctionTemplate(StandardBasicTypes.INTEGER, "?1 % ?2" ) );
-        registerFunction( "quote", new StandardSQLFunction("quote", StandardBasicTypes.STRING) );
-        registerFunction( "random", new NoArgSQLFunction("random", StandardBasicTypes.INTEGER) );
-        registerFunction( "round", new StandardSQLFunction("round") );
-        registerFunction( "substr", new StandardSQLFunction("substr", StandardBasicTypes.STRING) );
-        registerFunction( "trim", new AbstractAnsiTrimEmulationFunction() {
+        registerFunction("concat", new VarArgsSQLFunction(StandardBasicTypes.STRING, "", "||", ""));
+        registerFunction("mod", new SQLFunctionTemplate(StandardBasicTypes.INTEGER, "?1 % ?2"));
+        registerFunction("quote", new StandardSQLFunction("quote", StandardBasicTypes.STRING));
+        registerFunction("random", new NoArgSQLFunction("random", StandardBasicTypes.INTEGER));
+        registerFunction("round", new StandardSQLFunction("round"));
+        registerFunction("substr", new StandardSQLFunction("substr", StandardBasicTypes.STRING));
+        registerFunction("trim", new AbstractAnsiTrimEmulationFunction() {
             protected SQLFunction resolveBothSpaceTrimFunction() {
                 return new SQLFunctionTemplate(StandardBasicTypes.STRING, "trim(?1)");
             }
@@ -72,7 +67,7 @@ public class SQLiteDialect extends Dialect {
             protected SQLFunction resolveTrailingTrimFunction() {
                 return new SQLFunctionTemplate(StandardBasicTypes.STRING, "rtrim(?1, ?2)");
             }
-        } );
+        });
     }
 
     public boolean supportsIdentityColumns() {
@@ -107,15 +102,14 @@ public class SQLiteDialect extends Dialect {
         return "select last_insert_rowid()";
     }
 
+    @SuppressWarnings("deprecation")
     public boolean supportsLimit() {
         return true;
     }
 
+    @SuppressWarnings("deprecation")
     protected String getLimitString(String query, boolean hasOffset) {
-        return new StringBuffer(query.length()+20).
-                append(query).
-                append(hasOffset ? " limit ? offset ?" : " limit ?").
-                toString();
+        return query + (hasOffset ? " limit ? offset ?" : " limit ?");
     }
 
     public boolean supportsTemporaryTables() {

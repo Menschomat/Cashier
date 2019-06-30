@@ -32,18 +32,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().permitAll()
                 .and()
                 .sessionManagement().disable()
-                //
-                // Add Filter 1 - JWTLoginFilter
-                //
-
-                .addFilterBefore(jwtLoginFilter(),
-                        UsernamePasswordAuthenticationFilter.class)
-                //
-                // Add Filter 2 - JWTAuthenticationFilter
-                //
-                .addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-
-        ;
+                .addFilterBefore(jwtLoginFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean

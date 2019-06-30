@@ -44,8 +44,11 @@ public class ScheduleHandler {
     @GetMapping(value = "", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public List<ScheduledTask> getScheduleTask(Authentication authentication) {
-        List<ScheduledTask> out = userRepository.findById(authentication.getName()).get().getScheduledTasks();
-        return out;
+        Optional<DBUser> dbUserOptional = userRepository.findById(authentication.getName());
+        if (dbUserOptional.isPresent()) {
+            return dbUserOptional.get().getScheduledTasks();
+        } else
+            throw new UsernameNotFoundException("USER NOT FOUND");
     }
 
     @PostMapping(value = "", produces = APPLICATION_JSON_VALUE)
@@ -54,20 +57,14 @@ public class ScheduleHandler {
         final Optional<DBUser> user_o = userRepository.findById(authentication.getName());
         if (user_o.isPresent()) {
             scheduledTask.setUser(user_o.get());
-            scheduledTask.setTags(scheduledTask.getTags().stream().map(tag -> {
-                tag.setUser(user_o.get());
-                return tag;
-            }).collect(Collectors.toList()));
+            scheduledTask.setTags(scheduledTask.getTags().stream().peek(tag -> tag.setUser(user_o.get())).collect(Collectors.toList()));
             tagRepository.saveAll(scheduledTask.getTags());
             final ScheduledTask toAdd = scheduleRepository.saveAndFlush(scheduledTask);
-            scheduleTaskService.addTaskToScheduler(toAdd.getId(), new Runnable() {
-                @Override
-                public void run() {
-                    Transaction newTrans = new Transaction();
-                    newTrans.updateFromScheduledTask(toAdd);
-                    newTrans.setTags(tagRepository.findAllByScheduledTasks(scheduledTask));
-                    transactionRepository.save(newTrans);
-                }
+            scheduleTaskService.addTaskToScheduler(toAdd.getId(), () -> {
+                Transaction newTrans = new Transaction();
+                newTrans.updateFromScheduledTask(toAdd);
+                newTrans.setTags(tagRepository.findAllByScheduledTasks(scheduledTask));
+                transactionRepository.save(newTrans);
             }, scheduledTask.getCronTab());
             return getScheduleTask(authentication);
         } else {
@@ -90,7 +87,6 @@ public class ScheduleHandler {
             scheduleTaskService.removeTaskFromScheduler(id);
             scheduleRepository.deleteById(id);
         });
-
         return getScheduleTask(authentication);
     }
 }

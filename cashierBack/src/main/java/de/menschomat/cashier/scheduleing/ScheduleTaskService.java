@@ -43,7 +43,7 @@ public class ScheduleTaskService {
     
     // A context refresh event listener
     @EventListener({ ContextRefreshedEvent.class })
-    void contextRefreshedEvent() {
+    public void contextRefreshedEvent() {
         // Get all tasks from DB and reschedule them in case of context restarted
     }
 }

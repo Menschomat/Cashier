@@ -43,13 +43,22 @@ public class TransactionHandler {
     @GetMapping(value = "/all", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public List<Transaction> getAllTransactions(Authentication authentication) {
-        return userRepository.findById(authentication.getName()).get().getTransactions();
+        Optional<DBUser> dbUserOptional = userRepository.findById(authentication.getName());
+        if (dbUserOptional.isPresent()) {
+            return dbUserOptional.get().getTransactions();
+        } else
+            throw new UsernameNotFoundException("USER NOT FOUND");
     }
 
     @GetMapping(value = "/latest", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public List<Transaction> getLatestTransactions(Authentication authentication) {
-        return transactionRepository.findByUser(userRepository.findById(authentication.getName()).get(), PageRequest.of(0, 5, Sort.by("date").descending())).getContent();
+        Optional<DBUser> dbUserOptional = userRepository.findById(authentication.getName());
+        if (dbUserOptional.isPresent()) {
+            return transactionRepository.findByUser(dbUserOptional.get(), PageRequest.of(0, 5, Sort.by("date").descending())).getContent();
+        } else
+            throw new UsernameNotFoundException("USER NOT FOUND");
+
     }
 
     @GetMapping(value = "/date", produces = APPLICATION_JSON_VALUE)
@@ -59,22 +68,25 @@ public class TransactionHandler {
                                            @RequestParam int page, @RequestParam int size,
                                            @RequestParam(value = "sortBy", required = false) String sortBy,
                                            @RequestParam(value = "sortDir", required = false) String sortDir) {
-        Page<Transaction> resultPage = transactionRepository.findByDateBetweenAndUser(
-                from,
-                to,
-                userRepository.findById(authentication.getName()).get(),
-                getPageRequest(page, size, sortBy, sortDir)
-        );
-        return new TransactionResult(resultPage.getTotalPages(), resultPage.getTotalElements(), resultPage.getContent());
+        Optional<DBUser> dbUserOptional = userRepository.findById(authentication.getName());
+        if (dbUserOptional.isPresent()) {
+            Page<Transaction> resultPage = transactionRepository.findByDateBetweenAndUser(from, to, dbUserOptional.get(), getPageRequest(page, size, sortBy, sortDir));
+            return new TransactionResult(resultPage.getTotalPages(), resultPage.getTotalElements(), resultPage.getContent());
+        } else
+            throw new UsernameNotFoundException("USER NOT FOUND");
+
     }
 
     @GetMapping(value = "/date/all", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public List<Transaction> getNumOfPages(Authentication authentication, @RequestParam String from, @RequestParam String to) throws ParseException {
+        Optional<DBUser> dbUserOptional = userRepository.findById(authentication.getName());
+        if (dbUserOptional.isPresent()) {
+            SimpleDateFormat ISO8601DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.GERMANY);
+            return transactionRepository.findByDateBetweenAndUser(ISO8601DATEFORMAT.parse(from), ISO8601DATEFORMAT.parse(to), dbUserOptional.get());
+        } else
+            throw new UsernameNotFoundException("USER NOT FOUND");
 
-        SimpleDateFormat ISO8601DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.GERMANY);
-        List<Transaction> out = transactionRepository.findByDateBetweenAndUser(ISO8601DATEFORMAT.parse(from), ISO8601DATEFORMAT.parse(to), userRepository.findById(authentication.getName()).get());
-        return out;
     }
 
     @PostMapping(value = "", produces = APPLICATION_JSON_VALUE)
@@ -83,10 +95,7 @@ public class TransactionHandler {
         final Optional<DBUser> user_o = userRepository.findById(authentication.getName());
         if (user_o.isPresent()) {
             toAdd.setUser(user_o.get());
-            toAdd.setTags(toAdd.getTags().stream().map(tag -> {
-                tag.setUser(user_o.get());
-                return tag;
-            }).collect(Collectors.toList()));
+            toAdd.setTags(toAdd.getTags().stream().peek(tag -> tag.setUser(user_o.get())).collect(Collectors.toList()));
             tagRepository.saveAll(toAdd.getTags());
             transactionRepository.saveAndFlush(toAdd);
             return getLatestTransactions(authentication);

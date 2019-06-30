@@ -31,17 +31,11 @@ public class AppConfig {
 
     @PostConstruct
     public void init() {
-        scheduleRepository.findAll().forEach(scheduledTask -> {
-
-            scheduleTaskService.addTaskToScheduler(scheduledTask.getId(), new Runnable() {
-                @Override
-                public void run() {
-                    Transaction toAdd = new Transaction();
-                    toAdd.updateFromScheduledTask(scheduledTask);
-                    toAdd.setTags(tagRepository.findAllByScheduledTasks(scheduledTask));
-                    transactionRepository.save(toAdd);
-                }
-            }, scheduledTask.getCronTab());
-        });
+        scheduleRepository.findAll().forEach(scheduledTask -> scheduleTaskService.addTaskToScheduler(scheduledTask.getId(), () -> {
+            Transaction toAdd = new Transaction();
+            toAdd.updateFromScheduledTask(scheduledTask);
+            toAdd.setTags(tagRepository.findAllByScheduledTasks(scheduledTask));
+            transactionRepository.save(toAdd);
+        }, scheduledTask.getCronTab()));
     }
 }
