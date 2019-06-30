@@ -29,3 +29,6 @@ HELP.md
 .vscode/
 **/node_modules/**
 **/static
+
+### DATABASE ###
+*.db

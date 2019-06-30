@@ -10,9 +10,8 @@
     </parent>
     <groupId>de.menschomat</groupId>
     <artifactId>cashier</artifactId>
-    <version>0.1.0-ALPHA</version>
+    <version>0.2.0-ALPHA</version>
     <name>cashier</name>
-    <description>WG Tool</description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -120,9 +119,23 @@
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.16.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.apple</groupId>
+            <artifactId>AppleJavaExtensions</artifactId>
+            <version>1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.dorkbox</groupId>
+            <artifactId>SystemTray</artifactId>
+            <version>3.17</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
             <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
@@ -169,10 +182,7 @@
 
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
+
             <plugin>
                 <groupId>com.google.code.maven-replacer-plugin</groupId>
                 <artifactId>replacer</artifactId>
@@ -196,6 +206,18 @@
                             <value>${project.version}</value>
                         </replacement>
                     </replacements>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>de.menschomat.cashier.CashierApp</mainClass>
+                        </manifest>
+                    </archive>
                 </configuration>
             </plugin>
         </plugins>
