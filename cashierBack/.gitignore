@@ -32,3 +32,5 @@ HELP.md
 
 ### DATABASE ###
 *.db
+
+generated.properties

@@ -6,4 +6,4 @@ LABEL maintainer="falco@robaux.de"
 
 ADD cashier.jar cashier.jar
 
-ENTRYPOINT ["java","-jar","/cashier.jar"]
+ENTRYPOINT ["java","-jar","/cashier.jar","-Dloader.main=de.menschomat.cashier.CashierAppHeadless"]
