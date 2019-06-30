@@ -5,23 +5,30 @@ services:
     container_name: "cashier"
     image: menschomat/cashier:latest
     environment:
-      - SPRING_DATA_MONGODB_HOST=mongodb
-      - SPRING_DATA_MONGODB_PORT=27017
-      - SPRING_DATA_MONGODB_DATABASE=cashier
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/cashier
+      - SPRING_DATASOURCE_DRIVER-CLASS-NAME=org.postgresql.Driver
+      - SPRING_DATASOURCE_USERNAME=cashier_db_guy
+      - SPRING_DATASOURCE_PASSWORD=cashier
+      - SPRING_DATASOURCE_HIKARI_CONNECTIONTIMEOUT=20000
+      - SPRING_DATASOURCE_HIKARI_MAXIMUMPOOLSIZE=5
+      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.PostgreSQLDialect
+      - STANDALONE_ACTIVE=false
     ports:
       - 8080:8080
     links:
-      - mongodb
+      - db
     depends_on:
-      - mongodb
-  mongodb:
-    image: mongo:latest
-    container_name: "mongodb"
+      - db
+
+  db:
+    image: postgres:latest
     environment:
-      - MONGO_DATA_DIR=/data/db
-      - MONGO_LOG_DIR=/dev/null
-    volumes:
-      - cashier-data:/data/db
+      POSTGRES_PASSWORD: cashier
+      POSTGRES_DB: cashier
+      POSTGRES_USER: cashier_db_guy
+      POSTGRES_PORT: 5432
+      PGDATA: /var/lib/postgresql/data/pg_data
     ports:
-      - 27017:27017
-    command: mongod --smallfiles --logpath=/dev/null # --quiet
+      - 5432:5432
+    volumes:
+      - cashier-data:/var/lib/postgresql/data
