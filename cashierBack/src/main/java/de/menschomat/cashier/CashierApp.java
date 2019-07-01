@@ -4,6 +4,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -34,14 +36,18 @@ public class CashierApp {
 
 
     public static void main(String[] args) throws IOException {
-        java.io.InputStream is = CashierApp.class.getClassLoader().getResourceAsStream("generated.properties");
+
+        java.io.InputStream is = CashierApp.class.getClassLoader().getResourceAsStream("application.properties");
+        File file = new File("application.properties");
+        if (file.exists())
+            is = new FileInputStream(file);
         java.util.Properties p = new Properties();
         p.load(is);
         disableAccessWarnings();
-        if(p.getProperty("mode").equals("standalone")) {
+        if (p.getProperty("standAlone.active").equals("true")) {
             System.setProperty("apple.awt.UIElement", "true");
             new SpringApplicationBuilder(CashierApp.class).headless(false).run(args);
-        }else{
+        } else {
             new SpringApplicationBuilder(CashierApp.class).run(args);
         }
 

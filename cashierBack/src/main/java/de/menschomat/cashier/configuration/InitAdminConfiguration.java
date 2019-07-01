@@ -4,12 +4,13 @@ package de.menschomat.cashier.configuration;
 import de.menschomat.cashier.database.jpa.model.DBUser;
 import de.menschomat.cashier.database.jpa.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
 import javax.annotation.PostConstruct;
 
-@Configurable
+@Configuration
 public class InitAdminConfiguration {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -25,6 +26,8 @@ public class InitAdminConfiguration {
         admin.setUsername("admin");
         admin.setPassword(bCryptPasswordEncoder.encode("admin123"));
         admin.setRole("ADMIN");
+        System.out.println("ADMININIT");
+        System.out.println(userRepository.findAll().isEmpty());
         if (userRepository.findAll().isEmpty()) {
             userRepository.save(admin);
         }

@@ -25,6 +25,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                 this.router.navigate(['/login'])
   .then(() => {
     window.location.reload();
+    return throwError(error);
   });
             }
             

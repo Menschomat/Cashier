@@ -5,5 +5,6 @@ EXPOSE 8080
 LABEL maintainer="falco@robaux.de"
 
 ADD cashier.jar cashier.jar
+ADD docker.properties application.properties
 
-ENTRYPOINT ["java","-jar","/cashier.jar","-Dloader.main=de.menschomat.cashier.CashierAppHeadless"]
+ENTRYPOINT ["java","-jar","/cashier.jar","--spring.config.location=application.properties"]

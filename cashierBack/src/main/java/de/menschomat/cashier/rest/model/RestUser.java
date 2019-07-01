@@ -1,5 +1,7 @@
-package de.menschomat.cashier.database.jpa.model;
+package de.menschomat.cashier.rest.model;
 
+
+import de.menschomat.cashier.database.jpa.model.DBUser;
 
 import java.util.Date;
 
@@ -12,6 +14,8 @@ public class RestUser {
     public Date dateOfBirth;
     public Boolean initialized;
     public String role;
+
+    public RestUser(){}
 
     public RestUser(DBUser input){
         this.id = input.getId();

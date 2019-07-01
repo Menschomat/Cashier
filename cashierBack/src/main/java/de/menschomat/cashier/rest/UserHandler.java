@@ -2,7 +2,7 @@ package de.menschomat.cashier.rest;
 
 
 import de.menschomat.cashier.database.jpa.model.DBUser;
-import de.menschomat.cashier.database.jpa.model.RestUser;
+import de.menschomat.cashier.rest.model.RestUser;
 import de.menschomat.cashier.database.jpa.repositories.TagRepository;
 import de.menschomat.cashier.database.jpa.repositories.TransactionRepository;
 import de.menschomat.cashier.database.jpa.repositories.UserRepository;
@@ -17,9 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -46,6 +44,7 @@ public class UserHandler {
     @CrossOrigin
     public RestUser getCurrentUser(Authentication authentication) {
         Optional<DBUser> dbUserOptional = userRepository.findById(authentication.getName());
+        String bla = authentication.getName();
         if (dbUserOptional.isPresent()) {
             return new RestUser(dbUserOptional.get());
         } else
@@ -56,6 +55,7 @@ public class UserHandler {
     @PostMapping(value = "/current", produces = APPLICATION_JSON_VALUE)
     @CrossOrigin
     public RestUser updateCurrentUser(Authentication authentication, @RequestBody RestUser toAdd) {
+        String bla = authentication.getName();
         Optional<DBUser> dbUserOptional = userRepository.findById(authentication.getName());
         if (dbUserOptional.isPresent()) {
             DBUser user = dbUserOptional.get();

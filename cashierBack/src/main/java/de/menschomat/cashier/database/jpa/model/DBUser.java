@@ -1,6 +1,7 @@
 package de.menschomat.cashier.database.jpa.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import de.menschomat.cashier.rest.model.RestUser;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "cashier_user", indexes = {@Index(name = "username_idx", columnList = "username", unique = true)})
+@Table(name = "cashier_user")
 public class DBUser implements Serializable {
 
     @Id
@@ -25,7 +26,7 @@ public class DBUser implements Serializable {
 
     @NotBlank
     @Size(min = 3, max = 100)
-
+    @Column(unique = true)
     private String username;
 
     @Size(max = 100)

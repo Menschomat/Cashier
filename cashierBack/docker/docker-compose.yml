@@ -4,15 +4,6 @@ services:
     build: .
     container_name: "cashier"
     image: menschomat/cashier:latest
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/cashier
-      - SPRING_DATASOURCE_DRIVER-CLASS-NAME=org.postgresql.Driver
-      - SPRING_DATASOURCE_USERNAME=cashier_db_guy
-      - SPRING_DATASOURCE_PASSWORD=cashier
-      - SPRING_DATASOURCE_HIKARI_CONNECTIONTIMEOUT=20000
-      - SPRING_DATASOURCE_HIKARI_MAXIMUMPOOLSIZE=5
-      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.PostgreSQLDialect
-      - STANDALONE_ACTIVE=false
     ports:
       - 8080:8080
     links:
