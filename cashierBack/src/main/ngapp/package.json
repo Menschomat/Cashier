@@ -2,7 +2,7 @@
   "name": "w-go-front",
   "version": "0.0.0",
   "scripts": {
-    "mavenbuild": "./node_modules/.bin/ng.js build --prod",
+    "mavenbuild": "node node_modules/.bin/ng build --prod",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
