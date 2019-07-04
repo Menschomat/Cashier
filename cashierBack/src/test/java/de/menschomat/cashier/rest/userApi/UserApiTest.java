@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.menschomat.cashier.database.jpa.model.DBUser;
 import de.menschomat.cashier.rest.model.RestUser;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +13,6 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -29,16 +27,17 @@ public class UserApiTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
-
     private HttpHeaders headers = new HttpHeaders();
 
     @Before
     public void init() {
-        HttpEntity<String> entity = new HttpEntity<>("body", headers);
-        ResponseEntity<String> responseEntity = this.restTemplate.exchange("/api/users/login?username=admin&password=admin123", HttpMethod.GET, entity, String.class);
-        String authHeader = responseEntity.getHeaders().get("Authorization").get(0);
-        System.out.println(authHeader);
-        headers.set("Authorization", authHeader);
+        headers.set(
+                "Authorization",
+                this.restTemplate.exchange(
+                        "/api/users/login?username=admin&password=admin123",
+                        HttpMethod.GET,
+                        new HttpEntity<>("body", headers),
+                        String.class).getHeaders().get("Authorization").get(0));
     }
 
     @After
@@ -47,18 +46,28 @@ public class UserApiTest {
     }
 
     private DBUser getCurrent() throws IOException {
-        HttpEntity<String> entity = new HttpEntity<>("body", headers);
-        ResponseEntity<String> responseEntity = this.restTemplate.exchange("/api/user/current", HttpMethod.GET, entity, String.class);
-        return new ObjectMapper().readValue(responseEntity.getBody(), DBUser.class);
+        return new ObjectMapper().readValue(
+                this.restTemplate.exchange(
+                        "/api/user/current",
+                        HttpMethod.GET,
+                        new HttpEntity<>(
+                                "body",
+                                headers),
+                        String.class).getBody(),
+                DBUser.class);
     }
 
     @Test
     public void getCurrentReturnsValid() throws IOException {
-        HttpEntity<String> entity = new HttpEntity<>("body", headers);
-        ResponseEntity<String> responseEntity = this.restTemplate.exchange("/api/user/current", HttpMethod.GET, entity, String.class);
-        String body = responseEntity.getBody();
-        Object result = new ObjectMapper().readValue(body, DBUser.class);
-        assertThat(result).isInstanceOf(DBUser.class);
+        assertThat(new ObjectMapper().readValue(
+                this.restTemplate.exchange(
+                        "/api/user/current",
+                        HttpMethod.GET,
+                        new HttpEntity<>(
+                                "body",
+                                headers),
+                        String.class).getBody(),
+                DBUser.class)).isInstanceOf(DBUser.class);
     }
 
     @Test
@@ -75,9 +84,11 @@ public class UserApiTest {
     public void checkCurrentUpdatable() throws IOException {
         DBUser user = getCurrent();
         user.setName("Tester");
-        HttpEntity<DBUser> entity = new HttpEntity<>(user, headers);
-        ResponseEntity<String> responseEntity = this.restTemplate.exchange("/api/user/current", HttpMethod.POST, entity, String.class);
-        System.out.println(responseEntity.getBody());
-        assertThat(new ObjectMapper().readValue(responseEntity.getBody(), RestUser.class).name).isEqualTo("Tester");
+        assertThat(new ObjectMapper().readValue(this.restTemplate.exchange(
+                "/api/user/current",
+                HttpMethod.POST,
+                new HttpEntity<>(user, headers),
+                String.class).getBody(),
+                RestUser.class).name).isEqualTo("Tester");
     }
 }

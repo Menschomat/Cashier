@@ -1,6 +1,5 @@
 package de.menschomat.cashier.rest.transactionApi;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.menschomat.cashier.database.jpa.model.DBUser;
 import de.menschomat.cashier.database.jpa.model.Transaction;
@@ -15,13 +14,11 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -47,18 +44,19 @@ public class TransactionApiTest {
     }
 
     private DBUser getCurrent() throws IOException {
-        HttpEntity<String> entity = new HttpEntity<>("body", headers);
-        ResponseEntity<String> responseEntity = this.restTemplate.exchange("/api/user/current", HttpMethod.GET, entity, String.class);
-        return new ObjectMapper().readValue(responseEntity.getBody(), DBUser.class);
+        return new ObjectMapper().readValue(this.restTemplate.exchange(
+                "/api/user/current",
+                HttpMethod.GET,
+                new HttpEntity<>("body", headers),
+                String.class).getBody(), DBUser.class);
     }
 
     @Before
     public void init() {
-        HttpEntity<String> entity = new HttpEntity<>("body", headers);
-        ResponseEntity<String> responseEntity = this.restTemplate.exchange("/api/users/login?username=admin&password=admin123", HttpMethod.GET, entity, String.class);
-        String authHeader = responseEntity.getHeaders().get("Authorization").get(0);
-        System.out.println(authHeader);
-        headers.set("Authorization", authHeader);
+        headers.set("Authorization",
+                this.restTemplate.exchange("/api/users/login?username=admin&password=admin123",
+                        HttpMethod.GET, new HttpEntity<>("body", headers),
+                        String.class).getHeaders().get("Authorization").get(0));
     }
 
     @After
@@ -75,11 +73,8 @@ public class TransactionApiTest {
         toAdd.setDate(new Date());
         toAdd.setIngestion(true);
         toAdd.setTitle(title);
-        HttpEntity<Transaction> entity = new HttpEntity<>(toAdd, headers);
-        System.out.println(headers.get("Authorization"));
-        ResponseEntity<String> responseEntity = this.restTemplate.exchange("/api/transaction", HttpMethod.POST, entity, String.class);
-        System.out.println(responseEntity.getBody());
-        toAdd.setUser(getCurrent());
+        this.restTemplate.exchange("/api/transaction", HttpMethod.POST, new HttpEntity<>(toAdd, headers), String.class);
+        toAdd.setUser(getCurrent()); //set user here, to check if automated user-readding is working
         assertThat(sameTransaction(transactionRepository.findByTitle(title), toAdd)).isTrue();
     }
 }
