@@ -1,6 +1,7 @@
 package de.menschomat.cashier.rest;
 
 import de.menschomat.cashier.database.jpa.model.DBUser;
+import de.menschomat.cashier.database.jpa.model.Tag;
 import de.menschomat.cashier.database.jpa.model.Transaction;
 import de.menschomat.cashier.database.jpa.model.TransactionResult;
 import de.menschomat.cashier.database.jpa.repositories.TagRepository;
@@ -16,10 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -95,6 +93,8 @@ public class TransactionHandler {
         final Optional<DBUser> user_o = userRepository.findById(authentication.getName());
         if (user_o.isPresent()) {
             toAdd.setUser(user_o.get());
+            if (toAdd.getTags() == null)
+                toAdd.setTags(new ArrayList<>());
             toAdd.setTags(toAdd.getTags().stream().peek(tag -> tag.setUser(user_o.get())).collect(Collectors.toList()));
             tagRepository.saveAll(toAdd.getTags());
             transactionRepository.saveAndFlush(toAdd);

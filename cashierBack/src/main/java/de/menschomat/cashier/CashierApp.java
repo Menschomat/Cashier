@@ -36,14 +36,13 @@ public class CashierApp {
 
 
     public static void main(String[] args) throws IOException {
-
+        disableAccessWarnings();
         java.io.InputStream is = CashierApp.class.getClassLoader().getResourceAsStream("application.properties");
         File file = new File("application.properties");
+        java.util.Properties p = new Properties();
         if (file.exists())
             is = new FileInputStream(file);
-        java.util.Properties p = new Properties();
         p.load(is);
-        disableAccessWarnings();
         if (p.getProperty("standAlone.active").equals("true")) {
             System.setProperty("apple.awt.UIElement", "true");
             new SpringApplicationBuilder(CashierApp.class).headless(false).run(args);

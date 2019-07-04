@@ -15,7 +15,7 @@ public class JWTAuthenticationFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
-            throws IOException{
+            throws IOException {
         try {
             Authentication authentication = TokenAuthenticationService
                     .getAuthentication((HttpServletRequest) servletRequest);
@@ -25,7 +25,6 @@ public class JWTAuthenticationFilter extends GenericFilterBean {
             filterChain.doFilter(servletRequest, servletResponse);
 
         } catch (Exception e) {
-
             ((HttpServletResponse) servletResponse).sendError(HttpServletResponse.SC_BAD_REQUEST, "BAD_CREDENTIALS");
         }
 

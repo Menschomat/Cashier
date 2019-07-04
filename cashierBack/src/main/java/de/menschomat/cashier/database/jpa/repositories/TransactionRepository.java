@@ -17,6 +17,8 @@ public interface TransactionRepository extends JpaRepository<Transaction, String
 
     List<Transaction> findByDateBetweenAndUser(Date from, Date to, DBUser user);
 
+    Transaction findByTitle(String title);
+
     void deleteByIdAndUser(String id, DBUser user);
 
 }
