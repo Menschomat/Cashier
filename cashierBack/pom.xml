@@ -175,7 +175,7 @@
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>run ng build --prod</arguments>
+                            <arguments>run ng -- build --prod</arguments>
                         </configuration>
                     </execution>
 
