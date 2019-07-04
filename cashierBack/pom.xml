@@ -175,7 +175,7 @@
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>run-script mavenbuild</arguments>
+                            <arguments>install ng build --prod</arguments>
                         </configuration>
                     </execution>
 

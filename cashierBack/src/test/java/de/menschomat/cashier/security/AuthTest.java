@@ -24,15 +24,6 @@ public class AuthTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @Before
-    public void init() {
-    }
-
-    @After
-    public void finalize() {
-
-    }
-
     @Test
     public void testLogin(){
         HttpHeaders headers = new HttpHeaders();
