@@ -17,6 +17,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -33,11 +34,11 @@ public class UserApiTest {
     public void init() {
         headers.set(
                 "Authorization",
-                this.restTemplate.exchange(
-                        "/api/users/login?username=admin&password=admin123",
+                Objects.requireNonNull(this.restTemplate.exchange(
+                        "/api/users/login?username=admin&password=cashier",
                         HttpMethod.GET,
                         new HttpEntity<>("body", headers),
-                        String.class).getHeaders().get("Authorization").get(0));
+                        String.class).getHeaders().get("Authorization")).get(0));
     }
 
     @After

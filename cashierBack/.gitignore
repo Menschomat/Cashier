@@ -33,4 +33,6 @@ HELP.md
 ### DATABASE ###
 *.db
 
+memory:test
+
 generated.properties
