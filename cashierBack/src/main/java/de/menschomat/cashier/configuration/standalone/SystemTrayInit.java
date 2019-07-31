@@ -15,7 +15,7 @@ import java.util.Objects;
 
 @Configuration
 @ConditionalOnProperty(
-        value="standAlone.active",
+        value = "standAlone.active",
         havingValue = "true")
 public class SystemTrayInit {
 
@@ -34,18 +34,14 @@ public class SystemTrayInit {
         }
         URL logo = SystemTrayInit.class.getClassLoader().getResource("tray/logo.png");
         systemTray.setImage(Objects.requireNonNull(logo));
-
         systemTray.setStatus("Cashier");
-
         systemTray.getMenu().add(new MenuItem("Open", e -> {
-
             try {
                 BrowserInit.openBrowser("http://localhost:" + environment.getProperty("local.server.port"));
             } catch (URISyntaxException | IOException ex) {
                 ex.printStackTrace();
             }
         })).setShortcut('o');
-
         systemTray.getMenu().add(new MenuItem("Quit", e -> {
             systemTray.shutdown();
             System.exit(0);

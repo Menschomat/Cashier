@@ -187,6 +187,7 @@ public class DBUser implements Serializable {
     public void setScheduledTasks(List<ScheduledTask> scheduledTasks) {
         this.scheduledTasks = scheduledTasks;
     }
+
     public void updateFromRestUser(RestUser rUser) {
         this.username = rUser.username;
         this.dateOfBirth = rUser.dateOfBirth;

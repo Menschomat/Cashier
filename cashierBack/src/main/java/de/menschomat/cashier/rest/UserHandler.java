@@ -2,12 +2,13 @@ package de.menschomat.cashier.rest;
 
 
 import de.menschomat.cashier.database.jpa.model.DBUser;
-import de.menschomat.cashier.rest.model.RestUser;
 import de.menschomat.cashier.database.jpa.repositories.TagRepository;
 import de.menschomat.cashier.database.jpa.repositories.TransactionRepository;
 import de.menschomat.cashier.database.jpa.repositories.UserRepository;
-
 import de.menschomat.cashier.rest.model.ChangePWModel;
+import de.menschomat.cashier.rest.model.RestUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,6 +32,7 @@ public class UserHandler {
     private final BCryptPasswordEncoder passwordEncoder;
     private final TagRepository tagRepository;
     private final TransactionRepository transactionRepository;
+    private Logger logger = LoggerFactory.getLogger(UserHandler.class);
 
     public UserHandler(BCryptPasswordEncoder passwordEncoder, UserRepository userRepository, TagRepository tagRepository, TransactionRepository transactionRepository) {
         this.passwordEncoder = passwordEncoder;
@@ -88,9 +90,9 @@ public class UserHandler {
         if (dbUserOptional.isPresent()) {
             DBUser toModify = dbUserOptional.get();
             if (passwordEncoder.matches(changePWModel.getOldPW(), toModify.getPassword())) {
-                System.out.println(changePWModel.getNewPW());
                 toModify.setPassword(passwordEncoder.encode(changePWModel.getNewPW()));
                 userRepository.save(toModify);
+                logger.debug("Password Changed - New:" + changePWModel.getNewPW());
                 return new ResponseEntity<>("result successful result", HttpStatus.OK);
             }
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("CURRENT_WRONG");

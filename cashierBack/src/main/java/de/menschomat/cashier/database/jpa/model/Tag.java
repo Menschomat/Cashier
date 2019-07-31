@@ -111,4 +111,14 @@ public class Tag implements Serializable {
     public void setScheduledTasks(List<ScheduledTask> scheduledTasks) {
         this.scheduledTasks = scheduledTasks;
     }
+
+    @Override
+    public String toString() {
+        return "Tag{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", color='" + color + '\'' +
+                ", user=" + user +
+                '}';
+    }
 }
