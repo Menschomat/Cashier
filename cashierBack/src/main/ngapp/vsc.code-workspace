@@ -1,11 +1,10 @@
 {
 	"folders": [
 		{
-			"path": "/Users/fweihrauch/Documents/Projekte/wGo/wGoFront"
-		},
-		{
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"workbench.colorCustomizations": {}
+	}
 }
