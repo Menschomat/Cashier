@@ -61,10 +61,10 @@ export class TagService {
     private statusService: StatusServiceService
   ) {
     this.subscription = this.statusService.getMessage().subscribe(status => {
-      if (status.loggedIn == false) {
+      if (status.loggedIn === false) {
         this.allTags = [];
       }
-      if (status.loggedIn == true) {
+      if (status.loggedIn === true) {
         this.getAllTags();
       }
     });
