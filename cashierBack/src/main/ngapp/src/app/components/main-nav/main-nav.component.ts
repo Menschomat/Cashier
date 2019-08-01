@@ -76,8 +76,10 @@ export class MainNavComponent implements OnInit {
   }
   switchDark() {
     if (this.theme === "light") {
+      this.darkOut.emit(true);
       this.theme = this.themeService.setTheme("dark");
     } else if (this.theme === "dark") {
+      this.darkOut.emit(false);
       this.theme = this.themeService.setTheme("light");
     }
   }
@@ -104,8 +106,6 @@ export class MainNavComponent implements OnInit {
     return false;
   }
   ngOnInit() {
-    this.dark = localStorage.getItem("darkTheme") == "true";
-    this.darkOut.emit(this.dark);
     if (localStorage.getItem("cashierUserToken")) {
       this.initUserString();
     }

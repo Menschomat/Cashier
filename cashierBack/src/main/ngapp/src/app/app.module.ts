@@ -37,11 +37,11 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { MainNavComponent } from './view/main-wrapper/main-nav/main-nav.component';
+import { MainNavComponent } from './components/main-nav/main-nav.component';
 import { BookingCardComponent } from './components/booking-card/booking-card.component';
 import { OverviewCardComponent } from './view/home/overview-card/overview-card.component';
 import { NewTransactionDialogComponent } from './components/new-transaction-dialog/new-transaction-dialog.component';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'; 
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import {MatBadgeModule} from '@angular/material/badge';
 import { MccColorPickerModule } from 'material-community-components';
@@ -57,8 +57,7 @@ import { AdministrationComponent } from './view/administration/administration.co
 import { UserSettingsComponent } from './view/user-settings/user-settings.component';
 import { UserListComponent } from './view/administration/user-list/user-list.component';
 import { UserEditDialogComponent } from './view/administration/user-edit-dialog/user-edit-dialog.component';
-import { SidebarContentComponent } from './view/main-wrapper/sidebar-content/sidebar-content.component';
-import { MainWrapperComponent } from './view/main-wrapper/main-wrapper.component';
+import { SidebarContentComponent } from './components/sidebar-content/sidebar-content.component';
 import { TagDetailComponent } from './view/tag-detail/tag-detail.component';
 import { ChangePasswordComponent } from './view/user-settings/change-password/change-password.component';
 import { EditUserComponent } from './view/user-settings/edit-user/edit-user.component';
@@ -67,8 +66,8 @@ import { ScheduledTaskCardComponent } from './view/user-settings/scheduled-task-
 import { NewScheduledTaskComponent } from './view/user-settings/scheduled-task-card/new-scheduled-task/new-scheduled-task.component';
 import { BarChartCardComponent } from './components/charts/bar-chart-card/bar-chart-card.component';
 import { InitComponent } from './view/init/init.component';
-import { MainFooterComponent } from './view/main-wrapper/main-footer/main-footer.component';
- 
+import { MainFooterComponent } from './components/main-footer/main-footer.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -86,7 +85,6 @@ import { MainFooterComponent } from './view/main-wrapper/main-footer/main-footer
     UserListComponent,
     UserEditDialogComponent,
     SidebarContentComponent,
-    MainWrapperComponent,
     TagDetailComponent,
     ChangePasswordComponent,
     EditUserComponent,
@@ -149,7 +147,7 @@ import { MainFooterComponent } from './view/main-wrapper/main-footer/main-footer
   bootstrap: [AppComponent],
   entryComponents: [NewTransactionDialogComponent, TagEditorComponent, UserEditDialogComponent, NewScheduledTaskComponent]
 })
-export class AppModule { 
- 
+export class AppModule {
+
 
 }

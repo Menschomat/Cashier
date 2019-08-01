@@ -20,8 +20,8 @@ $theme: mat-dark-theme($primary, $accent, $warn);
 // Insert custom background color
 
 .mat-app-dark {
-    $background: map-get($theme, background);
-    background-color: mat-color($background, background);
+   // $background: map-get($theme, background);
+   // background-color: mat-color($background, background);
     @include angular-material-theme($theme);
   }
 // Include theme styles for core and each component used in your app.

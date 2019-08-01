@@ -16,11 +16,9 @@ export class TransactionService {
     return this.httpClient.get<Transaction[]>(`${this.apiURL}/latest`);
   }
   public addSingleTransaction(toAdd: Transaction) {
-    console.log(toAdd);
-    
     return this.httpClient.post<Transaction[]>(`${this.apiURL}`, toAdd);
   }
-  
+
   public deleteTransactionsById(toDelete: string[]) {
     const httpOptions = {
       headers: new HttpHeaders({

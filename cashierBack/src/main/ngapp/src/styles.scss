@@ -2,7 +2,7 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .success-dialog{
-    
+
     color: white !important;
     background-color: darkgreen !important;
     .mat-simple-snackbar-action {
@@ -10,7 +10,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     }
 }
 .error-dialog{
-    
+
     color: white !important;
     background-color: darkred !important;
     .mat-simple-snackbar-action {
@@ -18,10 +18,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     }
 }
 @import '~@angular/material/theming';
-
-// always include only once per project
 @include mat-core();
-
-// import our custom theme
-@import 'light-theme.scss';
-@import 'dark-theme.scss';
+@import './light-theme';
+@import './dark-theme';

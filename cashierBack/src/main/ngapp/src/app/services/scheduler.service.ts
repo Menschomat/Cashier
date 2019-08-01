@@ -14,8 +14,6 @@ export class SchedulerService {
     return this.httpClient.get<ScheduledTask[]>(`${this.apiURL}`);
   }
   public addTask(toAdd:ScheduledTask) {
-    console.log(toAdd);
-    
     return this.httpClient.post<ScheduledTask[]>(`${this.apiURL}`,toAdd);
   }
 

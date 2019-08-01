@@ -123,12 +123,11 @@ export class TagService {
     this.statusService.sendMessage({ saved: false });
   }
   public saveAndUpdateTagList() {
-    console.log(this.allTags);
     return this.httpClient
       .post<Tag[]>(`${this.apiURL}/all`, this.allTags)
       .subscribe(data => {
-        
-        
+
+
         this.statusService.sendMessage({ saved: true });
         this.allTags = data;
       });

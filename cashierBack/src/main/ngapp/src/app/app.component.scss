@@ -1,0 +1,11 @@
+:host{
+  height: 100vh;
+  min-height: 100vh;
+  max-height: 100vh;
+  max-width: 100vw;
+}
+.app-frame{
+  display: flex;
+  overflow: auto; max-height: calc(100vh - 4rem); min-height: calc(100vh - 4rem);
+}
+

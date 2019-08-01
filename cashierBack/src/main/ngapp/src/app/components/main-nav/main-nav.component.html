@@ -7,7 +7,7 @@
     <img
       style="font-size: 1em; position: absolute;left: 45.5vw;"
       src="/assets/cashier.svg"
-      height="50%"
+      height="40rem"
       onerror="this.onerror=null; this.src='image.png'"
     />
 
@@ -56,11 +56,11 @@
     <mat-menu #userMenu="matMenu">
       <button mat-menu-item style="text-align:right" (click)="switchDark()">
         <div *ngIf="theme === 'light'">
-          Theme: dark
+          Switch to dark
           <fa-icon [icon]="faMoon"></fa-icon>
         </div>
         <div *ngIf="theme === 'dark'">
-          Theme: light
+          Switch to light
           <fa-icon [icon]="faSun"></fa-icon>
         </div>
       </button>
