@@ -40,7 +40,7 @@ export class MainNavComponent implements OnInit {
   @Output() darkOut: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() toggleSide: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() logoutEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
-  dark: boolean = false;
+  dark = false;
   faUser = faUserCircle;
   faSignout = faSignOutAlt;
   faMoney = faMoneyBillWave;
@@ -56,7 +56,7 @@ export class MainNavComponent implements OnInit {
   cashiesButton: boolean;
   adminButton: boolean;
   subscription: Subscription;
-  userstring: String;
+  userstring: string;
   user: FrontendUser = {} as FrontendUser;
   theme: string;
   constructor(
@@ -69,7 +69,7 @@ export class MainNavComponent implements OnInit {
     this.subscription = this.statusService.getMessage().subscribe(status => {
       if (status.loggedIn) {
         this.initUserString();
-      } else if (status.loggedIn == false) {
+      } else if (status.loggedIn === false) {
         this.userstring = "";
       }
     });

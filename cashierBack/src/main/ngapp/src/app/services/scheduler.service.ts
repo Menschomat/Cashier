@@ -1,27 +1,30 @@
-import { Injectable } from '@angular/core';
-import { ScheduledTask } from '../model/transaction-management/scheduled-task';
-import { HttpClient } from '@angular/common/http';
+import { Injectable } from "@angular/core";
+import { ScheduledTask } from "../model/transaction-management/scheduled-task";
+import { HttpClient } from "@angular/common/http";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class SchedulerService {
-  apiURL: string = "/api/schedule";
+  apiURL = "/api/schedule";
   user: string;
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   public getAllTasks() {
     return this.httpClient.get<ScheduledTask[]>(`${this.apiURL}`);
   }
-  public addTask(toAdd:ScheduledTask) {
-    return this.httpClient.post<ScheduledTask[]>(`${this.apiURL}`,toAdd);
+  public addTask(toAdd: ScheduledTask) {
+    return this.httpClient.post<ScheduledTask[]>(`${this.apiURL}`, toAdd);
   }
 
   public deleteTask(toDelete: string) {
-    return this.httpClient.delete<ScheduledTask[]>(`${this.apiURL}?id=${toDelete}`);
+    return this.httpClient.delete<ScheduledTask[]>(
+      `${this.apiURL}?id=${toDelete}`
+    );
   }
   public deleteTasks(toDelete: string[]) {
-    return this.httpClient.delete<ScheduledTask[]>(`${this.apiURL}/multiple?ids=${toDelete}`);
+    return this.httpClient.delete<ScheduledTask[]>(
+      `${this.apiURL}/multiple?ids=${toDelete}`
+    );
   }
-
 }

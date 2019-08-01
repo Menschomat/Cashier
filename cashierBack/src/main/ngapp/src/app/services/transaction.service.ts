@@ -9,7 +9,7 @@ import { TransactionResponse } from "../model/transaction-management/Transaction
   providedIn: "root"
 })
 export class TransactionService {
-  apiURL: string = "/api/transaction";
+  apiURL = "/api/transaction";
 
   constructor(private httpClient: HttpClient, private uService: UserService) {}
   public getLatesTransactions() {
@@ -58,13 +58,13 @@ export class TransactionService {
     );
   }
   public getFromTo(from: Date, to: Date): Observable<Transaction[]> {
-    from.setHours(0)
-    from.setMinutes(0)
-    from.setSeconds(0)
+    from.setHours(0);
+    from.setMinutes(0);
+    from.setSeconds(0);
     from.setMilliseconds(1);
-    to.setHours(23)
-    to.setMinutes(59)
-    to.setSeconds(59)
+    to.setHours(23);
+    to.setMinutes(59);
+    to.setSeconds(59);
     to.setMilliseconds(99);
     return this.httpClient.get<Transaction[]>(
       `${

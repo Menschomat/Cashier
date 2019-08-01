@@ -9,7 +9,7 @@ import { Subscription } from "rxjs";
   providedIn: "root"
 })
 export class TagService {
-  light_colors = [
+  lightColors = [
     "#ffcdd2",
     "#F8BBD0",
     "#E1BEE7",
@@ -51,10 +51,9 @@ export class TagService {
     "#9E9E9E",
     "#607D8B"
   ];
-  apiURL: string = "/api/tag";
+  apiURL = "/api/tag";
   subscription: Subscription;
   allTags: Tag[] = [];
-
 
   constructor(
     private httpClient: HttpClient,
@@ -89,7 +88,7 @@ export class TagService {
     }
   }
 
-  public refreshAllTags(){
+  public refreshAllTags() {
     this.httpClient.get<Tag[]>(`${this.apiURL}/all`).subscribe(tags => {
       this.allTags = tags;
     });
@@ -109,7 +108,7 @@ export class TagService {
           title: tagid,
           color: this.getColor(),
           user: undefined,
-          transactions:[],
+          transactions: [],
           id: undefined
         };
   }

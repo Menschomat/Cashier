@@ -15,7 +15,7 @@ import { StatusServiceService } from "src/app/services/status-service.service";
   styleUrls: ["./scheduled-task-card.component.scss"]
 })
 export class ScheduledTaskCardComponent implements OnInit {
-  selection = new SelectionModel<String>(true, []);
+  selection = new SelectionModel<string>(true, []);
   data: ScheduledTask[] = [];
   displayedColumns: string[] = [
     "select",
@@ -55,7 +55,7 @@ export class ScheduledTaskCardComponent implements OnInit {
     dialogConfig.autoFocus = true;
     dialogConfig.minWidth = "40%";
 
-    let dialogRef = this.dialog.open(NewScheduledTaskComponent, dialogConfig);
+    const dialogRef = this.dialog.open(NewScheduledTaskComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.statusService.sendMessage({ saved: false });
