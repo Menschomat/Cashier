@@ -3,7 +3,7 @@
 justify-content: center; background-image: url('/assets/back.jpg'); height: 100%;background-size:cover"
 >
   <mat-card
-    style="margin: 1em; max-width: 50vw; width: 50vw; background-color: rgba(255, 255, 255, 0.92)"
+    style="margin: 1em; max-width: 50vw; width: 50vw; "
     class="mat-elevation-z8"
   >
     <mat-card-title>
@@ -13,7 +13,6 @@ justify-content: center; background-image: url('/assets/back.jpg'); height: 100%
     <mat-vertical-stepper
       [linear]="isLinear"
       #stepper
-      style="background-color: rgba(255, 255, 255, 0)!important;"
     >
       <mat-step [stepControl]="firstFormGroup">
         <form

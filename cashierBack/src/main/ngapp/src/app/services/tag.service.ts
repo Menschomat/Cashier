@@ -126,8 +126,6 @@ export class TagService {
     return this.httpClient
       .post<Tag[]>(`${this.apiURL}/all`, this.allTags)
       .subscribe(data => {
-
-
         this.statusService.sendMessage({ saved: true });
         this.allTags = data;
       });

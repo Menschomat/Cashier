@@ -47,9 +47,12 @@ public class TagHandler {
     public List<Tag> addAllTags(Authentication authentication, @RequestBody List<Tag> tags) {
         Optional<DBUser> dbUserOptional = userRepository.findById(authentication.getName());
         if (dbUserOptional.isPresent()) {
-            tags.forEach(tag -> tag.setUser(dbUserOptional.get()));
+            tags.forEach(tag ->
+            {
+                tag.setUser(dbUserOptional.get());
+            });
             logger.debug("Tags:"+tags);
-            return getAllTags(authentication);
+            return tagRepository.saveAll(tags);
         } else
             throw new UsernameNotFoundException("USER NOT FOUND");
     }
