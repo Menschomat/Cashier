@@ -39,7 +39,7 @@
     "ngx-gravatar": "^8.0.0",
     "rxjs": "~6.5.2",
     "tslib": "^1.10.0",
-    "zone.js": "~0.10.0"
+    "zone.js": "~0.9.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.801.3",
@@ -60,6 +60,6 @@
     "protractor": "~5.4.0",
     "ts-node": "~8.3.0",
     "tslint": "~5.18.0",
-    "typescript": "~3.5.3"
+    "typescript": "~3.4.5"
   }
 }
