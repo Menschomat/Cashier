@@ -1,0 +1,44 @@
+<mat-card class="mat-elevation-z8">
+  <mat-card-title>
+    Welcome to Cashier!
+  </mat-card-title>
+  <mat-card-content>
+    <mat-horizontal-stepper #stepper>
+      <mat-step>
+        <h2>Cashies?!</h2>
+        <ng-template matStepLabel>About Cashies</ng-template>
+        <img src="assets/coming-soon.png"  style="max-height: 30vh"/>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </mat-step>
+      <mat-step >
+          <h2>Cashies?!</h2>
+        <ng-template matStepLabel>Regular Cashies</ng-template>
+        <img src="assets/coming-soon.png"  style="max-height: 30vh"/>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </mat-step>
+      <mat-step>
+          <h2>Cashies?!</h2>
+        <ng-template matStepLabel>User-Settings</ng-template>
+        <img src="assets/coming-soon.png"  style="max-height: 30vh"/>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </mat-step>
+      <mat-step>
+          <h2>Cashies?!</h2>
+        <ng-template matStepLabel>Light oder Dark?</ng-template>
+        <img src="assets/coming-soon.png"  style="max-height: 30vh"/>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button (click)="stepper.reset()">Reset</button>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </mat-card-content>
+</mat-card>

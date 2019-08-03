@@ -67,6 +67,7 @@ import { NewScheduledTaskComponent } from "./view/user-settings/scheduled-task-c
 import { BarChartCardComponent } from "./components/charts/bar-chart-card/bar-chart-card.component";
 import { InitComponent } from "./view/init/init.component";
 import { MainFooterComponent } from "./components/main-footer/main-footer.component";
+import { HelpComponent } from './view/home/help/help.component';
 
 @NgModule({
   declarations: [
@@ -92,7 +93,8 @@ import { MainFooterComponent } from "./components/main-footer/main-footer.compon
     NewScheduledTaskComponent,
     BarChartCardComponent,
     InitComponent,
-    MainFooterComponent
+    MainFooterComponent,
+    HelpComponent
   ],
   imports: [
     BrowserModule,

@@ -119,5 +119,6 @@ public class Transaction implements Serializable {
         this.amount = scheduledTask.getAmount();
         this.tags = scheduledTask.getTags();
         this.user = scheduledTask.getUser();
+        this.ingestion = scheduledTask.isIngestion();
     }
 }

@@ -9,8 +9,6 @@ import { COMMA, ENTER, SPACE } from "@angular/cdk/keycodes";
 import { MatChipInputEvent } from "@angular/material/chips";
 import { Tag } from "src/app/model/hashtag-system/tag";
 import { TagService } from "src/app/services/tag.service";
-import { NewTransaction } from "src/app/model/transaction-management/new-transaction";
-import { Transaction } from "src/app/model/transaction-management/transaction";
 import { Observable } from "rxjs";
 import { map, startWith } from "rxjs/operators";
 import cronstrue from "cronstrue";
@@ -69,7 +67,7 @@ export class NewScheduledTaskComponent implements OnInit {
     this.newTransactionForm = this.fb.group({
       title: ["", Validators.required],
       amount: [0, Validators.pattern("^[-+]?[0-9]*.?[0-9]+$")],
-      type: [ Validators.required],
+      type: [Validators.required],
       cronTab: ["", Validators.required]
     });
   }
@@ -83,12 +81,12 @@ export class NewScheduledTaskComponent implements OnInit {
     this.clearAutocomplete();
   }
   private addTag(value: string) {
-    let toAdd = value.replace("#", "");
+    const toAdd = value.replace("#", "");
     if ((toAdd || "").trim()) {
-      var found = false;
+      let found = false;
       for (var i = 0; i < this.output.tags.length; i++) {
         if (
-          this.output.tags[i].title.toLocaleLowerCase().trim() ==
+          this.output.tags[i].title.toLocaleLowerCase().trim() ===
           toAdd.toLocaleLowerCase().trim()
         ) {
           found = true;
@@ -151,7 +149,7 @@ export class NewScheduledTaskComponent implements OnInit {
   }
 
   isCronValid(freq) {
-    var cronregex = new RegExp(
+    const cronregex = new RegExp(
       /^(\*|([0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9])|\*\/([0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9])) (\*|([0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9])|\*\/([0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9])) (\*|([0-9]|1[0-9]|2[0-3])|\*\/([0-9]|1[0-9]|2[0-3])) (\*|([1-9]|1[0-9]|2[0-9]|3[0-1])|\*\/([1-9]|1[0-9]|2[0-9]|3[0-1])) (\*|([1-9]|1[0-2])|\*\/([1-9]|1[0-2])) (\*|([0-6])|\*\/([0-6]))$/
     );
     return cronregex.test(freq);
