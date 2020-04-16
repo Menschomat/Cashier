@@ -58,8 +58,8 @@ export class OverviewCardComponent implements OnInit {
   ];
   selection = new SelectionModel<Transaction>(true, []);
   dataSource = new MatTableDataSource<Transaction>();
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   constructor(
     private dialog: MatDialog,
     private transactionService: TransactionService,
