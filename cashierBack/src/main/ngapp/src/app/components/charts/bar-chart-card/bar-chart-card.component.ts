@@ -1,16 +1,21 @@
-import { Component, OnInit, Input, ViewChild, SimpleChange } from '@angular/core';
-import { Transaction } from 'src/app/model/transaction-management/transaction';
-import { Subscription } from 'rxjs';
-import { TagService } from 'src/app/services/tag.service';
+import {
+  Component,
+  OnInit,
+  Input,
+  ViewChild,
+  SimpleChange,
+} from "@angular/core";
+import { Transaction } from "src/app/model/transaction-management/transaction";
+import { Subscription } from "rxjs";
+import { TagService } from "src/app/services/tag.service";
 import { Chart } from "chart.js";
 
 @Component({
-  selector: 'app-bar-chart-card',
-  templateUrl: './bar-chart-card.component.html',
-  styleUrls: ['./bar-chart-card.component.scss']
+  selector: "app-bar-chart-card",
+  templateUrl: "./bar-chart-card.component.html",
+  styleUrls: ["./bar-chart-card.component.scss"],
 })
 export class BarChartCardComponent implements OnInit {
-
   @Input()
   data: Transaction[] = [];
   @ViewChild("doughChart", { static: true }) private chartRef;
@@ -23,9 +28,9 @@ export class BarChartCardComponent implements OnInit {
     this.chart.data.labels = [];
     let issueBuffer: any = {};
     if (this.data.length > 0) {
-      this.data.forEach(trans => {
+      this.data.forEach((trans) => {
         if (!trans.ingestion)
-          trans.tags.forEach(tID => {
+          trans.tags.forEach((tID) => {
             if (issueBuffer[tID.title]) {
               issueBuffer[tID.title] += trans.amount;
             } else {
@@ -33,7 +38,7 @@ export class BarChartCardComponent implements OnInit {
             }
           });
       });
-      Object.keys(issueBuffer).forEach(tag => {
+      Object.keys(issueBuffer).forEach((tag) => {
         this.chart.data.datasets[0].data.push(issueBuffer[tag]);
         this.chart.data.labels.push(`#${tag}`);
         this.chart.data.datasets[0].backgroundColor.push(
@@ -45,22 +50,22 @@ export class BarChartCardComponent implements OnInit {
   }
   ngOnInit() {
     this.chart = new Chart(this.chartRef.nativeElement, {
-      type: 'horizontalBar',
+      type: "horizontalBar",
       data: {
         labels: [],
         datasets: [
           {
             label: "",
             backgroundColor: [],
-            data: []
-          }
-        ]
+            data: [],
+          },
+        ],
       },
       options: {
         legend: { display: false },
         tooltips: {
           callbacks: {
-            label: function(tooltipItem, data) {
+            label: function (tooltipItem, data) {
               var label = data.labels[tooltipItem.index] || "";
 
               if (label) {
@@ -71,16 +76,16 @@ export class BarChartCardComponent implements OnInit {
                   tooltipItem.index
                 ].toString() + "€";
               return label;
-            }
-          }
-        }
-      }
-  });
+            },
+          },
+        },
+      },
+    });
+    this.renderChartData();
   }
   ngOnChanges(changes: SimpleChange) {
     if (this.data && this.chart) {
       this.renderChartData();
     }
   }
-
 }

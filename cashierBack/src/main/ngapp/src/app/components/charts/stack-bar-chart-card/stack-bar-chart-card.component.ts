@@ -3,7 +3,7 @@ import {
   OnInit,
   ViewChild,
   Input,
-  SimpleChange
+  SimpleChange,
 } from "@angular/core";
 import { Chart } from "chart.js";
 import { Subscription } from "rxjs";
@@ -16,7 +16,7 @@ import * as moment from "moment";
 @Component({
   selector: "app-stack-bar-chart-card",
   templateUrl: "./stack-bar-chart-card.component.html",
-  styleUrls: ["./stack-bar-chart-card.component.scss"]
+  styleUrls: ["./stack-bar-chart-card.component.scss"],
 })
 export class StackBarChartCardComponent implements OnInit {
   @Input()
@@ -32,7 +32,7 @@ export class StackBarChartCardComponent implements OnInit {
     this.chart.data.labels = [];
     let tracker: number = 0;
     if (this.data.length > 0) {
-      this.data.sort(function(a, b) {
+      this.data.sort(function (a, b) {
         var c = Date.parse(
           a.date.split("+")[0].substring(0, a.date.split("+")[0].length - 4)
         );
@@ -41,19 +41,19 @@ export class StackBarChartCardComponent implements OnInit {
         );
         return c - d;
       });
-      this.data.forEach(trans => {
+      this.data.forEach((trans) => {
         this.chart.data.labels.push(trans.date);
         if (trans.ingestion) {
           tracker = tracker + trans.amount;
           this.chart.data.datasets[0].data.push({
             x: trans.date,
-            y: tracker
+            y: tracker,
           });
         } else {
           tracker = tracker - trans.amount;
           this.chart.data.datasets[0].data.push({
             x: trans.date,
-            y: tracker
+            y: tracker,
           });
         }
       });
@@ -71,20 +71,21 @@ export class StackBarChartCardComponent implements OnInit {
             data: [],
             label: "Trend",
             borderColor: "purple",
-            fill: false
-          }
-        ]
+            fill: false,
+          },
+        ],
       },
       options: {
         scales: {
           xAxes: [
             {
-              type: "time"
-            }
-          ]
-        }
-      }
+              type: "time",
+            },
+          ],
+        },
+      },
     });
+    this.renderChartData();
   }
   ngOnChanges(changes: SimpleChange) {
     if (this.data && this.chart) {

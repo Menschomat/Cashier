@@ -5,7 +5,7 @@
   (datePair)="dateChanged($event)"
   (reloadFromServer)="refreshData()"
 ></app-overview-card>
-<div style="flex-direction: row; display: flex; flex-wrap: wrap" *ngIf="transactions.length > 0">
+<div style="flex-direction: row; display: flex; flex-wrap: wrap" *ngIf="transactions && transactions.length > 0">
   <app-chart-card [data]="transactions"></app-chart-card>
   <app-stack-bar-chart-card [data]="transactions"></app-stack-bar-chart-card>
   <app-bar-chart-card [data]="transactions"></app-bar-chart-card>

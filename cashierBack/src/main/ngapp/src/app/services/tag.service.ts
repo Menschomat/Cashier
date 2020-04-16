@@ -43,7 +43,6 @@ export class TagService {
     "#4CAF50",
     "#8BC34A",
     "#CDDC39",
-    "#FFEB3B",
     "#FFC107",
     "#FF9800",
     "#FF5722",
@@ -51,6 +50,7 @@ export class TagService {
     "#9E9E9E",
     "#607D8B"
   ];
+  //    "#FFEB3B"
   apiURL = "/api/tag";
   subscription: Subscription;
   allTags: Tag[] = [];

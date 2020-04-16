@@ -83,6 +83,7 @@ export class ChartCardComponent implements OnInit {
         }
       }
     });
+    this.renderChartData();
   }
   ngOnChanges(changes: SimpleChange) {
     if (this.data && this.chart) {
