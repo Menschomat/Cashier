@@ -1,6 +1,6 @@
 <mat-card style="margin: 1em; min-width: 300px;" class="mat-elevation-z8">
   <mat-card-title>
-    Details ändern
+    Change details
   </mat-card-title>
   <mat-card-content style="display:flex; flex-direction:column">
     <mat-form-field class="example-full-width">
@@ -16,7 +16,7 @@
       <input matInput [(ngModel)]="user.surname" placeholder="Surname">
     </mat-form-field>
     <button mat-raised-button color="primary" (click)="submitUserdata()" [disabled]="equalCheck(changeCheckUser,user)">
-      Ändern
+      Submit
     </button>
   </mat-card-content>
 
