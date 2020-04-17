@@ -17,6 +17,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
         color: white !important;
     }
 }
+hr{
+    border-style: solid;
+    border-color: lightgray;
+}
 @import '~@angular/material/theming';
 @include mat-core();
 @import './light-theme';

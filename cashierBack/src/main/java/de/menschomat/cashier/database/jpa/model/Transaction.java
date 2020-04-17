@@ -115,10 +115,12 @@ public class Transaction implements Serializable {
 
     public void updateFromScheduledTask(ScheduledTask scheduledTask) {
         this.date = new Date();
+        this.date.setSeconds(0);
         this.title = scheduledTask.getTitle();
         this.amount = scheduledTask.getAmount();
         this.tags = scheduledTask.getTags();
         this.user = scheduledTask.getUser();
         this.ingestion = scheduledTask.isIngestion();
     }
+
 }

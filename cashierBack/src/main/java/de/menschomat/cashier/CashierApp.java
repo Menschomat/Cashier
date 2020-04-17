@@ -49,6 +49,6 @@ public class CashierApp {
         } else {
             new SpringApplicationBuilder(CashierApp.class).run(args);
         }
-
     }
 }
+

@@ -31,7 +31,6 @@ public class TransactionHandler {
     private final UserRepository userRepository;
     private final TagRepository tagRepository;
 
-
     public TransactionHandler(TransactionRepository transactionRepository, UserRepository userRepository, TagRepository tagRepository) {
         this.transactionRepository = transactionRepository;
         this.userRepository = userRepository;
@@ -56,7 +55,6 @@ public class TransactionHandler {
             return transactionRepository.findByUser(dbUserOptional.get(), PageRequest.of(0, 5, Sort.by("date").descending())).getContent();
         } else
             throw new UsernameNotFoundException("USER NOT FOUND");
-
     }
 
     @GetMapping(value = "/date", produces = APPLICATION_JSON_VALUE)

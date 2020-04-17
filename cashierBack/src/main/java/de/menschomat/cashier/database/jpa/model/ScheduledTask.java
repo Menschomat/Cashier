@@ -5,6 +5,8 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,6 +27,10 @@ public class ScheduledTask {
     private Float amount;
 
     private boolean ingestion;
+
+    private Date date;
+
+    private Date last;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "tags")
@@ -125,5 +131,21 @@ public class ScheduledTask {
     @Override
     public int hashCode() {
         return Objects.hash(id, title, amount, ingestion, tags, user, cronTab);
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Date getLast() {
+        return last;
+    }
+
+    public void setLast(Date last) {
+        this.last = last;
     }
 }

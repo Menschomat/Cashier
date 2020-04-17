@@ -164,6 +164,11 @@
             <artifactId>SystemTray</artifactId>
             <version>3.17</version>
         </dependency>
+        <dependency>
+            <groupId>com.cronutils</groupId>
+            <artifactId>cron-utils</artifactId>
+            <version>9.0.2</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

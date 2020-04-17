@@ -1,6 +1,7 @@
 package de.menschomat.cashier.database.jpa.repositories;
 
 import de.menschomat.cashier.database.jpa.model.DBUser;
+import de.menschomat.cashier.database.jpa.model.ScheduledTask;
 import de.menschomat.cashier.database.jpa.model.Transaction;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

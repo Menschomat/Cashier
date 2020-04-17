@@ -7,11 +7,13 @@ import de.menschomat.cashier.database.jpa.repositories.TagRepository;
 import de.menschomat.cashier.database.jpa.repositories.TransactionRepository;
 import de.menschomat.cashier.database.jpa.repositories.UserRepository;
 import de.menschomat.cashier.scheduleing.ScheduleTaskService;
+import de.menschomat.cashier.scheduleing.SchedulerUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -56,16 +58,12 @@ public class ScheduleHandler {
     public List<ScheduledTask> addScheduleTask(Authentication authentication, @RequestBody ScheduledTask scheduledTask) {
         final Optional<DBUser> user_o = userRepository.findById(authentication.getName());
         if (user_o.isPresent()) {
+            scheduledTask.setDate(new Date());
             scheduledTask.setUser(user_o.get());
             scheduledTask.setTags(scheduledTask.getTags().stream().peek(tag -> tag.setUser(user_o.get())).collect(Collectors.toList()));
             tagRepository.saveAll(scheduledTask.getTags());
             final ScheduledTask toAdd = scheduleRepository.saveAndFlush(scheduledTask);
-            scheduleTaskService.addTaskToScheduler(toAdd.getId(), () -> {
-                Transaction newTrans = new Transaction();
-                newTrans.updateFromScheduledTask(toAdd);
-                newTrans.setTags(tagRepository.findAllByScheduledTasks(scheduledTask));
-                transactionRepository.save(newTrans);
-            }, scheduledTask.getCronTab());
+            scheduleTaskService.addTaskToScheduler(toAdd.getId(), () -> SchedulerUtils.schedule(tagRepository, transactionRepository, scheduleRepository, toAdd), scheduledTask.getCronTab());
             return getScheduleTask(authentication);
         } else {
             throw new UsernameNotFoundException("USER NOT FOUND");
