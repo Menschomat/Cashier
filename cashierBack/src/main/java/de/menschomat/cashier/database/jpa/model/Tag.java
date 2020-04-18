@@ -23,11 +23,11 @@ public class Tag implements Serializable {
     private String id;
 
     @NotBlank
-    @Size(min = 3, max = 100)
+    @Size(min = 2, max = 25)
     private String title = "";
 
     @NotBlank
-    @Size(min = 3, max = 100)
+    @Size(min = 3, max = 25)
     private String color = "gray";
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
