@@ -1,6 +1,6 @@
 <div style="display: flex; flex-direction:column;">
   <div style="display: flex; flex-direction:row;">
-    <h1>New Cashie...</h1>
+    <h1>{{data.title}}</h1>
     <div style="flex: 1;"></div>
     <button
       style="margin-top: 1.2em;"
@@ -96,7 +96,7 @@
           [formControl]="tagCtrl"
         />
       </mat-chip-list>
-   
+
     <mat-autocomplete
       #auto="matAutocomplete"
       (optionSelected)="selected($event)"

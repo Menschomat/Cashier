@@ -1,6 +1,15 @@
-import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
-import { MatAutocomplete, MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
-import { MatDialogRef } from "@angular/material/dialog";
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  Inject,
+} from "@angular/core";
+import {
+  MatAutocomplete,
+  MatAutocompleteSelectedEvent,
+} from "@angular/material/autocomplete";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { COMMA, ENTER, SPACE } from "@angular/cdk/keycodes";
 import { MatChipInputEvent } from "@angular/material/chips";
@@ -14,13 +23,14 @@ import {
   FormGroup,
   FormBuilder,
   Validators,
-  FormControl
+  FormControl,
 } from "@angular/forms";
 import { ThemeService } from "src/app/services/theme.service";
+import { DatePipe } from "@angular/common";
 @Component({
   selector: "app-new-transaction-dialog",
   templateUrl: "./new-transaction-dialog.component.html",
-  styleUrls: ["./new-transaction-dialog.component.scss"]
+  styleUrls: ["./new-transaction-dialog.component.scss"],
 })
 export class NewTransactionDialogComponent implements OnInit {
   public newTransactionForm: FormGroup;
@@ -28,20 +38,29 @@ export class NewTransactionDialogComponent implements OnInit {
   allTags: Tag[] = [];
   filteredTags: Observable<string[]>;
   tagCtrl = new FormControl();
-  @ViewChild("taginput", { static: true }) tagInput: ElementRef<HTMLInputElement>;
+  @ViewChild("taginput", { static: true }) tagInput: ElementRef<
+    HTMLInputElement
+  >;
   @ViewChild("auto", { static: true }) matAutocomplete: MatAutocomplete;
   constructor(
     private dialogRef: MatDialogRef<NewTransactionDialogComponent>,
     private tagService: TagService,
     private fb: FormBuilder,
-    private themeService: ThemeService
+    private pipe: DatePipe,
+    @Inject(MAT_DIALOG_DATA) public data
   ) {
-    this.output.tags = [];
-    this.output.transaction = {} as Transaction;
-    this.output.transaction.tags = [];
-    this.output.transaction.amount = 0;
-    this.output.transaction.title = "";
-    this.output.transaction.date = "";
+    if (data.data) {
+      this.output.transaction = data.data;
+      this.output.tags = data.data.tags;
+    } else {
+      this.output.tags = [];
+      this.output.transaction = {} as Transaction;
+      this.output.transaction.tags = [];
+      this.output.transaction.amount = 0;
+      this.output.transaction.title = "";
+      this.output.transaction.date = "";
+    }
+
     this.allTags = this.tagService.allTags;
     this.filteredTags = this.tagCtrl.valueChanges.pipe(
       startWith(null),
@@ -56,13 +75,25 @@ export class NewTransactionDialogComponent implements OnInit {
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, SPACE, COMMA];
 
-  createForm() {
-    this.newTransactionForm = this.fb.group({
-      title: ["", Validators.required],
-      amount: [0, Validators.pattern("^[+]?[0-9]*.?[0-9]+$")],
-      type: ["", Validators.required],
-      date: ["", Validators.required]
-    });
+  createForm(pre: Transaction) {
+    if (pre) {
+      this.newTransactionForm = this.fb.group({
+        title: [pre.title, Validators.required],
+        amount: [pre.amount, Validators.pattern("^[+]?[0-9]*.?[0-9]+$")],
+        type: [pre.ingestion, Validators.required],
+        date: [
+          new Date(this.pipe.transform(pre.date, "fullDate")),
+          Validators.required,
+        ],
+      });
+    } else {
+      this.newTransactionForm = this.fb.group({
+        title: ["", Validators.required],
+        amount: [0, Validators.pattern("^[+]?[0-9]*.?[0-9]+$")],
+        type: ["", Validators.required],
+        date: ["", Validators.required],
+      });
+    }
   }
   add(event: MatChipInputEvent): void {
     const input = event.input;
@@ -74,12 +105,12 @@ export class NewTransactionDialogComponent implements OnInit {
     this.clearAutocomplete();
   }
   private addTag(value: string) {
-    let toAdd = value.replace("#", "");
+    const toAdd = value.replace("#", "");
     if ((toAdd || "").trim()) {
-      var found = false;
-      for (var i = 0; i < this.output.tags.length; i++) {
+      let found = false;
+      for (let i = 0; i < this.output.tags.length; i++) {
         if (
-          this.output.tags[i].title.toLocaleLowerCase().trim() ==
+          this.output.tags[i].title.toLocaleLowerCase().trim() ===
           toAdd.toLocaleLowerCase().trim()
         ) {
           found = true;
@@ -103,17 +134,17 @@ export class NewTransactionDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.createForm();
+    this.createForm(this.data.data);
   }
   close() {
     this.dialogRef.close();
   }
   onSubmit() {
-    this.output.tags.forEach(tag => {
-
+    this.output.tags.forEach((tag) => {
       tag.title = tag.title.toLocaleLowerCase().trim();
-      
     });
+    console.log(this.newTransactionForm.value.date);
+
     this.output.transaction.tags = this.output.tags;
     this.output.transaction.ingestion = this.newTransactionForm.value.type;
     this.output.transaction.amount = this.newTransactionForm.value.amount;
@@ -131,15 +162,12 @@ export class NewTransactionDialogComponent implements OnInit {
   }
 
   private _filter(value: string): string[] {
-    let filterValue = value
-      .toLocaleLowerCase()
-      .trim()
-      .replace("#", "");
+    const filterValue = value.toLocaleLowerCase().trim().replace("#", "");
     if (filterValue.length < 1) {
       return [];
     }
     return this.allTags
-      .map(t => t.title)
-      .filter(t => t.toLowerCase().indexOf(filterValue) === 0);
+      .map((t) => t.title)
+      .filter((t) => t.toLowerCase().indexOf(filterValue) === 0);
   }
 }

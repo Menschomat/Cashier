@@ -46,7 +46,7 @@
     style="position: absolute;"
   ></mat-progress-bar>
 
-  
+
   <mat-card-content *ngIf="!loading">
     <table mat-table [dataSource]="dataSource" style="width: 100%" matSortActive="dateTime" matSortDirection="desc" matSort >
       <ng-container matColumnDef="select">
@@ -69,6 +69,7 @@
           </mat-checkbox>
         </td>
       </ng-container>
+
       <ng-container matColumnDef="type">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let transaction">
@@ -115,6 +116,16 @@
               >#{{ getTagForTagID(tag.title).title }}
             </mat-chip>
           </mat-chip-list>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="edit" >
+        <th mat-header-cell *matHeaderCellDef>
+
+        </th>
+        <td mat-cell *matCellDef="let row" style="width: 2rem;">
+          <button mat-icon-button color="primary" aria-label="Example icon button with a home icon" (click)="editRow(row)">
+            <fa-icon [icon]="faEdit"></fa-icon>
+          </button>
         </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

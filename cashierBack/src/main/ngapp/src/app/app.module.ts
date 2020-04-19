@@ -68,6 +68,7 @@ import { BarChartCardComponent } from "./components/charts/bar-chart-card/bar-ch
 import { InitComponent } from "./view/init/init.component";
 import { MainFooterComponent } from "./components/main-footer/main-footer.component";
 import { HelpComponent } from './view/home/help/help.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -144,6 +145,7 @@ import { HelpComponent } from './view/home/help/help.component';
   ],
   providers: [
     MatDatepickerModule,
+    DatePipe,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],

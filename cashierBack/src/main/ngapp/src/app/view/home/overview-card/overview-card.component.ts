@@ -5,7 +5,7 @@ import {
   SimpleChange,
   Output,
   EventEmitter,
-  ViewChild
+  ViewChild,
 } from "@angular/core";
 import { OverviewData } from "src/app/view/home/overview-card/model/overview-data";
 import { MatDialogConfig, MatDialog } from "@angular/material/dialog";
@@ -18,7 +18,8 @@ import {
   faTrashAlt,
   faPlusCircle,
   faTimes,
-  faMinusCircle
+  faMinusCircle,
+  faEdit,
 } from "@fortawesome/free-solid-svg-icons";
 import { TransactionService } from "src/app/services/transaction.service";
 import { TagService } from "src/app/services/tag.service";
@@ -31,13 +32,14 @@ import { StatusServiceService } from "src/app/services/status-service.service";
 @Component({
   selector: "app-overview-card",
   templateUrl: "./overview-card.component.html",
-  styleUrls: ["./overview-card.component.scss"]
+  styleUrls: ["./overview-card.component.scss"],
 })
 export class OverviewCardComponent implements OnInit {
   faPlus = faPlus;
   faPlusC = faPlusCircle;
   faMinusC = faMinusCircle;
   faTrash = faTrashAlt;
+  faEdit = faEdit;
   loading = false;
   fromDate: Date;
   toDate: Date;
@@ -54,7 +56,8 @@ export class OverviewCardComponent implements OnInit {
     "dateTime",
     "title",
     "amount",
-    "tags"
+    "tags",
+    "edit",
   ];
   selection = new SelectionModel<Transaction>(true, []);
   dataSource = new MatTableDataSource<Transaction>();
@@ -69,14 +72,20 @@ export class OverviewCardComponent implements OnInit {
   ngOnInit() {
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
-        case 'dateTime': return Date.parse(item.date.split("+")[0].substring(0, item.date.split("+")[0].length - 4));
-        default: return item[property];
+        case "dateTime":
+          return Date.parse(
+            item.date
+              .split("+")[0]
+              .substring(0, item.date.split("+")[0].length - 4)
+          );
+        default:
+          return item[property];
       }
     };
     this.fromDate = new Date();
     this.toDate = new Date();
     this.fromDate.setMonth(this.toDate.getMonth() - 1);
-    this.dateChanged()
+    this.dateChanged();
     this.loading = true;
     this.refreshData();
   }
@@ -93,7 +102,7 @@ export class OverviewCardComponent implements OnInit {
   masterToggle() {
     this.isAllSelected()
       ? this.selection.clear()
-      : this.dataSource.data.forEach(row => this.selection.select(row));
+      : this.dataSource.data.forEach((row) => this.selection.select(row));
   }
 
   getTagForTagID(tID: string) {
@@ -105,12 +114,15 @@ export class OverviewCardComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.minWidth = "40%";
-
+    dialogConfig.data = {
+      title: "New Cashie...",
+      data: undefined,
+    };
     let dialogRef = this.dialog.open(
       NewTransactionDialogComponent,
       dialogConfig
     );
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.loading = true;
         this.statusService.sendMessage({ saved: false });
@@ -138,28 +150,53 @@ export class OverviewCardComponent implements OnInit {
   }
   deleteTransactions(tList: Transaction[]) {
     this.statusService.sendMessage({ saved: false });
-    tList.forEach(tag => {
+    tList.forEach((tag) => {
       this.selection.deselect(tag);
     });
-    this.transactionService.deleteTransactionsById(tList.map(t=> t.id)).subscribe(() => {
-      this.reloadFromServer.emit();
-    });
+    this.transactionService
+      .deleteTransactionsById(tList.map((t) => t.id))
+      .subscribe(() => {
+        this.reloadFromServer.emit();
+      });
   }
   openEdit(tag: Tag) {
     const dialogConfig = new MatDialogConfig();
-
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-
     dialogConfig.data = tag;
-
-    let dialogRef = this.dialog.open(TagEditorComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe(result => {
+    const dialogRef = this.dialog.open(TagEditorComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe((result) => {
       this.reloadFromServer.emit();
     });
   }
 
   dateChanged() {
     this.datePair.emit({ from: this.fromDate, to: this.toDate });
+  }
+  editRow(row: Transaction) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.minWidth = "40%";
+    dialogConfig.data = {
+      title: "Edit Cashie...",
+      data: row,
+    };
+    const dialogRef = this.dialog.open(
+      NewTransactionDialogComponent,
+      dialogConfig
+    );
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.loading = true;
+        this.statusService.sendMessage({ saved: false });
+        this.transactionService
+          .addSingleTransaction(result.transaction)
+          .subscribe(() => {
+            this.tagService.refreshAllTags();
+            this.reloadFromServer.emit();
+          });
+      }
+    });
   }
 }

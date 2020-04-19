@@ -1,7 +1,6 @@
 package de.menschomat.cashier.rest;
 
 import de.menschomat.cashier.database.jpa.model.DBUser;
-import de.menschomat.cashier.database.jpa.model.Tag;
 import de.menschomat.cashier.database.jpa.model.Transaction;
 import de.menschomat.cashier.database.jpa.model.TransactionResult;
 import de.menschomat.cashier.database.jpa.repositories.TagRepository;
