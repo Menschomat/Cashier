@@ -51,7 +51,7 @@ export class NewTransactionDialogComponent implements OnInit {
   ) {
     if (data.data) {
       this.output.transaction = data.data;
-      this.output.tags = data.data.tags;
+      this.output.tags = JSON.parse(JSON.stringify(data.data.tags));
     } else {
       this.output.tags = [];
       this.output.transaction = {} as Transaction;
