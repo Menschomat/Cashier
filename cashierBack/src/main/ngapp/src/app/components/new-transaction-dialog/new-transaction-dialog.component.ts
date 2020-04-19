@@ -62,7 +62,7 @@ export class NewTransactionDialogComponent implements OnInit {
 
     this.allTags = this.tagService.allTags;
     this.filteredTags = this.tagCtrl.valueChanges.pipe(
-      startWith(null),
+      startWith(null as any),
       map((tagid: string | null) => (tagid ? this._filter(tagid) : []))
     );
   }
@@ -72,7 +72,7 @@ export class NewTransactionDialogComponent implements OnInit {
   selectable = true;
   removable = true;
   addOnBlur = true;
-  readonly separatorKeysCodes: number[] = [ENTER, SPACE, COMMA];
+  readonly separatorKeysCodes: number[] = [SPACE, COMMA];
 
   createForm(pre: Transaction) {
     if (pre) {
@@ -107,9 +107,9 @@ export class NewTransactionDialogComponent implements OnInit {
     const toAdd = value.replace("#", "");
     if ((toAdd || "").trim()) {
       let found = false;
-      for (let i = 0; i < this.output.tags.length; i++) {
+      for (const tag of this.output.tags) {
         if (
-          this.output.tags[i].title.toLocaleLowerCase().trim() ===
+          tag.title.toLocaleLowerCase().trim() ===
           toAdd.toLocaleLowerCase().trim()
         ) {
           found = true;

@@ -93,6 +93,7 @@
           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
           (matChipInputTokenEnd)="add($event)"
           [matAutocomplete]="auto"
+          [matChipInputAddOnBlur]="false"
           [formControl]="tagCtrl"
         />
       </mat-chip-list>
@@ -100,6 +101,7 @@
     <mat-autocomplete
       #auto="matAutocomplete"
       (optionSelected)="selected($event)"
+      (optionActivated)="optionActive"
     >
       <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
         #{{ tag }}
@@ -112,7 +114,7 @@
       type="submit"
       [disabled]="!newTransactionForm.valid"
     >
-      Add
+      Submit
     </button>
   </form>
 </div>
