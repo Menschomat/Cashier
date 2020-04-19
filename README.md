@@ -1,6 +1,6 @@
 # Cashier
 
-> ## **Warning:** Current releases are not under test-coverage! Keep that in mind, while using!
+> ## **Warning:** Current releases are not under complete test-coverage! Keep that in mind, while using!
 
 ## Things to do for more stability:
 :construction: TODO/InProgress
@@ -24,21 +24,24 @@ Cashier moves the household book to the web.
 
 :white_check_mark: Done
 
-* Scheduled-Transactions :white_check_mark:
-* rudimental summary for timespan :white_check_mark:
+* Scheduled-Transactions (regular Cashies) :white_check_mark:
+* Rudimental summary for timespan :white_check_mark:
 * Multiuser-Support :white_check_mark:
 * Darkmode :white_check_mark:
 * Roles (Admin/User) :white_check_mark:
 * Transaction list with pagebased-loading and sorting :white_check_mark:
 * Incoming/Outgoing money :white_check_mark:
 * Fully editable Users :white_check_mark:
-* Fully editable Transactions :construction:
+* Fully editable Cashies :white_check_mark:
+* Fully editable regular Cashies :construction:
 * Fancy Charts :construction:
 * Hashtag system (nice and fancy) :white_check_mark:
 * Docker support :white_check_mark:
-* Standalone mode (Json as storage) :construction:
+* Standalone mode (SQLite as storage) :white_check_mark:
 * Secure login via OAuth :white_check_mark: 
-* Fast :white_check_mark:
+* Snappy performance :white_check_mark:
+* Advanced analytic-features :construction:
+* OCR to scan receipts :construction:
 
 ---
 
