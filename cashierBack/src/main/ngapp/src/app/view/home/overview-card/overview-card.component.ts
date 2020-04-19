@@ -11,7 +11,7 @@ import { OverviewData } from "src/app/view/home/overview-card/model/overview-dat
 import { MatDialogConfig, MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
-import { MatTableDataSource } from "@angular/material/table";
+import { MatTableDataSource, MatTable } from "@angular/material/table";
 import { NewTransactionDialogComponent } from "../../../components/new-transaction-dialog/new-transaction-dialog.component";
 import {
   faPlus,
@@ -28,6 +28,7 @@ import { TagEditorComponent } from "../../../components/tag-editor/tag-editor.co
 import { SelectionModel } from "@angular/cdk/collections";
 import { Transaction } from "src/app/model/transaction-management/transaction";
 import { StatusServiceService } from "src/app/services/status-service.service";
+import { DatePipe } from "@angular/common";
 
 @Component({
   selector: "app-overview-card",
@@ -63,20 +64,20 @@ export class OverviewCardComponent implements OnInit {
   dataSource = new MatTableDataSource<Transaction>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatTable) table: MatTable<any>;
   constructor(
     private dialog: MatDialog,
     private transactionService: TransactionService,
     private tagService: TagService,
-    private statusService: StatusServiceService
+    private statusService: StatusServiceService,
+    private pipe: DatePipe
   ) {}
   ngOnInit() {
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
         case "dateTime":
           return Date.parse(
-            item.date
-              .split("+")[0]
-              .substring(0, item.date.split("+")[0].length - 4)
+            this.pipe.transform(item.date.toString(), "fullDate")
           );
         default:
           return item[property];
@@ -90,7 +91,7 @@ export class OverviewCardComponent implements OnInit {
     this.refreshData();
   }
   ngOnChanges(changes: SimpleChange) {
-    this.refreshData();
+    if (this.data) this.refreshData();
   }
 
   isAllSelected() {
@@ -146,7 +147,9 @@ export class OverviewCardComponent implements OnInit {
     this.dataSource.data = this.data;
     this.loading = false;
     this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    if (this.sort) {
+      this.dataSource.sort = this.sort;
+    }
   }
   deleteTransactions(tList: Transaction[]) {
     this.statusService.sendMessage({ saved: false });

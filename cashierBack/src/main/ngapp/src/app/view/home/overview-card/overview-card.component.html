@@ -47,7 +47,7 @@
   ></mat-progress-bar>
 
 
-  <mat-card-content *ngIf="!loading">
+  <mat-card-content>
     <table mat-table [dataSource]="dataSource" style="width: 100%" matSortActive="dateTime" matSortDirection="desc" matSort >
       <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef>

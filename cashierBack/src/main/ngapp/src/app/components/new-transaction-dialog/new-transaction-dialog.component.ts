@@ -25,7 +25,6 @@ import {
   Validators,
   FormControl,
 } from "@angular/forms";
-import { ThemeService } from "src/app/services/theme.service";
 import { DatePipe } from "@angular/common";
 @Component({
   selector: "app-new-transaction-dialog",
@@ -143,8 +142,6 @@ export class NewTransactionDialogComponent implements OnInit {
     this.output.tags.forEach((tag) => {
       tag.title = tag.title.toLocaleLowerCase().trim();
     });
-    console.log(this.newTransactionForm.value.date);
-
     this.output.transaction.tags = this.output.tags;
     this.output.transaction.ingestion = this.newTransactionForm.value.type;
     this.output.transaction.amount = this.newTransactionForm.value.amount;
