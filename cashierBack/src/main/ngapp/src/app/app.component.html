@@ -1,7 +1,7 @@
-<app-main-nav
-(darkOut)="onSetTheme($event)"
-></app-main-nav>
-<div class="app-frame mat-app-background">
+<app-main-nav (darkOut)="onSetTheme($event)"></app-main-nav>
+<div
+  class="app-frame mat-app-background"
+>
   <router-outlet></router-outlet>
 </div>
 <app-main-footer></app-main-footer>

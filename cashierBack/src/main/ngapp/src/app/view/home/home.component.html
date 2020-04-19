@@ -1,11 +1,11 @@
-<div style="display: flex; justify-content: center; margin: 1em;"></div>
+
 <!-- <app-help></app-help> -->
 <app-overview-card
   [data]="transactions"
   (datePair)="dateChanged($event)"
   (reloadFromServer)="refreshData()"
 ></app-overview-card>
-<div style="flex-direction: row; display: flex; flex-wrap: wrap" *ngIf="transactions && transactions.length > 0">
+<div style="flex-direction: row; display: flex; flex-wrap: wrap; margin-bottom: 1.75rem;" *ngIf="transactions && transactions.length > 0">
   <app-chart-card [data]="transactions"></app-chart-card>
   <app-stack-bar-chart-card [data]="transactions"></app-stack-bar-chart-card>
   <app-bar-chart-card [data]="transactions"></app-bar-chart-card>
