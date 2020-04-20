@@ -59,12 +59,10 @@
       [matMenuTriggerFor]="userMenu"
     >
       <img
-        style="
-          max-height: 1.5em;
-          max-width: 1.5em;
-          position: relative;
-          top: -0.1em;
-        "
+        [style.max-height]="'1.5em'"
+        [style.max-width]="'1.5em'"
+        [style.position]="'relative'"
+        [style.top]="'-0.1em'"
         *ngIf="user && user.email"
         ngxGravatar
         [email]="user?.email"
