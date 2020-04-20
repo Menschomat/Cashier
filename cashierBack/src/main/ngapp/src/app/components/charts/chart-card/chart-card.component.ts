@@ -61,6 +61,8 @@ export class ChartCardComponent implements OnInit {
         labels: []
       },
       options: {
+        maintainAspectRatio: false,
+        responsive: true,
         legend: {
           position: "right",
           display: true

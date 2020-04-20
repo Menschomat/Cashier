@@ -62,6 +62,8 @@ export class BarChartCardComponent implements OnInit {
         ],
       },
       options: {
+        maintainAspectRatio: false,
+        responsive: true,
         legend: { display: false },
         tooltips: {
           callbacks: {

@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StackBarChartCardComponent } from './stack-bar-chart-card.component';
+import { StackBarChartCardComponent } from './line-chart-card.component';
 
 describe('StackBarChartCardComponent', () => {
   let component: StackBarChartCardComponent;

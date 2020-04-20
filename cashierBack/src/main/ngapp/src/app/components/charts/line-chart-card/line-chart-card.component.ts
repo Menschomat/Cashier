@@ -7,14 +7,13 @@ import {
 } from "@angular/core";
 import { Chart } from "chart.js";
 import { Subscription } from "rxjs";
-import { TagService } from "src/app/services/tag.service";
 import { Transaction } from "src/app/model/transaction-management/transaction";
 import { ThemeService } from "src/app/services/theme.service";
 
 @Component({
-  selector: "app-stack-bar-chart-card",
-  templateUrl: "./stack-bar-chart-card.component.html",
-  styleUrls: ["./stack-bar-chart-card.component.scss"],
+  selector: "line-chart-card",
+  templateUrl: "./line-chart-card.component.html",
+  styleUrls: ["./line-chart-card.component.scss"],
 })
 export class StackBarChartCardComponent implements OnInit {
   @Input()
@@ -77,6 +76,8 @@ export class StackBarChartCardComponent implements OnInit {
         ],
       },
       options: {
+        maintainAspectRatio: false,
+        responsive: true,
         scales: {
           xAxes: [
             {

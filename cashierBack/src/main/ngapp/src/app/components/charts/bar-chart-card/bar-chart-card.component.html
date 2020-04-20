@@ -2,8 +2,10 @@
   <mat-card-header>
     <mat-card-title>Outgoings</mat-card-title>
   </mat-card-header>
-  <hr />
-  <mat-card-content>
+  <hr style="width: 100%;"/>
+  <mat-card-content style="height: 20vh; min-height: 300px;
+  flex: 1 0 auto;
+  width: 100%;">
     <canvas #doughChart>{{ chart }}</canvas>
   </mat-card-content>
 </mat-card>

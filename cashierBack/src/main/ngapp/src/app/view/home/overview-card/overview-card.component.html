@@ -6,7 +6,7 @@
     style="
       align-items: center;
       display: flex;
-      flex: 1 0;
+      flex: 0 0;
       flex-wrap: wrap;
       padding: 1rem 0.5rem 0 0.5rem;
     "
@@ -53,7 +53,7 @@
       <mat-datepicker #toPicker disabled="false"></mat-datepicker>
     </mat-form-field>
   </mat-card-header>
-  <hr style="flex:1; width:99.9%; margin:0" />
+  <hr style="width:99.9%; margin:0" />
   <mat-progress-bar
     *ngIf="loading"
     mode="indeterminate"
@@ -173,9 +173,9 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
   </mat-card-content>
-  <hr style="flex:1; width:99.9%; margin:0" />
+  <hr style="width:99.9%; margin:0" />
   <mat-card-actions
-    style="display: flex; flex-direction: column; flex: 1 0; padding: 0rem 1rem 1rem 1rem;"
+    style="display: flex; flex-direction: column; flex: 0 0; padding: 0rem 1rem 1rem 1rem;"
   >
     <div>
       <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>

@@ -52,7 +52,7 @@ import { LoginComponent } from "./view/login/login.component";
 import { JwtInterceptor } from "./auth/helpers/jwt.interceptor";
 import { ErrorInterceptor } from "./auth/helpers/error.interceptor";
 import { NgxCurrencyModule } from "ngx-currency";
-import { StackBarChartCardComponent } from "./components/charts/stack-bar-chart-card/stack-bar-chart-card.component";
+import { StackBarChartCardComponent } from "./components/charts/line-chart-card/line-chart-card.component";
 import { AdministrationComponent } from "./view/administration/administration.component";
 import { UserSettingsComponent } from "./view/user-settings/user-settings.component";
 import { UserListComponent } from "./view/administration/user-list/user-list.component";
