@@ -25,3 +25,24 @@ hr{
 @include mat-core();
 @import './light-theme';
 @import './dark-theme';
+
+
+@-webkit-keyframes autofill {
+    0%,100% {
+        color: #666;
+        background: transparent;
+    }
+}
+
+input:-webkit-autofill {
+    -webkit-animation-delay: 1s; /* Safari support - any positive time runs instantly */
+    -webkit-animation-name: autofill;
+    -webkit-animation-fill-mode: both;
+}
+.mat-table-sticky:first-child {
+    border-right: 1px solid #E0E0E0;
+  }
+  
+  .mat-table-sticky:last-child {
+    border-left: 1px solid #E0E0E0;
+  }

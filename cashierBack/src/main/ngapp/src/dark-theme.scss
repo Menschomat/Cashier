@@ -23,8 +23,16 @@ $theme: mat-dark-theme($primary, $accent, $warn);
    // $background: map-get($theme, background);
    // background-color: mat-color($background, background);
     @include angular-material-theme($theme);
+    .mat-table-sticky:first-child {
+      border-right: 1px solid #595959!important;
+    }
+    
+    .mat-table-sticky:last-child {
+      border-left: 1px solid #595959!important;
+    }
   }
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
+
 

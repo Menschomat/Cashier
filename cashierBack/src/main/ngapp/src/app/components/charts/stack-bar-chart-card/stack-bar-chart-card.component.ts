@@ -9,6 +9,7 @@ import { Chart } from "chart.js";
 import { Subscription } from "rxjs";
 import { TagService } from "src/app/services/tag.service";
 import { Transaction } from "src/app/model/transaction-management/transaction";
+import { ThemeService } from "src/app/services/theme.service";
 
 @Component({
   selector: "app-stack-bar-chart-card",
@@ -22,8 +23,9 @@ export class StackBarChartCardComponent implements OnInit {
   @ViewChild("lineChart", { static: true }) private chartRef;
   chart: any;
   subscription: Subscription;
-  constructor(private tagService: TagService) {}
+  constructor(private themeService: ThemeService) {}
   renderChartData() {
+
     this.chart.data.datasets[0].data = [];
     this.chart.data.labels = [];
     let tracker: number = 0;
@@ -59,7 +61,6 @@ export class StackBarChartCardComponent implements OnInit {
   }
   ngOnInit() {
     this.chart = new Chart(this.chartRef.nativeElement, {
-      
       type: "line",
       data: {
         labels: [],
@@ -67,10 +68,11 @@ export class StackBarChartCardComponent implements OnInit {
           {
             data: [],
             label: "Trend",
-            borderColor: "purple",
+            borderColor:
+              this.themeService.getTheme() === "dark" ? "white" : "purple",
             fill: true,
             backgroundColor: "rgba(141, 36, 170, 0.2)",
-            lineTension:0.15
+            lineTension: 0.15,
           },
         ],
       },

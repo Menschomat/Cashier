@@ -6,6 +6,7 @@ import {
   Output,
   EventEmitter,
   ViewChild,
+  ViewEncapsulation,
 } from "@angular/core";
 import { OverviewData } from "src/app/view/home/overview-card/model/overview-data";
 import { MatDialogConfig, MatDialog } from "@angular/material/dialog";
@@ -34,6 +35,7 @@ import { DatePipe } from "@angular/common";
   selector: "app-overview-card",
   templateUrl: "./overview-card.component.html",
   styleUrls: ["./overview-card.component.scss"],
+  encapsulation: ViewEncapsulation.None
 })
 export class OverviewCardComponent implements OnInit {
   faPlus = faPlus;
@@ -83,6 +85,7 @@ export class OverviewCardComponent implements OnInit {
           return item[property];
       }
     };
+
     this.fromDate = new Date();
     this.toDate = new Date();
     this.fromDate.setMonth(this.toDate.getMonth() - 1);
@@ -146,9 +149,13 @@ export class OverviewCardComponent implements OnInit {
   refreshData() {
     this.dataSource.data = this.data;
     this.loading = false;
-    this.dataSource.paginator = this.paginator;
+
     if (this.sort) {
       this.dataSource.sort = this.sort;
+    }
+    if (this.paginator) {
+      this.dataSource.paginator = this.paginator;
+      this.paginator._intl.itemsPerPageLabel = "Items:";
     }
   }
   deleteTransactions(tList: Transaction[]) {

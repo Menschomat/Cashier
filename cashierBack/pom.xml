@@ -10,7 +10,7 @@
     </parent>
     <groupId>de.menschomat</groupId>
     <artifactId>cashier</artifactId>
-    <version>0.2.2-ALPHA</version>
+    <version>0.2.3-ALPHA</version>
     <name>cashier</name>
     <properties>
         <java.version>1.8</java.version>
