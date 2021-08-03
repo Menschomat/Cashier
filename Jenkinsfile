@@ -14,11 +14,12 @@ pipeline {
         }
         stage ('Build') {
             steps {
-                sh 'mvn -Dmaven.test.failure.ignore=true install'
+                sh 'mvn install'
             }
 
             post {
-                success {
+                always {
+                    archiveArtifacts artifacts: 'target/*.jar, target/*.exe', fingerprint: true
                     junit 'target/surefire-reports/**/*.xml'
                 }
             }
