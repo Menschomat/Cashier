@@ -1,7 +1,7 @@
 version: '2'
 services:
   myapp:
-    build: .
+    build: ""
     container_name: "cashier"
     image: menschomat/cashier:latest
     ports:

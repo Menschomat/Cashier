@@ -23,8 +23,8 @@ hr{
 }
 @import '~@angular/material/theming';
 @include mat-core();
-@import './light-theme';
-@import './dark-theme';
+@import 'src/light-theme';
+@import 'src/dark-theme';
 
 
 @-webkit-keyframes autofill {
@@ -42,7 +42,7 @@ input:-webkit-autofill {
 .mat-table-sticky:first-child {
     border-right: 1px solid #E0E0E0;
   }
-  
+
   .mat-table-sticky:last-child {
     border-left: 1px solid #E0E0E0;
   }

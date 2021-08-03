@@ -3,7 +3,7 @@ import {
   OnInit,
   ViewChild,
   Input,
-  SimpleChange
+  SimpleChange, OnChanges
 } from "@angular/core";
 import { Chart } from "chart.js";
 import { TagService } from "src/app/services/tag.service";
@@ -26,7 +26,7 @@ export class ChartCardComponent implements OnInit {
     this.chart.data.datasets[0].data = [];
     this.chart.data.datasets[0].backgroundColor = [];
     this.chart.data.labels = [];
-    let tagCountBuffer: any = {};
+    const tagCountBuffer: any = {};
     if (this.data.length > 0) {
       this.data.forEach(trans => {
         if (!trans.ingestion)
@@ -67,22 +67,22 @@ export class ChartCardComponent implements OnInit {
           position: "right",
           display: true
         },
-        tooltips: {
-          callbacks: {
-            label: function(tooltipItem, data) {
-              var label = data.labels[tooltipItem.index] || "";
+        /*        tooltips: {
+                  callbacks: {
+                    label: function(tooltipItem, data) {
+                      let label =  data.labels[tooltipItem.index] as string || "";
 
-              if (label) {
-                label += ": ";
-              }
-              label +=
-                data.datasets[tooltipItem.datasetIndex].data[
-                  tooltipItem.index
-                ].toString() + "€";
-              return label;
-            }
-          }
-        }
+                      if (label) {
+                        label += ": ";
+                      }
+                      label +=
+                        data.datasets[tooltipItem.datasetIndex].data[
+                          tooltipItem.index
+                        ].toString() + "€";
+                      return label;
+                    }
+                  }
+                }*/
       }
     });
     this.renderChartData();

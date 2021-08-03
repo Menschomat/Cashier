@@ -65,22 +65,22 @@ export class BarChartCardComponent implements OnInit {
         maintainAspectRatio: false,
         responsive: true,
         legend: { display: false },
-        tooltips: {
-          callbacks: {
-            label: function (tooltipItem, data) {
-              var label = data.labels[tooltipItem.index] || "";
+        /*      tooltips: {
+                callbacks: {
+                  label: function (tooltipItem, data) {
+                    var label = data.labels[tooltipItem.index] || "";
 
-              if (label) {
-                label += ": ";
-              }
-              label +=
-                data.datasets[tooltipItem.datasetIndex].data[
-                  tooltipItem.index
-                ].toString() + "€";
-              return label;
-            },
-          },
-        },
+                    if (label) {
+                      label += ": ";
+                    }
+                    label +=
+                      data.datasets[tooltipItem.datasetIndex].data[
+                        tooltipItem.index
+                      ].toString() + "€";
+                    return label;
+                  },
+                },
+              },*/
       },
     });
     this.renderChartData();
