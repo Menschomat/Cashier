@@ -1,7 +1,10 @@
 pipeline {
-    agent none
+    agent {
+        label "maven"
+    }
     stages {
         stage ('Initialize') {
+
             steps {
                 sh '''
                 echo "PATH = ${PATH}"
@@ -10,9 +13,6 @@ pipeline {
             }
         }
         stage ('Build') {
-            agent {
-                label "arm64-docker"
-            }
             steps {
                 sh 'mvn -Dmaven.test.failure.ignore=true install'
             }
