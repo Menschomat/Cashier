@@ -1,4 +1,5 @@
 # Cashier
+[![Build Status](https://jenkins.base.menscho.space/buildStatus/icon?job=Cashier)](https://jenkins.base.menscho.space/job/Cashier/)
 
 > ## **Warning:** Current releases are not under complete test-coverage! Keep that in mind, while using!
 
