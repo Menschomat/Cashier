@@ -3,10 +3,9 @@ package de.menschomat.cashier.rest.userApi;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.menschomat.cashier.database.jpa.model.DBUser;
 import de.menschomat.cashier.rest.model.RestUser;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -14,14 +13,12 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
 import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations = "classpath:test.properties")
 public class UserApiTest {
@@ -30,7 +27,7 @@ public class UserApiTest {
     private TestRestTemplate restTemplate;
     private HttpHeaders headers = new HttpHeaders();
 
-    @Before
+    @BeforeEach
     public void init() {
         headers.set(
                 "Authorization",
@@ -41,7 +38,7 @@ public class UserApiTest {
                         String.class).getHeaders().get("Authorization")).get(0));
     }
 
-    @After
+    @AfterEach
     public void finalize() {
         headers = new HttpHeaders();
     }

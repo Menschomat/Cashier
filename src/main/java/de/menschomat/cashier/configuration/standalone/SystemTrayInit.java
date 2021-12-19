@@ -27,7 +27,6 @@ public class SystemTrayInit {
 
     @PostConstruct
     public void init() {
-        SystemTray.SWING_UI = new CustomSwingUI();
         SystemTray systemTray = SystemTray.get();
         if (systemTray == null) {
             throw new RuntimeException("Unable to load SystemTray!");

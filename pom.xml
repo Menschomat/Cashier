@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.5.RELEASE</version>
+        <version>2.5.7</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>de.menschomat</groupId>
@@ -13,7 +13,8 @@
     <version>0.2.3-ALPHA</version>
     <name>cashier</name>
     <properties>
-        <java.version>1.8</java.version>
+        <log4j2.version>2.17.0</log4j2.version>
+        <java.version>11</java.version>
     </properties>
     <profiles>
         <profile>
@@ -92,12 +93,12 @@
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
-            <version>2.9.2</version>
+            <version>3.0.0</version>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.9.2</version>
+            <version>3.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -131,7 +132,7 @@
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
-            <version>0.9.0</version>
+            <version>0.9.1</version>
         </dependency>
         <dependency>
             <groupId>javax.activation</groupId>
@@ -152,7 +153,7 @@
         <dependency>
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
-            <version>3.16.1</version>
+            <version>3.36.0.3</version>
         </dependency>
         <dependency>
             <groupId>com.apple</groupId>
@@ -162,13 +163,25 @@
         <dependency>
             <groupId>com.dorkbox</groupId>
             <artifactId>SystemTray</artifactId>
-            <version>3.17</version>
+            <version>4.0</version>
         </dependency>
+
         <dependency>
             <groupId>com.cronutils</groupId>
             <artifactId>cron-utils</artifactId>
             <version>9.1.6</version>
         </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>31.0.1-jre</version>
+        </dependency>
+
+
     </dependencies>
     <build>
         <plugins>
@@ -179,7 +192,7 @@
             <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
-                <version>1.7.6</version>
+                <version>1.12.0</version>
                 <configuration>
                     <nodeVersion>v12.4.0</nodeVersion>
                     <npmVersion>6.9.0</npmVersion>
@@ -253,7 +266,7 @@
             <plugin>
                 <groupId>com.akathist.maven.plugins.launch4j</groupId>
                 <artifactId>launch4j-maven-plugin</artifactId>
-                <version>2.1.1</version>
+                <version>2.1.2</version>
                 <executions>
                     <execution>
                         <id>l4j-gui</id>
@@ -272,7 +285,7 @@
                                 <mainClass>de.menschomat.cashier.CashierApp</mainClass>
                             </classPath>
                             <jre>
-                                <minVersion>1.8.0</minVersion>
+                                <minVersion>11</minVersion>
                                 <initialHeapSize>512</initialHeapSize>
                                 <maxHeapSize>1024</maxHeapSize>
                             </jre>
@@ -280,7 +293,7 @@
                                 <fileVersion>1.0.0.0</fileVersion>
                                 <txtFileVersion>1.0.0.0</txtFileVersion>
                                 <fileDescription>des</fileDescription>
-                                <copyright>Copyright (c) 2019</copyright>
+                                <copyright>Copyright (c) 2021</copyright>
                                 <companyName>Mensch0mat</companyName>
                                 <productVersion>3.0.0.0</productVersion>
                                 <txtProductVersion>${project.version}</txtProductVersion>

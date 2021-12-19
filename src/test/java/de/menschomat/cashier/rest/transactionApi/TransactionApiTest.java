@@ -4,10 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.menschomat.cashier.database.jpa.model.DBUser;
 import de.menschomat.cashier.database.jpa.model.Transaction;
 import de.menschomat.cashier.database.jpa.repositories.TransactionRepository;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -15,7 +12,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
 import java.util.Date;
@@ -24,7 +20,6 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations = "classpath:test.properties")
 public class TransactionApiTest {
@@ -51,7 +46,7 @@ public class TransactionApiTest {
                 String.class).getBody(), DBUser.class);
     }
 
-    @Before
+    @BeforeEach
     public void init() {
         headers.set("Authorization",
                 Objects.requireNonNull(this.restTemplate.exchange("/api/users/login?username=admin&password=cashier",
@@ -59,7 +54,7 @@ public class TransactionApiTest {
                         String.class).getHeaders().get("Authorization")).get(0));
     }
 
-    @After
+    @AfterEach
     public void finalize() {
         headers = new HttpHeaders();
     }
